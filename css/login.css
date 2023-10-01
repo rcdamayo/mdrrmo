@@ -1,0 +1,89 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    background-color: #ffffff;
+    background-image: none;
+}
+
+.login-container {
+    /* border: 1px solid green; */
+    height: 80%;
+    width: 60%;
+    padding: 0px;
+    float: right;
+    margin-top: 5%;
+    margin-right: 5%;
+    padding: 50px 0px;
+    padding-right: 40px;
+}
+
+#login-btn {
+    width: 95%;
+    height: 35px;
+    /* margin: 10px; */
+    margin-left: 0px;
+    padding: 5px 20px;
+    border: 0px;
+    border-radius: 50px;
+    background-color: #043a87;
+    color: #ffffff;
+    position: relative;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#login-btn:hover {
+    background-color: #006aff;
+}
+
+#login-btn.disabled {
+    background-color: #ddd; /* Disabled background color */
+    cursor: not-allowed;
+}
+
+h1 {
+    font-size: 20px;
+    font-weight: normal;
+}
+
+p, label {
+    font-size: 12px;
+    /* margin-left: 10px; */
+    color: #a3a3a3;
+    float: left;
+}
+
+input[type="text"], [type="password"] {
+    width: 90%;
+    height: 20px;
+    margin: 10px;
+    margin-left: 0px;
+    padding: 5px 20px;
+    box-shadow: 1px -1px 5px #a3a3a3;
+    display: block;
+    border-radius: 50px;
+    border: 1px solid #a3a3a3;
+}
+
+input[type="checkbox"] {
+    width: auto;
+    position: relative;
+    margin-top: 10%;
+    display: block;
+}
+
+.input-container {
+    /* border: 1px solid blue; */
+    width: 100%;
+    margin-top: 10%;
+    margin-left: 20px;
+}
+
+.arrow {
+    /* border: 1px solid red; */
+    width: 50px;
+    border-radius: 50px;
+    position: absolute;
+    left: 30%;
+    margin-top: 2%;
+}

@@ -1,0 +1,140 @@
+.division {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  /* border: 1px solid green; */
+  padding: 40px;
+}
+
+.division:first-child {
+  flex: 1;
+}
+
+.division:last-child {
+  flex: 2;
+  padding-left: 0px;
+}
+
+.division h1 {
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.prone-table {
+    /* border: 1px solid blue; */
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    padding: 40px;
+    flex: 1;
+    width: 80%;
+    min-height: 500px;
+    font-size: 14px;
+    background-color: #ffffff;
+    box-shadow: 2px 5px 5px #d3d3d3;
+}
+
+.prone-data {
+    border: 1px solid red;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 10px;
+    margin: 0px;
+}
+
+.prone-brgys {
+    border: 1px solid orange;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    padding: 10px;
+    margin: 0px;
+}
+
+table {
+  overflow-y: auto;
+}
+
+th {
+  text-align: left;
+  border-bottom: 2px solid #d8d8d8;
+  padding-bottom: 10px;
+  font-weight: 800;
+}
+
+td {
+  padding: 10px;
+}
+
+
+.water-level {
+  display: flex;
+  flex-direction: column;
+  align-self: self-end;
+  background-color: #ffffff;
+  border-radius: 20px;
+  width: 80%;
+  height: 300px;
+  margin: 0px;
+  /* margin: 20px 0px 10px 40px; */
+  /* margin-left: 40px; */
+  /* position: relative; */
+  /* left: 5%; */
+  /* top: 8%; */
+  padding: 20px;
+  text-align: center;
+  font-size: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 2px 5px 5px #d3d3d3;
+}
+
+.water-level h2 {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+/* .chart-container {
+  width: 100%;   
+  height: 100%; 
+  /* border: 1px solid black; 
+} */
+
+#tableSelect {
+  display: flex;
+  /* justify-content: center; */
+  align-self: self-end;
+  width: 150px;
+  height: 30px;
+  text-align: left;
+  border: 0px;
+  cursor: pointer;
+}
+
+option, select {
+  text-transform: capitalize;
+}
+
+.legend-container {
+  /* margin-top: 20px; */
+  /* border: 1px solid red; */
+  position: absolute;
+  margin-right: 20px;
+  padding: 0px;
+}
+
+.legend-color {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+#legend li {
+  list-style: none;
+  margin-bottom: 5px;
+  position: relative;
+}

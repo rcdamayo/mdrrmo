@@ -1,0 +1,322 @@
+.division {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    flex: 0;
+    /* border: 1px solid red; */
+    padding: 40px;
+}
+
+.division:first-child {
+    flex: 3;
+}
+
+.division:nth-child(2) {
+    flex: 3;
+    padding: 0px;
+    padding-top: 20px;
+}
+
+.division:last-child {
+    flex: 3;
+    padding: 0px;
+}
+
+.svg-container {
+    width: 95%;
+    height: 300px;
+    /* border: 1px solid green; */
+    margin: 0px;
+    padding: 20px;
+    transition: 0.3s;
+}
+
+.svg-container:hover {
+    width: 100%;
+    height: 350px;
+    padding: 0px;
+}
+
+svg {
+    width: 100%;
+    height: 100%;
+}
+
+.calendar {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 100%;
+    height: 320px;
+    padding: 0px;
+    /* padding-top: 0px; */
+    background-color: #ffffff;
+    margin: 0;
+    font-size: 14px;
+    position: static;
+    z-index: 1;
+    transition: 0.3s;
+}
+
+.calendar .container {
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+    height: 20px;
+    padding: 15px 20px;
+    margin: 0px;
+    color: #626366;
+    background-color: #dbdbdb;
+    /* border: 1px solid green; */
+}
+
+.calendar .mdy {
+    /* border: 1px solid red; */
+    font-weight: normal;
+    display: flex;
+    flex: 1;
+    margin-top: 0px;
+    font-size: 20px;
+}
+
+.calendar .mdy a {
+    justify-content: right;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    margin-right: 5px;
+    color: #626366;
+}
+
+/* Add CSS to style the calendar */
+.calendar-table {
+    width: 100%; /* Set the table width to 100% to make columns equal */
+    table-layout: fixed; /* Use fixed table layout */
+}
+
+.calendar-table th,
+.calendar-table td {
+    width: 14.28%; /* Set the width for each column (100% divided by 7 days) */
+    height: 100px; /* Set the height for each cell */
+    text-align: center; /* Center-align text in cells */
+    vertical-align: middle; /* Vertically align content in cells */
+    padding: 10px; /* Add padding to cells as needed */
+}
+
+.calendar table {
+    width: 95%;
+    max-height: 100%;
+    border-collapse: collapse;
+    margin: 10px;
+    padding-bottom: 0px;
+}
+
+.calendar th,
+.calendar td {
+    width: auto;
+    height: 32px;
+    padding: 5px;
+    text-align: center;
+    /* border-radius: 100%; */
+    background-color: #ffffff;
+    transition: 0.2s;
+}
+
+.calendar td a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: 400;
+    /* border: 1px solid green; */
+}
+
+/* .calendar td a:hover {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 400;
+} */
+
+.calendar td.today {
+    background-color: #ec2227;
+    color: #ffffff;
+    border-radius: 0%;
+}
+
+.calendar td.today a {
+    background-color: #ec2227;
+    color: #ffffff;
+    border-radius: 0%;
+}
+
+.calendar td:not(.today):hover {
+    background-color: #ec2227;
+    cursor: pointer;
+    color: #ffffff;
+    border-radius: 0%;
+}
+
+.calendar td:not(.today) a:hover {
+    background-color: #ec2227;
+    cursor: pointer;
+    color: #ffffff;
+    border-radius: 0%;
+}
+
+.calendar-nav {
+    display: inline;
+    float: right;
+    margin-top: 15px;
+}
+
+.calendar-nav a {
+    text-decoration: none;
+    color: #9f9f9f;
+    font-weight: 900;
+    font-size: 18px;
+    margin-right: 20px;
+    transition: 0.3s;
+}
+
+.calendar-nav a:hover {
+    color: #043a87;
+}
+
+.calendar-container {
+    float: left;
+    width: 60%;
+    padding: 20px;
+}
+
+.upcoming-events-container {
+    display: flex;
+    flex-direction: column;
+    float: left;
+    /* width: 40%; */
+    height: 200px;
+    /* width: 300px; */
+    overflow-y: auto;
+    /* border: 1px solid #ccc; */
+    padding: 10px;
+}
+
+.events:last-child {
+    flex: 4;
+}
+
+.event {
+    margin-bottom: 20px;
+}
+
+.day {
+    width: 40px;
+    height: 40px;
+    background-color: #043b8744;
+    color: #043a87;
+    text-align: center;
+    line-height: 40px;
+    font-size: 18px;
+    font-weight: 700;
+    float: left;
+    margin-right: 30px; /* Add spacing between day and event name */
+}
+
+.early-alert {
+    /* border: 1px solid red; */
+    border-bottom: 2px solid #dddddd;
+    width: 75%;
+    height: 100px;
+    margin: 12%;
+    padding: 20px;
+    padding-top: 0px;
+    display:flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-self: center;
+    text-align: center;
+}
+
+.early-alert h3 {
+    font-size: 16px; 
+    font-weight: 500;
+    color: #043a87; 
+    position: relative; 
+    top: -20px; 
+    font-size: 16px;
+    margin: 0px;
+    margin-top: 10px;
+}
+
+.early-alert p {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    width: 250px;
+    font-size: 12px;
+    margin: 0px;
+    margin-top: -20px;
+}
+
+.hotline {
+    width: 80%;
+    height: 130px;
+    margin-top: 50px;
+    padding: 0px;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    /* border: 1px solid red; */
+}
+
+.hotline h3 {
+    color:#043a87;
+    position: absolute; 
+    font-weight: 700;
+    margin-top: 0px;
+}
+  
+.hotlines {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    width: 100%;
+    top: 10px;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    font-size: 10px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.hotlines:first-child {
+    flex: 1;
+}
+
+.hotlines:last-child {
+    flex: 1;
+}
+
+.clock, #clock {
+    font-size: 12px;
+    text-align: right;
+    font-weight: 500;
+    word-spacing: 0.05rem;
+    margin-bottom: 10px;
+}
+
+.calendar .sunday {
+    background-color: #dbdbdb;
+}
+
+/* Style for the "gray" class (previous and next month's days) */
+.calendar .gray {
+    color: gray;
+}
+
+.calendar .gray:first-child {
+    color: black;
+    background-color: #dbdbdb;
+}
+
+iframe {
+    width: 400px;
+    margin: 0px;
+}
