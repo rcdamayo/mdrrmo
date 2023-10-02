@@ -16,7 +16,7 @@
         <rect id="Rectangle_2" data-name="Rectangle 2" width="608" height="1080" fill="#043a87" opacity="0.6"/>
     </svg>
 
-    <div class="arrow">
+    <!-- <div class="arrow">
         <a href="index.php"> 
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="40" height="40" viewBox="0 0 256 256" xml:space="preserve">
 
@@ -27,14 +27,14 @@
     </g>
     </svg>
     </a>
-</div>
+</div> -->
 <div class="login-container">
     <img src="../images/barugo_logo.png" style="float: right; height: 80px;">
 
         <h1>MDRRMO BARUGO</h1>
 
         <div class="input-container">
-        <form method="POST" action="">
+        <form method="POST" action="admin-home.php">
             <label for="username">USERNAME</label>
             <br>
             <input type="text" id="username" name="username" class="login-input" required>
