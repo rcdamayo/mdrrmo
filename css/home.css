@@ -12,7 +12,7 @@
 }
 
 .division:nth-child(2) {
-    flex: 3;
+    flex: 0;
     padding: 0px;
     padding-top: 20px;
 }
@@ -21,6 +21,7 @@
     flex: 3;
     padding: 0px;
 }
+
 
 .svg-container {
     width: 95%;
@@ -31,15 +32,30 @@
     transition: 0.3s;
 }
 
-.svg-container:hover {
-    width: 100%;
-    height: 350px;
-    padding: 0px;
+.division:last-child img {
+    width: 25%;
+    /* height: 20%; */
+    margin: 20px;
+    transition: 0.3s;
+    position: absolute;
+    box-shadow: 5px 5px 15px #b3b3b3;
+    z-index: 8;
 }
 
-.division:last-child svg {
-    width: 100%;
-    height: 100%;
+.division:last-child img:hover {
+    width: 35%;
+    /* height: 150%; */
+    padding: 0px;
+    margin-left: -5%;
+}
+
+.division:nth-child(2) img {
+    width: 30%;
+    /* height: 20%; */
+    /* margin: 20px; */
+    transition: 0.3s;
+    position: absolute;
+    z-index: 8;
 }
 
 .calendar {
@@ -201,20 +217,48 @@
 }
 
 .event {
-    margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 
-.day {
+.upcoming-day {
+    display: inline;
     width: 40px;
     height: 40px;
-    background-color: #043b8744;
-    color: #043a87;
+    margin-bottom: 5px;
+    /* background-color: #043b8744; */
+    color: #686868;
     text-align: center;
-    line-height: 40px;
-    font-size: 18px;
-    font-weight: 700;
+    padding: 0px;
+    padding-left: 10px;
+    border-left: 3px solid #043a87;
+    font-size: 26px;
+    font-weight: 400;
     float: left;
-    margin-right: 30px; /* Add spacing between day and event name */
+    margin-right: 25px; /* Add spacing between day and event name */
+}
+
+.upcoming-name {
+    display: inline;
+    /* border: 1px solid red; */
+    color: #686868;
+}
+
+.upcoming-name2 {
+    position: relative;
+    color: #686868;
+    /* left: 10%; */
+    font-size: 12px;
+}
+
+.upcoming-time {
+    display: inline;
+    position: relative;
+    top: -50%;
+    float: right;
+    padding: 10px;
+    font-size: 12px;
+    background-color: #043a87;
+    color: #ffffff;
 }
 
 .early-alert {
@@ -316,7 +360,9 @@
     background-color: #dbdbdb;
 }
 
-iframe {
+#map {
     width: 400px;
+    height: 240px;
     margin: 0px;
 }
+

@@ -120,7 +120,7 @@ button {
     justify-content: center;
     padding: 10px;
     margin: 10px 20px;
-    background-color: #043a87;
+    background-color: #f9b314;
     color: #ffffff;
     border: 0px;
     border-radius: 10px;
@@ -129,7 +129,7 @@ button {
 }
 
 button:hover {
-    background-color: #0000ff;
+    background-color: #f3bc3d;
 }
 
 .chart-container .chartjs-chart-legend {

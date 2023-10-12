@@ -3,16 +3,19 @@
   flex-direction: column;
   /* width: 400px; */
   flex: 1;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   padding: 40px;
 }
 
 .division:first-child {
-  align-items: flex-end;
+  /* align-items: end; */
+  padding-right: 0px;
+  flex: 2;
 }
 
 .division:last-child {
-  align-items: flex-start;
+  align-items: flex-end;
+  flex: 1;
 }
 
 /* CSS for the snackbar */
@@ -68,14 +71,14 @@
 
   .calendar {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    width: 75%;
+    min-width: 100%;
     height: 450px;
     padding: 0px;
     /* padding-top: 0px; */
     background-color: #ffffff;
     margin: 0;
     font-size: 14px;
-    position: static;
+    position: relative;
     border: 1px solid #6f6f6f;
     border-radius: 20px;
     z-index: 1;
@@ -240,6 +243,9 @@ textarea {
 }
 
 .textarea-wrapper {
+  display: inline-flex;
+  /* border: 1px solid green; */
+  width: 40%;
   position: relative;
 }
 
@@ -257,7 +263,7 @@ textarea {
 textarea {
   width: 100%;
   padding: 10px;
-  padding-top: 10%; /* Adjust as needed */
+  padding-top: 8%; /* Adjust as needed */
   border: 1px solid #6f6f6f;
   border-radius: 10px;
 }
@@ -268,7 +274,7 @@ textarea:focus + .placeholder {
 
 input {
   height: 30px;
-  width: 300px;
+  width: 100%;
   /* text-align: right; */
   margin: 10px 0px;
   padding: 5px;
@@ -285,9 +291,72 @@ button {
   border: 0px;
   border-radius: 40px;
   cursor: pointer;
+  margin: 10px 20px;
 }
 
 .done {
+  background-color: #043a87;
+  color: #ffffff;
+}
+
+.upcoming-events-container {
+  display: inline-flex;
+  flex-direction: column;
+  float: left;
+  width: 40%;
+  height: 100%;
+  margin-right: 10%;
+  /* width: 300px; */
+  overflow-y: auto;
+  /* border: 1px solid #ccc; */
+  padding: 10px;
+}
+
+.events:last-child {
+  flex: 4;
+}
+
+.event {
+  margin-bottom: 0px;
+}
+
+.upcoming-day {
+  display: inline;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 5px;
+  /* background-color: #043b8744; */
+  color: #686868;
+  text-align: center;
+  padding: 0px;
+  padding-left: 10px;
+  border-left: 3px solid #043a87;
+  font-size: 26px;
+  font-weight: 400;
+  float: left;
+  margin-right: 25px; /* Add spacing between day and event name */
+}
+
+.upcoming-name {
+  display: inline;
+  /* border: 1px solid red; */
+  color: #686868;
+}
+
+.upcoming-name2 {
+  position: relative;
+  color: #686868;
+  /* left: 10%; */
+  font-size: 12px;
+}
+
+.upcoming-time {
+  display: inline;
+  position: relative;
+  top: -50%;
+  float: right;
+  padding: 10px;
+  font-size: 12px;
   background-color: #043a87;
   color: #ffffff;
 }
