@@ -274,7 +274,7 @@ echo '</div>';
 
 </div>
 
-<div class="footer">
+<div class="footer" style="margin-top: 3rem;">
   <div class="foot-txt">
   <img src="images/footer.png" style="height: 100%; width: 80%;">
   </div>
