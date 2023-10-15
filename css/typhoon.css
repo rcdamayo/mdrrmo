@@ -1,0 +1,14 @@
+#typhoon-info {
+    display: block;
+    /* position: absolute; */
+    background-color: #ffffff;
+    height: 200px;
+    width: 200px;
+}
+
+#map {
+    height: 650px;
+    width: 100%;
+    position: relative;
+    z-index: 9;
+}

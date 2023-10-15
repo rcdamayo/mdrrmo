@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Disaster Ready: Typhoon Advisories & Alerts</title>
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/map.css">
+  <link rel="stylesheet" href="css/typhoon.css">
   <link rel="icon" href="images/icon.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  <!-- Include Axios for HTTP requests (you may need to install it) -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
 <body>
 <div class="topnav" id="myTopnav">
@@ -64,7 +63,10 @@
     </a>
 </div>
 
-<div id="map" style="width: 100%; height: 600px;"></div>
+<div id="map"></div>
+    <div id="typhoon-info"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
 
     <script>
         var map = L.map('map').setView([12.8797, 121.7740], 5);
@@ -73,44 +75,48 @@
         }).addTo(map);
 
         var typhoonLayer = L.layerGroup().addTo(map);
+        var typhoonInfoContainer = document.getElementById('typhoon-info');
 
         function fetchTyphoonData() {
-            // Replace these URLs with actual typhoon data sources (NHC and JTWC)
-            var nhcDataUrl = 'https://api.nhc.example.com/latest';
-            var jtwcDataUrl = 'https://api.jtwc.example.com/latest';
+            var apiKey = 'tWqg1p3aJNfy0rUSOWxzgdcNiJLoDqi0';
+            var typhoonUrl = 'https://dataservice.accuweather.com/tropical/v1/tracks/active?apikey=' + apiKey;
 
-            axios.get(nhcDataUrl)
-                .then(function (response) {
-                    var nhcTyphoonData = response.data;
-                    // Process NHC data and add markers to the map
-                    updateMapWithTyphoonData(nhcTyphoonData);
+            fetch(typhoonUrl)
+                .then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
                 })
-                .catch(function (error) {
-                    console.error('Error fetching NHC typhoon data: ' + error);
-                });
-
-            axios.get(jtwcDataUrl)
-                .then(function (response) {
-                    var jtwcTyphoonData = response.data;
-                    // Process JTWC data and add markers to the map
-                    updateMapWithTyphoonData(jtwcTyphoonData);
+                .then(function(typhoonData) {
+                    console.log(typhoonData);
+                    updateMapWithTyphoonData(typhoonData);
+                    displayTyphoonInfo(typhoonData);
                 })
-                .catch(function (error) {
-                    console.error('Error fetching JTWC typhoon data: ' + error);
+                .catch(function(error) {
+                    console.error('Error fetching typhoon data: ' + error);
                 });
         }
 
         function updateMapWithTyphoonData(typhoonData) {
-            // Clear the existing typhoon markers
             typhoonLayer.clearLayers();
-
-            // Loop through the typhoon data and add markers to the map
-            typhoonData.forEach(function (typhoon) {
-                var marker = L.marker([typhoon.latitude, typhoon.longitude]).addTo(typhoonLayer);
-                marker.bindPopup('Typhoon Name: ' + typhoon.name);
-            });
+            if (typhoonData.length > 0) {
+                var typhoon = typhoonData[0];
+                var marker = L.marker([typhoon.Center.Latitude, typhoon.Center.Longitude]).addTo(typhoonLayer);
+                marker.bindPopup('Typhoon Name: ' + typhoon.Name);
+            }
         }
 
-        // Call fetchTyphoonData to fetch and update typhoon data at regular intervals
-        setInterval(fetchTyphoonData, 600000); // Update every 10 minutes (adjust as needed)
+        function displayTyphoonInfo(typhoonData) {
+            if (typhoonData.length > 0) {
+                var typhoon = typhoonData[0];
+                var typhoonInfo = "Typhoon Coordinates: Latitude " + typhoon.Center.Latitude + ", Longitude " + typhoon.Center.Longitude;
+                typhoonInfoContainer.innerText = typhoonInfo;
+            } else {
+                typhoonInfoContainer.innerText = "No active typhoons";
+            }
+        }
+
+        fetchTyphoonData();
+        setInterval(fetchTyphoonData, 600000); 
     </script>

@@ -246,7 +246,6 @@ td {
 .submit-button {
   display:block;
   position: relative;
-  /* right: -27rem; */
   background-color: transparent;
   cursor: pointer;
   padding: 15px 20px;

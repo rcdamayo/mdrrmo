@@ -21,6 +21,7 @@ if (!isset($_SESSION['id'])) {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="js/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 <div class="topnav" id="myTopnav">
@@ -75,10 +76,12 @@ if (!isset($_SESSION['id'])) {
 <div class="main">
 <div class="division">
 
-<form action="add_event.php" method="POST">
+<form action="add_event.php" method="POST" id="eventForm">
 
 <!-- UPCOMING -->
-<p style="color: #505050;">Preview</p>
+
+<div class="upcoming-container" style="margin-top: 2%;">
+  <div class="preview-text">Preview</div>
     <div class="upcoming-events-container">
     
     <?php
@@ -96,60 +99,60 @@ if (!isset($_SESSION['id'])) {
 
     // Fetch upcoming events from the database
     $today = date('Y-m-d');
-    $sql = "SELECT event_date, event_name, event_time FROM events WHERE event_date >= ? ORDER BY event_date";
+    $sql = "SELECT * FROM events WHERE event_date >= ? ORDER BY event_date";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $today);
     $stmt->execute();
     $result = $stmt->get_result();
 
     while ($row = $result->fetch_assoc()) {
-        $eventDate = date('F j, Y', strtotime($row['event_date']));
-        $eventName = ucfirst($row['event_name']);
-        $eventTime = date('h:i A', strtotime($row['event_time']));
-        
-        // Extract day from the event date
-        $eventDay = date('d', strtotime($eventDate));
-        
-        // Display the day with blue background
-        echo '<div class="event">';
-        echo '<div class="upcoming-day">' . $eventDay . '</div>';
-        echo '<div class="upcoming-name">' . $eventName . '</div>';
-        echo '<div class="upcoming-name2">' . $eventDate . '</div>';
-        echo '<div class="upcoming-time">' . $eventTime . '</div>';
-        echo '</div>';
-    }
+      $eventId = $row['id'];
+      $eventDate = date('F j, Y', strtotime($row['event_date']));
+      $eventName = ucfirst($row['event_name']);
+      $eventTime = $row['event_time'];
+      $eventDescription = $row['event_description'];
+
+       // Extract day from the event date
+      $eventDay = date('j', strtotime($eventDate));
+
+      // Display each event with a unique ID
+      echo '<div class="event" id="event_'.$eventId.'">';
+      echo '<div class="upcoming-day">' . $eventDay . '</div>';
+      echo '<div class="upcoming-name">' . $eventName . '</div>';
+      echo '<div class="upcoming-date">' . $eventDate . '</div>';
+      echo '<div class="upcoming-time">' . $eventTime . '</div>';
+      echo '<div class="upcoming-description" style="display: none;">' . $eventDescription . '</div>';
+      echo '</div>';
+  }
 
     $stmt->close();
     $conn->close();
     ?>
   </div>
+</div>
+</div>
 
-  
-       
-    <div class="textarea-wrapper">
+  <div class="division">
+    <div class="textarea-wrapper" style="flex-direction: row;">
       <div class="placeholder">Select a Day</div>
-      <input type="date" name="eventDate" id="eventDate" required style="width: 45%; margin-right: 10px;">
+      <input type="text" name="eventDate" id="eventDate" required style="margin-right: 10px;">
 
         <div class="placeholder" style="left: 52%;">Time</div>
-          <input type="time" name="eventTime" required style="width: 45%;"><br>
+        <input type="time" name="eventTime" id="eventTime" required>
       </div>
     
       <div class="textarea-wrapper">
         <div class="placeholder">Title</div>
-        <input type="text" name="eventTitle" required><br>
+        <input type="text" name="eventTitle" id="eventTitle" required>
       </div>
 
-    <!-- <div class="textarea-container"> -->
       <div class="textarea-wrapper">
         <div class="placeholder" style="top: 0; left: 0;">Event</div>
-        <textarea name="eventDescription" required></textarea>
+        <textarea name="eventDescription" id="eventDescription" required></textarea>
       </div>
-    <!-- </div> -->
+  </div>
+  <!-- </div> -->
 
-
-        
-
-</div>
 
 
 <div class="division">
@@ -275,13 +278,14 @@ while ($firstDay != 0) {
 }
 
 echo '</table>';
-echo '<button type="submit" value="Add Event" class="done">Done</button>';
+echo '<div class="buttons-container">';
+echo '<button class="remove" disabled>Remove</button>';
+echo '<button type="submit" value="Add Event" class="done" onclick="addEvent()">Done</button>';
+echo '</div>';
 echo '</div>';
 ?>
-
 </form>
 </div>
-    <div id="snackbar" class="hide"></div>
 
     <script>
     // JavaScript function to handle date cell background color
@@ -424,6 +428,32 @@ echo '</div>';
         // Prevent the default form submission
         return false;
     }
+
+    $(document).ready(function(){
+        // Function to format date for date input
+        function formatDateForInput(dateString) {
+            var date = new Date(dateString);
+            var year = date.getFullYear();
+            var month = ("0" + (date.getMonth() + 1)).slice(-2);
+            var day = ("0" + date.getDate()).slice(-2);
+            return year + "-" + month + "-" + day;
+        }
+
+        // Add an event listener to each event
+        $('.event').click(function(){
+            // Retrieve values from the event
+            var eventDate = $(this).find('.upcoming-date').text().trim();
+            var eventTime = $(this).find('.upcoming-time').text().trim();
+            var eventTitle = $(this).find('.upcoming-name').text().trim();
+            var eventDescription = $(this).find('.upcoming-description').text().trim();
+
+            // Populate the input fields with the formatted values
+            $('#eventDate').val(formatDateForInput(eventDate));
+            $('#eventTime').val(eventTime);
+            $('#eventTitle').val(eventTitle);
+            $('#eventDescription').val(eventDescription);
+        });
+    });
 </script>
 
 </div>
