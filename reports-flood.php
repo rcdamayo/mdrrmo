@@ -75,7 +75,7 @@ if (!isset($_SESSION['id'])) {
 
 <div class="main">
   <p style="word-spacing: 10px;">
-    <b>Flood</b> | <a href="admin-typhoon.php">Typhoon</a>
+    <b>Flood</b> | <a href="reports-typhoon.php">Typhoon</a>
   </p>
 
   <p style="margin-top: 7%;">

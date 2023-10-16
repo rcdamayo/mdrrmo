@@ -54,6 +54,12 @@
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
       <i class="fa fa-bars"></i>
     </a>
+
+    <br>
+
+    <div class="top-about">
+      ABOUT US
+    </div>
 </div>
 
 <!-- <div class="top-img">
