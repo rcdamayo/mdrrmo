@@ -52,6 +52,7 @@
       </div>
     </a>
 
+    <a href="about.php">About</a>
     <a href="typhoon.php">Typhoon</a>
     <a href="flood.php">Flood</a>
     <a href="weather.php">Weather</a>
