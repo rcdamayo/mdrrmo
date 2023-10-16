@@ -16,7 +16,7 @@ if (!isset($_SESSION['id'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Disaster Ready: Flood Reports</title>
   <link rel="stylesheet" href="css/admin.css">
-  <link rel="stylesheet" href="css/reports-flood.css">
+  <link rel="stylesheet" href="css/reports-typhoon.css">
   <link rel="icon" href="images/icon.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="js/script.js"></script>
@@ -75,7 +75,7 @@ if (!isset($_SESSION['id'])) {
 
 <div class="main">
   <p style="word-spacing: 10px;">
-    <b>Flood</b> | <a href="reports-typhoon.php">Typhoon</a>
+    <a href="reports-flood.php">Flood</a> | <b>Typhoon</b>
   </p>
 
   <p style="margin-top: 7%;">
@@ -90,7 +90,7 @@ if (!isset($_SESSION['id'])) {
   <div id="print">Print</div>
 
 <div class="division">
-  <form action="flood_report.php" method="POST">
+  <form action="typhoon_report.php" method="POST">
     <div class="textarea-wrapper">
       <div class="placeholder">
         Sitio/Purok/Zone/Block/Street
@@ -254,7 +254,7 @@ if ($conn->connect_error) {
 }
 
 // SQL query to fetch data
-$sql = "SELECT * FROM flood_report";
+$sql = "SELECT * FROM typhoon_report";
 
 $result = $conn->query($sql);
 

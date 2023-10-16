@@ -34,7 +34,7 @@ $adult2_f = $_POST['adult2F'];
 $pregnant = $_POST['pregnant'];
 
 // Insert event data into the "events" table
-$query = "INSERT INTO flood_report (sitio, families, persons_m, persons_f, persons_lgbt, disabilities_m, disabilities_f, diseases_m, diseases_f, children1_m, children1_f, children2_m, children2_f, children3_m, children3_f, children4_m, children4_f, children5_m, children5_f, adult1_m, adult1_f, adult2_m, adult2_f, pregnant) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+$query = "INSERT INTO typhoon_report (sitio, families, persons_m, persons_f, persons_lgbt, disabilities_m, disabilities_f, diseases_m, diseases_f, children1_m, children1_f, children2_m, children2_f, children3_m, children3_f, children4_m, children4_f, children5_m, children5_f, adult1_m, adult1_f, adult2_m, adult2_f, pregnant) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 $stmt = $mysqli->prepare($query);
 
 if ($stmt === false) {
@@ -45,7 +45,7 @@ $stmt->bind_param('ssiiiiiiiiiiiiiiiiiiiiii', $sitio, $families, $persons_m, $pe
 
 if ($stmt->execute()) {
     
-    header('Location: reports-flood.php');
+    header('Location: reports-typhoon.php');
     $eventAddedSuccessfully = true;
 } else {
     $eventAddedSuccessfully = false;
