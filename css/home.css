@@ -150,26 +150,26 @@
 } */
 
 .calendar td.today {
-    background-color: #ec2227;
+    background-color: #043a87;
     color: #ffffff;
     border-radius: 0%;
 }
 
 .calendar td.today a {
-    background-color: #ec2227;
+    background-color: #043a87;
     color: #ffffff;
     border-radius: 0%;
 }
 
 .calendar td:not(.today):hover {
-    background-color: #ec2227;
+    background-color: #0354c6;
     cursor: pointer;
     color: #ffffff;
     border-radius: 0%;
 }
 
 .calendar td:not(.today) a:hover {
-    background-color: #ec2227;
+    background-color: #0354c6;
     cursor: pointer;
     color: #ffffff;
     border-radius: 0%;
@@ -205,7 +205,7 @@
     flex-direction: column;
     float: left;
     /* width: 40%; */
-    height: 200px;
+    height: 250px;
     /* width: 300px; */
     overflow-y: auto;
     /* border: 1px solid #ccc; */
