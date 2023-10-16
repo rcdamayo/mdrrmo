@@ -65,6 +65,7 @@ if (!isset($_SESSION['id'])) {
       </div>
     </a>
 
+    <a href="admin-about.php">About</a>
     <a href="admin-typhoon.php">Typhoon</a>
     <a href="admin-flood.php">Flood</a>
     <a href="admin-home.php" class="active">Home</a>
