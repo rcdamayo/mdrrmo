@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="css/about.css">
   <link rel="icon" href="images/icon.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script src="js/script.js"></script>
+
 </head>
 <body>
 <div class="topnav" id="myTopnav">
@@ -58,7 +58,8 @@
     <br>
 
     <div class="top-about">
-      ABOUT US
+      <div class="top-about-h3">About Us</div>
+      <div class="top-about-p">MUNICIPAL DISASTER RISK REDUCTION & MANAGEMENT OFFICE</div>
     </div>
 </div>
 
@@ -66,3 +67,195 @@
     
 </div> -->
 <div class="main">
+
+<?php
+// Database connection parameters
+$servername = "localhost"; // Replace with your server name
+$username = "root"; // Replace with your username
+$password = ""; // Replace with your password
+$database = "disaster_ready"; // Replace with your database name
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetching all rows from the table
+$sql = "SELECT * FROM employees"; // Replace with your table name
+$result = $conn->query($sql);
+
+// Array to hold the rows
+$rows = array();
+
+// Storing all rows in the array
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $rows[] = $row;
+    }
+} else {
+    echo "0 results";
+}
+
+// Close the connection
+$conn->close();
+?>
+
+<div class="container">
+    <div class="box">
+        <?php
+        if (isset($rows[0])) {
+            echo '<p>' . $rows[0]["employee_name"] . '</p>';
+            echo '<p>' . $rows[0]["position"] . '</p>';
+            echo '<p>' . $rows[0]["position2"] . '</p>';
+        }
+        ?>
+    </div>
+    <div class="vertical-line"></div>
+    <div class="box">
+        <?php
+        if (isset($rows[1])) {
+            echo '<p>' . $rows[1]["employee_name"] . '</p>';
+            echo '<p>' . $rows[1]["position"] . '</p>';
+            echo '<p>' . $rows[1]["position2"] . '</p>';
+        }
+        ?>
+    </div>
+
+
+<div class="container2">
+    <div class="box">
+        <?php
+        if (isset($rows[2])) {
+            echo '<p>' . $rows[2]["employee_name"] . '</p>';
+            echo '<p>' . $rows[2]["position"] . '</p>';
+            echo '<p>' . $rows[2]["position2"] . '</p>';
+        }
+        ?>
+    </div>
+    <div class="horizontal-line"></div>
+    <div class="box">
+        <?php
+        if (isset($rows[3])) {
+            echo '<p>' . $rows[3]["employee_name"] . '</p>';
+            echo '<p>' . $rows[3]["position"] . '</p>';
+            echo '<p>' . $rows[3]["position2"] . '</p>';
+        }
+        ?>
+    </div>
+    <div class="horizontal-line"></div>
+    <div class="box">
+        <?php
+        if (isset($rows[4])) {
+            echo '<p>' . $rows[4]["employee_name"] . '</p>';
+            echo '<p>' . $rows[4]["position"] . '</p>';
+            echo '<p>' . $rows[4]["position2"] . '</p>';
+
+        }
+        ?>
+    </div>
+</div>
+
+<div class="vertical-line" style="height: 100px; margin-left: -49em; margin-top: 22em;"></div>
+<div class="vertical-line" style="height: 100px; margin-left: 49em; margin-top: 22em;"></div>
+
+<div class="container2">
+    <div class="box">
+        <?php
+        if (isset($rows[5])) {
+            echo '<p>' . $rows[5]["employee_name"] . '</p>';
+            echo '<p>' . $rows[5]["position"] . '</p>';
+            echo '<p>' . $rows[5]["position2"] . '</p>';
+        }
+        ?>
+    </div>
+    <div class="horizontal-line"></div>
+    <div class="box">
+        <?php
+        if (isset($rows[6])) {
+            echo '<p>' . $rows[6]["employee_name"] . '</p>';
+            echo '<p>' . $rows[6]["position"] . '</p>';
+            echo '<p>' . $rows[6]["position2"] . '</p>';
+        }
+        ?>
+    </div>
+    <div class="horizontal-line"></div>
+    <div class="box">
+        <?php
+        if (isset($rows[7])) {
+            echo '<p>' . $rows[7]["employee_name"] . '</p>';
+            echo '<p>' . $rows[7]["position"] . '</p>';
+            echo '<p>' . $rows[7]["position2"] . '</p>';
+        }
+        ?>
+    </div>
+    <div class="horizontal-line"></div>
+    <div class="box">
+        <?php
+        if (isset($rows[8])) {
+            echo '<p>' . $rows[8]["employee_name"] . '</p>';
+            echo '<p>' . $rows[8]["position"] . '</p>';
+            echo '<p>' . $rows[8]["position2"] . '</p>';
+        }
+        ?>
+    </div>
+</div>
+
+<div class="container2" style="width: 60%;">
+    <div class="box">
+        <?php
+        if (isset($rows[9])) {
+            echo '<p>' . $rows[9]["employee_name"] . '</p>';
+            echo '<p>' . $rows[9]["position"] . '</p>';
+            echo '<p>' . $rows[9]["position2"] . '</p>';
+        }
+        ?>
+    </div>
+    <div class="horizontal-line"></div>
+    <div class="box">
+        <?php
+        if (isset($rows[10])) {
+            echo '<p>' . $rows[10]["employee_name"] . '</p>';
+            echo '<p>' . $rows[10]["position"] . '</p>';
+            echo '<p>' . $rows[10]["position2"] . '</p>';
+        }
+        ?>
+    </div>
+    <div class="horizontal-line"></div>
+    <div class="box">
+        <?php
+        if (isset($rows[11])) {
+            echo '<p>' . $rows[11]["employee_name"] . '</p>';
+            echo '<p>' . $rows[11]["position"] . '</p>';
+            echo '<p>' . $rows[11]["position2"] . '</p>';
+        }
+        ?>
+    </div>
+</div>
+</div>
+
+<div class="elbow1"></div>
+<div class="elbow2"></div>
+  </div>
+
+
+  <div class="footer" style="margin-top: 3rem;">
+  <div class="foot-txt">
+  <img src="images/footer.png" style="height: 100%; width: 80%;">
+  </div>
+
+  <div class="foot-txt">
+      <font style="font-weight: 700;">REPUBLIC OF THE PHILIPPINES</font>
+      All content is in the public domain unless otherwise stated.
+  </div>
+
+  <div class="foot-txt">
+    <font style="font-weight: 700;">ABOUT GOVPH</font>
+    Learn more about the Philippine government, its structure, how government works and the people behind it.
+  </div>
+</div>
+
+</body>
+</html>
