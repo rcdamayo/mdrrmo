@@ -64,7 +64,18 @@
 
 <div class="main">
   <div class="division">
-    <div id="map"></div>
+
+  <div class="early-alert">
+        <h3>EMERGENCY ALERT & WARNING</h3>
+        <div class="alert-message">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#f9b314" viewBox="0 0 256 256" style="position: absolute; top: 40%; left: 5%;"><path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path></svg>
+          <form action="store_flood_alert.php" method="post">
+            <label for="alert_message">Enter your data:</label><br>
+            <input type="text" id="alert_message" name="alert_message"><br><br>
+            <input type="submit" value="Submit">
+          </form>
+        </div>
+      </div>
 
     <?php
     // Connect to your MySQL database
@@ -98,45 +109,6 @@
     }
     ?>
 
-  <div class="legend-cont">
-    <h3>LEGEND</h3>
-      <div class="button-container">
-
-      <button class="hazard-level-button" data-level="All">
-        <div class="hazard-level-color" style="background-color: #000000;"></div>
-        <p>All</p>
-      </button>
-
-      <button class="hazard-level-button" data-level="Normal" style="margin-top: 10%;">
-        <div class="hazard-level-color" style="background-color: #043a87"></div>
-        <p>Normal</p>
-      </button>
-
-      <button class="hazard-level-button" data-level="Low">
-        <div class="hazard-level-color" style="background-color: #ffff00"></div>
-        <p>Low</p>
-      </button>
-
-      <button class="hazard-level-button" data-level="Medium">
-        <div class="hazard-level-color" style="background-color: #ffa500"></div>
-        <p>Medium</p>
-      </button>
-
-      <button class="hazard-level-button" data-level="High">
-        <div class="hazard-level-color" style="background-color: #ff0000;"></div>
-        <p>High</p>
-      </button>
-    </div>
-  </div>
-
-    
-  <div class="svg-container">
-  <img src="images/hazard-map1.png">
-    <!-- </div> -->
-
-    <!-- <div class="svg-container"> -->
-    <img src="images/hazard-map2.png" style="left: 50%;">
-</div>
 </div>
 
     <div class="division">
@@ -184,6 +156,33 @@ if ($result->num_rows > 0) {
 
 $conn->close();
 ?>
+    
+  </div>
+
+
+      
+
+    </div>
+
+    
+</div>
+
+<div class="footer">
+  <div class="foot-txt">
+  <img src="images/footer.png" style="height: 100%; width: 80%;">
+  </div>
+
+  <div class="foot-txt">
+      <font style="font-weight: 700;">REPUBLIC OF THE PHILIPPINES</font>
+      All content is in the public domain unless otherwise stated.
+  </div>
+
+  <div class="foot-txt">
+    <font style="font-weight: 700;">ABOUT GOVPH</font>
+    Learn more about the Philippine government, its structure, how government works and the people behind it.
+  </div>
+</div>
+
 <script>
 document.addEventListener("click", function (e) {
     if (e.target && e.target.classList.contains("edit-button")) {
@@ -238,165 +237,6 @@ document.addEventListener("click", function (e) {
         xhr.send(formData);
     }
 });
-</script>
-
-            
-        </div>
-
-
-        <div class="early-alert">
-        <h3>EMERGENCY ALERT & WARNING</h3>
-        <div class="alert-message">
-        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#f9b314" viewBox="0 0 256 256" style="position: absolute; top: 40%; left: 5%;"><path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path></svg>
-          <p><span id="alertMessage"></span></p>
-        </div>
-  </div>
-
-    </div>
-
-    
-</div>
-
-<div class="footer">
-  <div class="foot-txt">
-  <img src="images/footer.png" style="height: 100%; width: 80%;">
-  </div>
-
-  <div class="foot-txt">
-      <font style="font-weight: 700;">REPUBLIC OF THE PHILIPPINES</font>
-      All content is in the public domain unless otherwise stated.
-  </div>
-
-  <div class="foot-txt">
-    <font style="font-weight: 700;">ABOUT GOVPH</font>
-    Learn more about the Philippine government, its structure, how government works and the people behind it.
-  </div>
-</div>
-
-<script>
-
-  // Early warning and alert
- // Fetch data from OpenWeatherMap API
- fetch('https://api.openweathermap.org/data/2.5/weather?q=barugo,leyte&appid=ac61a2a4ee180f84e878fa11d084815d')
- .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .then(data => {
-    const alertMessage = document.getElementById('alertMessage');
-    if (data.weather && data.weather.length > 0) {
-      const weatherCondition = data.weather[0].main;
-      if (weatherCondition.toLowerCase().includes('typhoon')) {
-        alertMessage.innerText = 'Typhoon alert!';
-      } else {
-        alertMessage.innerText = 'No active Emergency Alert and Warning Message as of present time.';
-      }
-    } else {
-      alertMessage.innerText = 'No alert available.';
-    }
-  })
-  .catch(error => {
-    console.log('Error fetching weather data:', error);
-    const alertMessage = document.getElementById('alertMessage');
-    alertMessage.innerText = 'Error fetching weather data.';
-  });
-    // Define custom SVG icons for different hazard types
-    var floodNormalIcon = L.divIcon({
-        className: 'custom-icon',
-        html: '<div class="svg-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#043a87" viewBox="0 0 256 256"><path d="M128,16a88.1,88.1,0,0,0-88,88c0,75.3,80,132.17,83.41,134.55a8,8,0,0,0,9.18,0C136,236.17,216,179.3,216,104A88.1,88.1,0,0,0,128,16Zm0,56a32,32,0,1,1-32,32A32,32,0,0,1,128,72Z"></path></svg></div>', // Replace with your SVG code
-        iconSize: [32, 32],
-    });
-
-    var floodLowIcon = L.divIcon({
-        className: 'custom-icon',
-        html: '<div class="svg-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#ffff00" viewBox="0 0 256 256"><path d="M128,16a88.1,88.1,0,0,0-88,88c0,75.3,80,132.17,83.41,134.55a8,8,0,0,0,9.18,0C136,236.17,216,179.3,216,104A88.1,88.1,0,0,0,128,16Zm0,56a32,32,0,1,1-32,32A32,32,0,0,1,128,72Z"></path></svg></div>', // Replace with your SVG code
-        iconSize: [32, 32],
-    });
-
-    var floodMediumIcon = L.divIcon({
-        className: 'custom-icon',
-        html: '<div class="svg-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#ffa500" viewBox="0 0 256 256"><path d="M128,16a88.1,88.1,0,0,0-88,88c0,75.3,80,132.17,83.41,134.55a8,8,0,0,0,9.18,0C136,236.17,216,179.3,216,104A88.1,88.1,0,0,0,128,16Zm0,56a32,32,0,1,1-32,32A32,32,0,0,1,128,72Z"></path></svg></div>', // Replace with your SVG code
-        iconSize: [32, 32],
-    });
-
-    var floodHighIcon = L.divIcon({
-        className: 'custom-icon',
-        html: '<div class="svg-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#ff0000" viewBox="0 0 256 256"><path d="M128,16a88.1,88.1,0,0,0-88,88c0,75.3,80,132.17,83.41,134.55a8,8,0,0,0,9.18,0C136,236.17,216,179.3,216,104A88.1,88.1,0,0,0,128,16Zm0,56a32,32,0,1,1-32,32A32,32,0,0,1,128,72Z"></path></svg></div>', // Replace with your SVG code
-        iconSize: [32, 32],
-    });
-
-   // Initialize Leaflet map
-var map = L.map('map').setView([11.3167, 124.7333], 12); // Coordinates for Barugo, Leyte
-
-// Add tile layer
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
-}).addTo(map);
-
-// Create an object to store all markers
-var markers = [];
-
-// Add flood-prone area markers with custom SVG icons (similar to your PHP loop)
-<?php foreach ($hazardAreas as $area): ?>
-    var hazardLevel = '<?php echo $area['level']; ?>'; // Get hazard level from PHP data
-    var lat = <?php echo $area['lat']; ?>;
-    var lng = <?php echo $area['lng']; ?>;
-    var icon = getCustomIcon(hazardLevel); // Get the custom icon based on hazard level
-
-    var marker = L.marker([lat, lng], { icon: icon })
-        .bindPopup('<b><?php echo $area['name']; ?></b><br>Lat: ' + lat + '<br>Long: ' + lng);
-        
-    markers.push(marker);
-<?php endforeach; ?>
-
-// Function to get the custom icon based on hazard level
-function getCustomIcon(level) {
-    if (level === 'Low') return floodLowIcon;
-    else if (level === 'Medium') return floodMediumIcon;
-    else if (level === 'High') return floodHighIcon;
-    else return floodNormalIcon;
-}
-
-// Function to show/hide markers based on selected hazard level
-function updateMarkers(selectedLevel) {
-    // Remove all markers from the map
-    markers.forEach(function(marker) {
-        map.removeLayer(marker);
-    });
-
-    // Filter and add only the markers with the selected hazard level
-    markers.forEach(function(marker) {
-        var hazardLevel = getHazardLevel(marker.options.icon);
-
-        if (selectedLevel === 'All' || selectedLevel === hazardLevel) {
-            map.addLayer(marker);
-        }
-    });
-}
-
-// Function to get hazard level from icon class name
-function getHazardLevel(icon) {
-    if (icon === floodLowIcon) return 'Low';
-    else if (icon === floodMediumIcon) return 'Medium';
-    else if (icon === floodHighIcon) return 'High';
-    else return 'Normal';
-}
-
-// Attach a click event listener to the hazard level buttons
-var buttons = document.querySelectorAll('.hazard-level-button');
-buttons.forEach(function(button) {
-    button.addEventListener('click', function() {
-        var selectedLevel = this.getAttribute('data-level');
-        updateMarkers(selectedLevel);
-    });
-});
-
-// Initially, show all markers
-updateMarkers('All');
-
 </script>
 
 </body>

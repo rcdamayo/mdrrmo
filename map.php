@@ -547,7 +547,7 @@
 
 <script>
   // Initialize the map
-const mymap = L.map('map').setView([11.3167, 124.7333], 13);
+const mymap = L.map('map').setView([11.3167, 124.7333], 20);
 
 // Add a tile layer from OpenStreetMap
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -558,8 +558,8 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 const svgIcon = L.divIcon({
     className: 'custom-svg-icon',
     html: '<svg xmlns="http://www.w3.org/2000/svg" fill="#ff0000" viewBox="0 0 256 256"><path d="M128,16a88.1,88.1,0,0,0-88,88c0,75.3,80,132.17,83.41,134.55a8,8,0,0,0,9.18,0C136,236.17,216,179.3,216,104A88.1,88.1,0,0,0,128,16Zm0,56a32,32,0,1,1-32,32A32,32,0,0,1,128,72Z"></path></svg>',
-    iconSize: [32, 32], // Set the icon size
-    iconAnchor: [16, 40], // Set the icon anchor to center bottom
+    iconSize: [25, 25], // Set the icon size
+    iconAnchor: [12, 30], // Set the icon anchor to center bottom
 });
 
 // Create a layer for the pins
