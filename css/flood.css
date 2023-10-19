@@ -33,7 +33,7 @@
     padding: 40px;
     flex: 1;
     width: 60%;
-    max-height: 50%;
+    min-height: 300px;
     font-size: 14px;
     background-color: #ffffff;
     overflow-y: auto;
