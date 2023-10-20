@@ -64,7 +64,9 @@
     </a>
 </div>
 
-<div id="map"></div>
+<iframe src="https://www.panahon.gov.ph//" width="100%" height="600px" frameborder="0"></iframe>
+
+<!-- <div id="map"></div>
     <div id="typhoon-info"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
@@ -120,4 +122,4 @@
 
         fetchTyphoonData();
         setInterval(fetchTyphoonData, 600000); 
-    </script>
+    </script> -->

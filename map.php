@@ -552,6 +552,7 @@ const mymap = L.map('map').setView([11.3167, 124.7333], 20);
 // Add a tile layer from OpenStreetMap
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
+    attribution: 'Route for the nearest evacuation center from your location'
 }).addTo(mymap);
 
 // Create an SVG icon for the pins

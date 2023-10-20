@@ -77,7 +77,7 @@ if (!isset($_SESSION['id'])) {
 <div class="main">
 <div class="division">
 
-<form action="add_event.php" method="POST" id="eventForm">
+
 
 <!-- UPCOMING -->
 
@@ -134,6 +134,8 @@ if (!isset($_SESSION['id'])) {
 </div>
 
   <div class="division">
+  <form action="add_event.php" method="POST" id="eventForm">
+    
     <div class="textarea-wrapper" style="flex-direction: row;">
       <div class="placeholder">Select a Day</div>
       <input type="text" name="eventDate" id="eventDate" required style="margin-right: 10px;">
@@ -282,10 +284,10 @@ echo '</table>';
 echo '<div class="buttons-container">';
 echo '<button class="remove" disabled>Remove</button>';
 echo '<button type="submit" value="Add Event" class="done" onclick="addEvent()">Done</button>';
+echo '</form>';
 echo '</div>';
 echo '</div>';
 ?>
-</form>
 </div>
 
     <script>
@@ -384,51 +386,39 @@ echo '</div>';
         updateDateCellBackground();
     });
 
-    // JavaScript function to handle form submission
     function addEvent() {
-        var eventForm = document.getElementById('eventForm');
+    var eventForm = document.getElementById('eventForm');
 
-        // Create a new FormData object to store form data
-        var formData = new FormData(eventForm);
+    // Create a new FormData object to store form data
+    var formData = new FormData(eventForm);
 
-        // Create a new XMLHttpRequest object
-        var xhr = new XMLHttpRequest();
+    // Create a new XMLHttpRequest object
+    var xhr = new XMLHttpRequest();
 
-        // Define the AJAX request
-        xhr.open('POST', 'add_event.php', true);
+    // Define the AJAX request
+    xhr.open('POST', 'add_event.php', true);
 
-        // Define the callback function when the request is complete
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                // Check if the response indicates success
-                if (xhr.responseText === 'Event added successfully.') {
-                    // Show the success message in the Snackbar
-                    var snackbar = document.getElementById('snackbar');
-                    snackbar.innerHTML = xhr.responseText;
-                    snackbar.className = 'show';
-
-                    // After 3 seconds, hide the Snackbar
-                    setTimeout(function () {
-                        snackbar.className = snackbar.className.replace('show', 'hide');
-                    }, 3000);
-
-                    // Clear the form
-                    eventForm.reset();
-                } else {
-                    // Show an error message in the Snackbar
-                    var snackbar = document.getElementById('snackbar');
-                    snackbar.innerHTML = 'Error adding event: ' + xhr.responseText;
-                    snackbar.className = 'show';
-                }
+    // Define the callback function when the request is complete
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            // Check if the response indicates success
+            if (xhr.responseText !== 'Event added successfully.') {
+                // Show an error message in the console
+                console.error('Error adding event: ' + xhr.responseText);
             }
-        };
 
-        // Send the form data to the server
-        xhr.send(formData);
+            // Clear the form
+            eventForm.reset();
+        }
+    };
 
-        // Prevent the default form submission
-        return false;
-    }
+    // Send the form data to the server
+    xhr.send(formData);
+
+    // Prevent the default form submission
+    return false;
+}
+
 
     $(document).ready(function(){
         // Function to format date for date input

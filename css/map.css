@@ -46,10 +46,10 @@
 
 #map {
     display: block;
-    height: 400px;
+    height: 37rem;
     width: 100%;
     position: relative;
-    margin: 40px;
+    margin: 0px;
     /* left: 5%; */
     /* top: -5%; */
     z-index: 9;
