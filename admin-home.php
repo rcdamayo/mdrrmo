@@ -281,13 +281,15 @@ while ($firstDay != 0) {
 }
 
 echo '</table>';
-echo '<div class="buttons-container">';
-echo '<button class="remove" disabled>Remove</button>';
-echo '<button type="submit" value="Add Event" class="done" onclick="addEvent()">Done</button>';
-echo '</form>';
-echo '</div>';
-echo '</div>';
 ?>
+
+<div class="buttons-container">
+  <button class="remove" disabled>Remove</button>
+  <button type="submit" value="Add Event" class="done" onclick="addEvent()">Done</button>
+</form>
+</div>
+</div>
+
 </div>
 
     <script>

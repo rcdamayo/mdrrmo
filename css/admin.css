@@ -209,3 +209,60 @@ body {
     font-size: 14px;
     justify-content: center;
 } */
+
+/* CSS for the snackbar */
+/* CSS for the snackbar */
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 10;
+    left: 50%;
+    bottom: 30px;
+    transition: all 0.5s ease-in-out;
+}
+
+/* For Webkit browsers */
+*::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background: #b4b4b4;
+  }
+  
+  *::-webkit-scrollbar-thumb:hover {
+    background: #929292;
+  }
+  
+  /* For Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #000000;
+  }
+  
+  *::-ms-scrollbar {
+    width: 8px;
+  }
+  
+  *::-ms-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  *::-ms-scrollbar-thumb {
+    background: #888;
+  }
+  
+  *::-ms-scrollbar-thumb:hover {
+    background: #555;
+  }

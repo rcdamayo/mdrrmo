@@ -146,12 +146,15 @@ td {
 }
 
 .alert-message p {
-  display: flex;
+  display: block;
   height: 100%;
   margin: 0px;
-  margin-left: 50px;
+  padding-left: 5em;
+  padding-right: 3em;
+  /* margin-left: 1em; */
   align-items: center;
   justify-content: center;
+  overflow: auto;
 }
 
 .hazard-level-button {

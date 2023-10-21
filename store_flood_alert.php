@@ -20,12 +20,12 @@ $stmt->bind_param("ss", $alert_message, $timestamp);
 // Set parameters and execute
 $alert_message = $_POST["alert_message"];
 $timestamp = date('Y-m-d H:i:s');
-$stmt->execute();
+if ($stmt->execute()) {
+    echo "Alert added successfully";
+} else {
+    echo "Unsuccessful adding alert";
+}
 
 $stmt->close();
 $conn->close();
-
-// Redirect to the display page
-header("Location: flood.php");
-exit();
 ?>

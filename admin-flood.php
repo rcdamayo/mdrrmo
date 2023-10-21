@@ -66,16 +66,54 @@
   <div class="division">
 
   <div class="early-alert">
-        <h3>EMERGENCY ALERT & WARNING</h3>
-        <div class="alert-message">
-        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#f9b314" viewBox="0 0 256 256" style="position: absolute; top: 40%; left: 5%;"><path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path></svg>
-          <form action="store_flood_alert.php" method="post">
-            <label for="alert_message">Enter your data:</label><br>
-            <input type="text" id="alert_message" name="alert_message"><br><br>
-            <input type="submit" value="Submit">
-          </form>
-        </div>
-      </div>
+    <form action="store_flood_alert.php" method="post" onsubmit="submitForm(event)">
+    <h3>EMERGENCY ALERT & WARNING</h3>
+    <input type="submit" value="DONE">
+    <div class="alert-message">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#f9b314" viewBox="0 0 256 256" style="position: absolute; top: 40%; left: 5%;">
+            <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path>
+        </svg>
+        
+        <textarea id="alert_message" name="alert_message" onkeydown="if(event.keyCode === 13){if(event.shiftKey){this.value += '\n'} else {event.preventDefault(); this.form.submit()}}"></textarea>
+            
+        </form>
+    </div>
+</div>
+
+      <div id="snackbar"></div>
+
+      <script>
+    function submitForm(event) {
+        event.preventDefault();
+        var form = event.target;
+        var formData = new FormData(form);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", form.action, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = xhr.responseText.trim();
+                showSnackbar(response);
+            }
+        };
+        xhr.send(formData);
+    }
+
+    function showSnackbar(message) {
+        var snackbar = document.getElementById("snackbar");
+        snackbar.textContent = message;
+        snackbar.style.visibility = "visible";
+        setTimeout(function() {
+            snackbar.style.opacity = 1;
+        }, 1);
+        setTimeout(function() {
+            snackbar.style.opacity = 0;
+        }, 2500);
+        setTimeout(function() {
+            snackbar.style.visibility = "hidden";
+        }, 3000);
+    }
+</script>
 
     <?php
     // Connect to your MySQL database
@@ -112,52 +150,119 @@
 </div>
 
     <div class="division">
+
+
         <h1>BARANGAYS PRONE TO FLOOD</h1>
+        <form id='editForm' method='post'>
+        <button type='button' class='submit-prone' onclick='updateData()'>UPDATE</button>
 
         <div class="prone-table">
 
         <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "disaster_ready";
+    // Connect to your MySQL database
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $database = "disaster_ready";
 
-$conn = new mysqli($servername, $username, $password, $database);
+    $conn = new mysqli($servername, $username, $password, $database);
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$sql = "SELECT id, barangay, status FROM brgys_prone_to_flood";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    echo "<table>
-        <tr>
-            <th>Edit</th>
-            <th>Barangay</th>
-            <th>Status</th>
-            <th>Confirm</th>
-        </tr>";
-
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>
-            <td><button class='edit-button'><svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='#f9b314' viewBox='0 0 256 256' style='z-index: 1;'><path d='M221.66,90.34,192,120,136,64l29.66-29.66a8,8,0,0,1,11.31,0L221.66,79A8,8,0,0,1,221.66,90.34Z' opacity='0.2'></path><path d='M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM51.31,160,136,75.31,152.69,92,68,176.68ZM48,179.31,76.69,208H48Zm48,25.38L79.31,188,164,103.31,180.69,120Zm96-96L147.31,64l24-24L216,84.68Z'></path></svg></svg></button></td>
-            <td style='font-weight: 600;'>" . $row["barangay"] . "</td>
-            <td>" . $row["status"] . "</td>
-            <input type='hidden' class='row-id' value='" . $row["id"] . "'>
-        </tr>";
+    // Check the connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
 
-    echo "</table>";
-} else {
-    echo "No results found";
+    // Fetch hazard-prone area data from the database
+    $sql = "SELECT id, barangay, status FROM brgys_prone_to_flood";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        echo "<table>
+                <tr>
+                    <th>Barangay</th>
+                    <th>Status</th>
+                </tr>";
+
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>
+                <td style='font-weight: 600;'><p>✏️</p><input type='text' name='barangay[]' value='" . $row["barangay"] . "'></td>
+                <td><p>✏️</p><input type='text' name='status[]' value='" . $row["status"] . "'></td>
+                <input type='hidden' name='id[]' value='" . $row["id"] . "'>
+            </tr>";
+        }
+
+        echo "</table>";
+
+        echo "</form>";
+    } else {
+        echo "No results found";
+    }
+
+    $conn->close();
+?>
+
+<div id="snackbar"></div>
+
+<script>
+    function showSnackbar(message) {
+    var snackbar = document.getElementById("snackbar");
+    snackbar.textContent = message;
+    snackbar.style.visibility = "visible";
+    setTimeout(function() {
+        snackbar.style.opacity = 1;
+    }, 1);
+    setTimeout(function() {
+        snackbar.style.opacity = 0;
+    }, 2500);
+    setTimeout(function() {
+        snackbar.style.visibility = "hidden";
+    }, 3000);
 }
 
-$conn->close();
-?>
-    
+function updateData() {
+    var form = document.getElementById("editForm");
+    var formData = new FormData(form);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "update_prone.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                var response = xhr.responseText.trim();
+                if (response.includes('Error')) {
+                    showSnackbar("Error updating records");
+                } else {
+                    showSnackbar("Records updated successfully");
+                }
+            } else {
+                showSnackbar("Error updating records");
+            }
+        }
+    };
+    xhr.send(formData);
+}
+
+var cells = document.querySelectorAll("td input");
+cells.forEach(function(cell) {
+    cell.setAttribute("contentEditable", true);
+});
+
+function addRow() {
+    var table = document.querySelector('table');
+    var newRow = table.insertRow(-1);
+
+    var cell1 = newRow.insertCell(0);
+    var cell2 = newRow.insertCell(1);
+
+    cell1.innerHTML = "<input type='text' name='new_barangay[]' value=''>";
+    cell2.innerHTML = "<input type='text' name='new_status[]' value=''>";
+}
+
+</script>
+
+<button type="button" class="add-row" onclick="addRow()">+</button>
   </div>
+  
 
 
       
@@ -183,61 +288,11 @@ $conn->close();
   </div>
 </div>
 
-<script>
-document.addEventListener("click", function (e) {
-    if (e.target && e.target.classList.contains("edit-button")) {
-        const row = e.target.closest("tr");
-        const cells = row.getElementsByTagName("td");
 
-        for (let i = 1; i < cells.length; i++) {
-            const cell = cells[i];
-            const text = cell.textContent.trim();
-            const input = document.createElement("input");
-            input.value = text;
 
-            cell.innerHTML = "";
-            cell.appendChild(input);
-        }
 
-        const editButton = e.target;
-        const submitButton = document.createElement("button");
-        submitButton.className = 'submit-button';
-        submitButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#f9b314" viewBox="0 0 256 256"><path d="M224,128a96,96,0,1,1-96-96A96,96,0,0,1,224,128Z" opacity="0.2"></path><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path></svg>';
 
-        editButton.style.display = "none";
-        row.querySelector(".row-id").value = row.querySelector(".row-id").value;
-        row.insertBefore(submitButton, row.querySelector(".row-id"));
-    }
-    else if (e.target && e.target.classList.contains("submit-button")) {
-        const row = e.target.closest("tr");
-        const cells = row.getElementsByTagName("td");
-        const rowId = row.querySelector(".row-id").value;
-        const updatedBarangay = cells[1].getElementsByTagName("input")[0].value;
-        const updatedStatus = cells[2].getElementsByTagName("input")[0].value;
-        const formData = new FormData();
-        formData.append('id', rowId);
-        formData.append('barangay', updatedBarangay);
-        formData.append('status', updatedStatus);
 
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", "update_prone.php", true);
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                const response = xhr.responseText;
-                if (response === "success") {
-                    cells[1].textContent = updatedBarangay;
-                    cells[2].textContent = updatedStatus;
-                    row.querySelector(".edit-button").style.display = "block";
-                    row.querySelector(".submit-button").style.display = "none";
-                }
-            }
-        };
-
-        xhr.send(formData);
-    }
-});
-</script>
 
 </body>
 </html>
