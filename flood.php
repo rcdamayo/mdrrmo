@@ -123,7 +123,7 @@
     }
 
     // Fetch hazard-prone area data from the database
-    $sql = "SELECT latitude, longitude, level, barangay FROM map_markers";
+    $sql = "SELECT * FROM map_markers";
     $result = $conn->query($sql);
 
     $hazardAreas = [];
@@ -131,6 +131,7 @@
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $hazardAreas[] = [
+                'display' => $row['display_marker'],
                 'lat' => $row['latitude'],
                 'lng' => $row['longitude'],
                 'name' => $row['barangay'],
@@ -289,16 +290,19 @@ var markers = [];
 
 // Add flood-prone area markers with custom SVG icons (similar to your PHP loop)
 <?php foreach ($hazardAreas as $area): ?>
-    var hazardLevel = '<?php echo $area['level']; ?>'; // Get hazard level from PHP data
-    var lat = <?php echo $area['lat']; ?>;
-    var lng = <?php echo $area['lng']; ?>;
-    var icon = getCustomIcon(hazardLevel); // Get the custom icon based on hazard level
+    <?php if ($area['display'] === 'y'): ?>
+        var hazardLevel = '<?php echo $area['level']; ?>'; // Get hazard level from PHP data
+        var lat = <?php echo $area['lat']; ?>;
+        var lng = <?php echo $area['lng']; ?>;
+        var icon = getCustomIcon(hazardLevel); // Get the custom icon based on hazard level
 
-    var marker = L.marker([lat, lng], { icon: icon })
-        .bindPopup('<b><?php echo $area['name']; ?></b><br>Lat: ' + lat + '<br>Long: ' + lng);
-        
-    markers.push(marker);
+        var marker = L.marker([lat, lng], { icon: icon })
+            .bindPopup('<b><?php echo $area['name']; ?></b><br>Lat: ' + lat + '<br>Long: ' + lng);
+
+        markers.push(marker);
+    <?php endif; ?>
 <?php endforeach; ?>
+
 
 // Function to get the custom icon based on hazard level
 function getCustomIcon(level) {

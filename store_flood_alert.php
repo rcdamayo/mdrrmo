@@ -23,7 +23,7 @@ $timestamp = date('Y-m-d H:i:s');
 if ($stmt->execute()) {
     echo "Alert added successfully";
 } else {
-    echo "Unsuccessful adding alert";
+    echo "Cannot add Alert Message";
 }
 
 $stmt->close();

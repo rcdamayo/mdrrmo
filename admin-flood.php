@@ -74,7 +74,7 @@
             <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path>
         </svg>
         
-        <textarea id="alert_message" name="alert_message" onkeydown="if(event.keyCode === 13){if(event.shiftKey){this.value += '\n'} else {event.preventDefault(); this.form.submit()}}"></textarea>
+        <textarea id="alert_message" name="alert_message" placeholder="Enter Emergency Flood Alert/Warning Message here." onkeydown="if(event.keyCode === 13){if(event.shiftKey){this.value += '\n'} else {event.preventDefault(); this.form.submit()}}"></textarea>
             
         </form>
     </div>
@@ -115,7 +115,7 @@
     }
 </script>
 
-<div class="map-markers-container">
+
 
 <?php
 // Connect to your MySQL database
@@ -132,21 +132,30 @@ if ($conn->connect_error) {
 }
 
 // Fetch hazard-prone area data from the database
-$sql = "SELECT id, latitude, longitude, level, barangay FROM map_markers";
+$sql = "SELECT * FROM map_markers";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     echo "<form id='updateForm' onsubmit='submitForm(event)' method='post' action='update_markers.php'>";
+    echo "<h2 class='markers-header'>HAZARD MAP MARKERS</h2>";
+    echo "<button class='update-marker' type='submit'>UPDATE</button>";
+    echo "<div class='map-markers-container'>";
     echo "<table class='map-markers-table'>";
     echo "<tr>
+            <th>Display Marker</th>
             <th>Barangay</th>
             <th>Level</th>
             <th>Latitude</th>
             <th>Longitude</th>
+            
         </tr>";
 
     while ($row = $result->fetch_assoc()) {
         echo "<tr>";
+        echo "<td>
+                <button class='switch' onclick='toggleDisplay(this, " . $row['id'] . ")'>" . ($row['display_marker'] === 'y' ? '<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#068e53" viewBox="0 0 256 256"><path d="M176,56H80a72,72,0,0,0,0,144h96a72,72,0,0,0,0-144Zm0,112a40,40,0,1,1,40-40A40,40,0,0,1,176,168Z"></path></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#757575" viewBox="0 0 256 256"><path d="M176,56H80a72,72,0,0,0,0,144h96a72,72,0,0,0,0-144ZM80,168a40,40,0,1,1,40-40A40,40,0,0,1,80,168Z"></path></svg>') . "</button>
+                <input type='hidden' name='display_marker[]' value='" . $row['display_marker'] . "'>
+              </td>";
         echo "<td>" . $row['barangay'] . "</td>";
         echo "<td>
                 <select name='level[]'>
@@ -158,10 +167,11 @@ if ($result->num_rows > 0) {
             </td>";
         echo "<td><input type='text' name='latitude[]' value='" . $row['latitude'] . "'></td>";
         echo "<td><input type='text' name='longitude[]' value='" . $row['longitude'] . "'></td>";
+        
         echo "</tr>";
     }
     echo "</table>";
-    echo "<button type='submit'>Update Data</button></form>";
+    echo "</form>";
 } else {
     echo "0 results";
 }
@@ -172,43 +182,60 @@ $conn->close();
 
 <script>
     function showSnackbar(message) {
-    var snackbar = document.getElementById("snackbar");
-    snackbar.textContent = message;
-    snackbar.style.visibility = "visible";
-    setTimeout(function() {
-        snackbar.style.opacity = 1;
-    }, 1);
-    setTimeout(function() {
-        snackbar.style.opacity = 0;
-    }, 2500);
-    setTimeout(function() {
-        snackbar.style.visibility = "hidden";
-    }, 3000);
-}
+        var snackbar = document.getElementById("snackbar");
+        snackbar.textContent = message;
+        snackbar.style.visibility = "visible";
+        setTimeout(function() {
+            snackbar.style.opacity = 1;
+        }, 1);
+        setTimeout(function() {
+            snackbar.style.opacity = 0;
+        }, 2500);
+        setTimeout(function() {
+            snackbar.style.visibility = "hidden";
+        }, 3000);
+    }
 
-function updateData() {
-    var form = document.getElementById("updateForm");
-    var formData = new FormData(form);
+    function toggleDisplay(button, id) {
+        var currentValue = button.nextElementSibling.value;
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "update_markers.php", true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                var response = xhr.responseText.trim();
-                if (response.includes('Error')) {
-                    showSnackbar("Error updating records");
-                } else {
-                    showSnackbar("Records updated successfully");
-                }
-            } else {
-                showSnackbar("Error updating records");
-            }
+        // Toggle the value and button text
+        if (currentValue === 'y') {
+            button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#757575" viewBox="0 0 256 256"><path d="M176,56H80a72,72,0,0,0,0,144h96a72,72,0,0,0,0-144ZM80,168a40,40,0,1,1,40-40A40,40,0,0,1,80,168Z"></path></svg>';
+            button.nextElementSibling.value = 'n';
+        } else {
+            button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#068e53" viewBox="0 0 256 256"><path d="M176,56H80a72,72,0,0,0,0,144h96a72,72,0,0,0,0-144Zm0,112a40,40,0,1,1,40-40A40,40,0,0,1,176,168Z"></path></svg>';
+            button.nextElementSibling.value = 'y';
         }
-    };
-    xhr.send(formData);
-}
+    }
+
+    function updateData() {
+        var form = document.getElementById("updateForm");
+        var formData = new FormData(form);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "update_markers.php", true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var response = xhr.responseText.trim();
+                    if (response.includes('Error')) {
+                        showSnackbar("Error updating records");
+                    } else {
+                        showSnackbar("Records updated successfully");
+                    }
+                } else {
+                    showSnackbar("Error updating records");
+                }
+            }
+        };
+        xhr.send(formData);
+    }
 </script>
+
+
+
+
 
 </div>
 
