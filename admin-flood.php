@@ -115,37 +115,102 @@
     }
 </script>
 
-    <?php
-    // Connect to your MySQL database
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $database = "disaster_ready";
+<div class="map-markers-container">
 
-    $conn = new mysqli($servername, $username, $password, $database);
+<?php
+// Connect to your MySQL database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "disaster_ready";
 
-    // Check the connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check the connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch hazard-prone area data from the database
+$sql = "SELECT id, latitude, longitude, level, barangay FROM map_markers";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    echo "<form id='updateForm' onsubmit='submitForm(event)' method='post' action='update_markers.php'>";
+    echo "<table class='map-markers-table'>";
+    echo "<tr>
+            <th>Barangay</th>
+            <th>Level</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+        </tr>";
+
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . $row['barangay'] . "</td>";
+        echo "<td>
+                <select name='level[]'>
+                    <option value='Normal'" . ($row['level'] == 'Normal' ? 'selected' : '') . ">Normal</option>
+                    <option value='Low'" . ($row['level'] == 'Low' ? 'selected' : '') . ">Low</option>
+                    <option value='Medium'" . ($row['level'] == 'Medium' ? 'selected' : '') . ">Medium</option>
+                    <option value='High'" . ($row['level'] == 'High' ? 'selected' : '') . ">High</option>
+                </select>
+            </td>";
+        echo "<td><input type='text' name='latitude[]' value='" . $row['latitude'] . "'></td>";
+        echo "<td><input type='text' name='longitude[]' value='" . $row['longitude'] . "'></td>";
+        echo "</tr>";
     }
+    echo "</table>";
+    echo "<button type='submit'>Update Data</button></form>";
+} else {
+    echo "0 results";
+}
+$conn->close();
+?>
 
-    // Fetch hazard-prone area data from the database
-    $sql = "SELECT latitude, longitude, level, barangay FROM map_markers";
-    $result = $conn->query($sql);
+<div id='snackbar'></div>
 
-    $hazardAreas = [];
+<script>
+    function showSnackbar(message) {
+    var snackbar = document.getElementById("snackbar");
+    snackbar.textContent = message;
+    snackbar.style.visibility = "visible";
+    setTimeout(function() {
+        snackbar.style.opacity = 1;
+    }, 1);
+    setTimeout(function() {
+        snackbar.style.opacity = 0;
+    }, 2500);
+    setTimeout(function() {
+        snackbar.style.visibility = "hidden";
+    }, 3000);
+}
 
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $hazardAreas[] = [
-                'lat' => $row['latitude'],
-                'lng' => $row['longitude'],
-                'name' => $row['barangay'],
-                'level' => $row['level']
-            ];
+function updateData() {
+    var form = document.getElementById("updateForm");
+    var formData = new FormData(form);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "update_markers.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                var response = xhr.responseText.trim();
+                if (response.includes('Error')) {
+                    showSnackbar("Error updating records");
+                } else {
+                    showSnackbar("Records updated successfully");
+                }
+            } else {
+                showSnackbar("Error updating records");
+            }
         }
-    }
-    ?>
+    };
+    xhr.send(formData);
+}
+</script>
+
+</div>
 
 </div>
 
@@ -177,7 +242,7 @@
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        echo "<table>
+        echo "<table class='table-data'>
                 <tr>
                     <th>Barangay</th>
                     <th>Status</th>
@@ -192,7 +257,7 @@
         }
 
         echo "</table>";
-
+        echo '<button type="button" class="add-row" onclick="addRow()">+</button>';
         echo "</form>";
     } else {
         echo "No results found";
@@ -248,7 +313,9 @@ cells.forEach(function(cell) {
 });
 
 function addRow() {
-    var table = document.querySelector('table');
+    var tables = document.getElementsByClassName('table-data');
+    var table = tables[0]; // Assuming the first table with the class "map-markers-table"
+
     var newRow = table.insertRow(-1);
 
     var cell1 = newRow.insertCell(0);
@@ -260,7 +327,7 @@ function addRow() {
 
 </script>
 
-<button type="button" class="add-row" onclick="addRow()">+</button>
+
   </div>
   
 
