@@ -66,7 +66,7 @@ if (!isset($_SESSION['id'])) {
     </a>
 
     <a href="admin-about.php">About</a>
-    <a href="admin-typhoon.php">Typhoon</a>
+    <a href="admin-sms.php">SMS</a>
     <a href="admin-flood.php">Flood</a>
     <a href="admin-home.php" class="active">Home</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
@@ -135,6 +135,9 @@ if (!isset($_SESSION['id'])) {
 
   <div class="division">
   <form action="add_event.php" method="POST" id="eventForm">
+
+  <div class="input-fields">
+    <div class="input-fields-header">Create an Event</div>
     
     <div class="textarea-wrapper" style="flex-direction: row;">
       <div class="placeholder">Select a Day</div>
@@ -154,7 +157,7 @@ if (!isset($_SESSION['id'])) {
         <textarea name="eventDescription" id="eventDescription" required></textarea>
       </div>
   </div>
-  <!-- </div> -->
+  </div>
 
 
 

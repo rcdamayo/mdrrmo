@@ -97,7 +97,7 @@ body {
     background-color: red;
 }
 
-.topnav a:nth-child(-n + 5) {
+.topnav a:nth-child(-n + 6) {
     display: flex;
     flex-direction: column;
     width: 7em;
@@ -115,12 +115,12 @@ body {
     transition: 0.3s;
 }
 
-.topnav a:nth-child(-n + 5):hover {
+.topnav a:nth-child(-n + 6):hover {
     background-color: #043a87;
     color: #ffffff;
 }
 
-.topnav a:nth-child(-n + 5).active {
+.topnav a:nth-child(-n + 6).active {
     background-color: #043a87;
     color: #ffffff;
 }
@@ -323,7 +323,7 @@ body {
 }
 
 .vertical-line {
-    top: 330px;
+    top: 440px;
     height: 280px;
     border: 2px solid black; /* Change color as needed */
     flex: 1;
@@ -332,25 +332,73 @@ body {
 }
 
 .elbow1 {
-    position: absolute;
+    position: relative;
     width: 180px;
     height: 164px;
     border-bottom: 3px solid black;
     border-left: 3px solid black;
     flex: 1;
-    margin-top: 32em;
-    left: 12em;
+    margin-top: -18em;
+    margin-left: 12em;
     z-index: 6;
 }
 
 .elbow2 {
-    position: absolute;
+    position: relative;
     width: 180px;
     height: 164px;
     border-bottom: 3px solid black;
     border-right: 3px solid black;
     flex: 1;
-    margin-top: 32em;
-    right: 12em;
+    margin-top: -10.5em;
+    right: -57em;
     z-index: 6;
+}
+
+input {
+    width: 90%;
+    text-align: center;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 1px solid #9f9f9f;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.position {
+    color: #2a5556;
+    font-size: 12px;
+    font-weight: 800;
+    width: 80%;
+}
+
+h1 {
+    display: inline-flex;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 2em;
+}
+
+.update-orgchart {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    height: 35px;
+    width: 7em;
+    /* margin-left: 35%; */
+    padding: 5px;
+    font-size: 16px;
+    font-weight: 800;
+    color: #ffffff;
+    background-color: #04aa6d;
+    border: 0;
+    box-shadow: 3px 3px 8px #4e4e4e;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.update-orgchart:hover {
+    box-shadow: none;
 }

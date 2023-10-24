@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+// Check if the user is not logged in
+if (!isset($_SESSION['id'])) {
+    header("Location: login.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +18,6 @@
     <link rel="stylesheet" href="css/admin-flood.css">
     <link rel="icon" href="images/icon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
 <body>
 <div class="topnav" id="myTopnav">
@@ -54,7 +62,7 @@
     </a>
 
     <a href="admin-about.php">About</a>
-    <a href="admin-typhoon.php">Typhoon</a>
+    <a href="admin-sms.php">SMS</a>
     <a href="admin-flood.php" class="active">Flood</a>
     <a href="admin-home.php">Home</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">

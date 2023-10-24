@@ -54,19 +54,14 @@
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
       <i class="fa fa-bars"></i>
     </a>
-
-    <br>
+</div>
 
     <div class="top-about">
       <div class="top-about-h3">About Us</div>
       <div class="top-about-p">MUNICIPAL DISASTER RISK REDUCTION & MANAGEMENT OFFICE</div>
     </div>
-</div>
-
-<!-- <div class="top-img">
-    
-</div> -->
 <div class="main">
+    
 
 <?php
 // Database connection parameters

@@ -8,7 +8,7 @@
 
 .division:first-child {
   flex: 1;
-  padding-left: 70px;
+  /* padding-left: 50px; */
 }
 
 .division:last-child {
@@ -192,12 +192,14 @@
 }
 
 .map-markers-table input[type="text"] {
+  border: 1px solid #cacaca;
   width: 90px;
   height: 20px;
   padding: 5px;
 }
 
 .map-markers-table select {
+  border: 1px solid #cacaca;
   width: 100px;
   height: 35px;
   padding: 5px;
