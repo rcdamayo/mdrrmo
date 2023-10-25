@@ -23,28 +23,12 @@ if ($stmt === false) {
 
 $stmt->bind_param('ssss', $event_date, $event_time, $event_name, $event_description);
 
-if ($stmt->execute()) {
-    $eventAddedSuccessfully = true;
-} else {
-    $eventAddedSuccessfully = false;
-    echo 'Error adding event: ' . $stmt->error;
-}
+$stmt->execute();
 
 // Close the database connection
 $stmt->close();
 $mysqli->close();
-?>
 
-<script>
-    // Display popup message based on the event addition status
-    var eventAddedSuccessfully = '<?php echo $eventAddedSuccessfully; ?>';
-    if (eventAddedSuccessfully) {
-        if (confirm('Event added successfully! Click OK to go to admin-home.php.')) {
-            window.location.href = 'admin-home.php';
-        }
-    } else {
-        if (confirm('Error adding event. Please try again. Click OK to go to admin-home.php.')) {
-            window.location.href = 'admin-home.php';
-        }
-    }
-</script>
+header('Location: admin-home.php');
+exit;
+?>

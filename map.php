@@ -623,13 +623,6 @@ pinsLayer.on('add', function () {
     const bounds = pinsLayer.getBounds();
     mymap.fitBounds(bounds);
 });
-
-
-
-
-
-
-
 </script>
 
 </body>

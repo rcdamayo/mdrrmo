@@ -13,14 +13,16 @@ if (!isset($_SESSION['id'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Disaster Ready: Official Website of MDRRMO Barugo</title>
+  <title>Disaster Ready Admin: Map</title>
   <link rel="stylesheet" href="css/admin.css">
   <link rel="stylesheet" href="css/admin-map.css">
   <link rel="icon" href="images/icon.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script src="js/script.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+  
 </head>
 <body>
 <div class="topnav" id="myTopnav">
@@ -65,7 +67,7 @@ if (!isset($_SESSION['id'])) {
     </a>
 
     <a href="admin-about.php">About</a>
-    <a href="admin-typhoon.php">Typhoon</a>
+    <a href="admin-sms.php">SMS</a>
     <a href="admin-flood.php">Flood</a>
     <a href="admin-home.php">Home</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
@@ -74,7 +76,209 @@ if (!isset($_SESSION['id'])) {
 </div>
 
 
-<div class="main2">
+<div class="main">
   <!-- <div class="division"> -->
     <div id="map"></div>
+
+    <div class="input-container">
+      <h1>&#x1F4CC; UPDATE MARKERS </h1>
+
+      <form id='editForm' method='post'>
+        <button type='button' class='submit-evac' onclick='updateData()'>UPDATE</button>
+
+        <div class="evac-table">
+
+        <?php
+    // Connect to your MySQL database
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $database = "disaster_ready";
+
+    $conn = new mysqli($servername, $username, $password, $database);
+
+    // Check the connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Fetch hazard-prone area data from the database
+    $sql = "SELECT * FROM evac_centers";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        echo "<table class='table-data'>
+                <tr>
+                    <th>Name</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                </tr>";
+
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>
+                <td><input type='text' name='name[]' value='" . $row["name"] . "'></td>
+                <td><input type='text' name='latitude[]' value='" . $row["latitude"] . "'></td>
+                <td><input type='text' name='longitude[]' value='" . $row["longitude"] . "'></td>
+                <input type='hidden' name='id[]' value='" . $row["id"] . "'>
+            </tr>";
+        }
+
+        echo "</table>";
+        echo '<button type="button" class="add-row" onclick="addRow()">+</button>';
+        echo "</form>";
+    } else {
+        echo "No results found";
+    }
+
+    $conn->close();
+?>
+
+<div id="snackbar"></div>
+
+<script>
+    function showSnackbar(message) {
+    var snackbar = document.getElementById("snackbar");
+    snackbar.textContent = message;
+    snackbar.style.visibility = "visible";
+    setTimeout(function() {
+        snackbar.style.opacity = 1;
+    }, 1);
+    setTimeout(function() {
+        snackbar.style.opacity = 0;
+    }, 2500);
+    setTimeout(function() {
+        snackbar.style.visibility = "hidden";
+    }, 3000);
+}
+
+function updateData() {
+    var form = document.getElementById("editForm");
+    var formData = new FormData(form);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "update_evac.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                var response = xhr.responseText.trim();
+                if (response.includes('Error')) {
+                    showSnackbar("Error updating evacuation centers");
+                } else {
+                    showSnackbar("Evacuation Centers updated successfully");
+                }
+            } else {
+                showSnackbar("Error updating evacutation centers");
+            }
+        }
+    };
+    xhr.send(formData);
+}
+
+var cells = document.querySelectorAll("td input");
+cells.forEach(function(cell) {
+    cell.setAttribute("contentEditable", true);
+});
+
+function addRow() {
+    var tables = document.getElementsByClassName('table-data');
+    var table = tables[0]; // Assuming the first table with the class "map-markers-table"
+
+    var newRow = table.insertRow(-1);
+
+    var cell1 = newRow.insertCell(0);
+    var cell2 = newRow.insertCell(1);
+    var cell3 = newRow.insertCell(2);
+
+    cell1.innerHTML = "<input type='text' name='new_name[]' value=''>";
+    cell2.innerHTML = "<input type='text' name='new_latitude[]' value=''>";
+    cell3.innerHTML = "<input type='text' name='new_longitude[]' value=''>";
+}
+
+</script>
+    </div>
   </div>
+
+
+
+
+  <script>
+ // Initialize the map
+const mymap = L.map('map').setView([11.3167, 124.7333], 20);
+
+// Add a tile layer from OpenStreetMap
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: 'Route for the nearest evacuation center from your location'
+}).addTo(mymap);
+
+// Create an SVG icon for the pins
+const svgIcon = L.divIcon({
+    className: 'custom-svg-icon',
+    html: '<svg xmlns="http://www.w3.org/2000/svg" fill="#ff0000" viewBox="0 0 256 256"><path d="M128,16a88.1,88.1,0,0,0-88,88c0,75.3,80,132.17,83.41,134.55a8,8,0,0,0,9.18,0C136,236.17,216,179.3,216,104A88.1,88.1,0,0,0,128,16Zm0,56a32,32,0,1,1-32,32A32,32,0,0,1,128,72Z"></path></svg>',
+    iconSize: [25, 25], // Set the icon size
+    iconAnchor: [12, 30], // Set the icon anchor to center bottom
+});
+
+// Create a layer for the pins
+const pinsLayer = L.layerGroup().addTo(mymap);
+
+// Function to calculate and add routing to the nearest pin
+function calculateAndAddRouting(userLat, userLng, data) {
+    let nearestPin = null;
+    let nearestDistance = Infinity;
+
+    data.forEach((pin) => {
+        const pinLat = pin.lat;
+        const pinLng = pin.lng;
+        const distance = Math.sqrt((pinLat - userLat) ** 2 + (pinLng - userLng) ** 2);
+
+        if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestPin = pin;
+        }
+    });
+
+    // Add routing control to the nearest pin
+    L.Routing.control({
+        waypoints: [
+            L.latLng(userLat, userLng),
+            L.latLng(nearestPin.lat, nearestPin.lng)
+        ],
+        lineOptions: {
+            styles: [{ color: 'blue', opacity: 0.6, weight: 4 }]
+        },
+        show: false // Set show option to false to hide the direction text
+    }).addTo(mymap);
+}
+
+// Fetch data from the PHP script
+fetch('get_evac_centers.php') // Replace with the correct path to your PHP script
+    .then(response => response.json())
+    .then(data => {
+        // Add markers for evacuation centers
+        data.forEach((center) => {
+            const marker = L.marker([center.lat, center.lng], {
+                icon: svgIcon,
+                draggable: false,
+            }).addTo(pinsLayer).bindPopup(center.name);
+        });
+
+        // Automatically calculate and add routing once data is fetched
+        navigator.geolocation.getCurrentPosition(function (position) {
+            const userLat = position.coords.latitude;
+            const userLng = position.coords.longitude;
+
+            calculateAndAddRouting(userLat, userLng, data);
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+
+// Fit the map to the pins after adding markers
+pinsLayer.on('add', function () {
+    const bounds = pinsLayer.getBounds();
+    mymap.fitBounds(bounds);
+});
+
+</script>

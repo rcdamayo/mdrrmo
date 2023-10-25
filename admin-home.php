@@ -82,7 +82,7 @@ if (!isset($_SESSION['id'])) {
 <!-- UPCOMING -->
 
 <div class="upcoming-container" style="margin-top: 2%;">
-  <div class="preview-text">Preview</div>
+  <div class="preview-text">PREVIEW</div>
     <div class="upcoming-events-container">
     
     <?php
@@ -130,12 +130,26 @@ if (!isset($_SESSION['id'])) {
     $conn->close();
     ?>
   </div>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var events = document.querySelectorAll('.event');
+
+    events.forEach(function(event) {
+      event.addEventListener('click', function() {
+        events.forEach(function(evt) {
+          evt.classList.remove('active');
+        });
+        event.classList.add('active');
+      });
+    });
+  });
+  </script>
 </div>
 </div>
 
   <div class="division">
   <form action="add_event.php" method="POST" id="eventForm">
-
   <div class="input-fields">
     <div class="input-fields-header">Create an Event</div>
     
@@ -287,11 +301,17 @@ echo '</table>';
 ?>
 
 <div class="buttons-container">
-  <button class="remove" disabled>Remove</button>
-  <button type="submit" value="Add Event" class="done" onclick="addEvent()">Done</button>
-</form>
+    <button class="done" type="submit" value="Add Event" onclick="addEvent(event)">Done</button>
+  </form>
+  <form action="remove_event.php" method="POST" id="removeForm">
+    <button class="remove" onclick="removeEvent(event)" id="removeButton">Remove</button>
+  </form>
+  </div>
+  <div id="snackbar"></div>
+
 </div>
-</div>
+
+
 
 </div>
 
@@ -391,38 +411,72 @@ echo '</table>';
         updateDateCellBackground();
     });
 
-    function addEvent() {
+    function showSnackbar(message) {
+    var snackbar = document.getElementById("snackbar");
+    snackbar.textContent = message;
+    snackbar.style.visibility = "visible";
+    setTimeout(function() {
+        snackbar.style.opacity = 1;
+    }, 1);
+    setTimeout(function() {
+        snackbar.style.opacity = 0;
+    }, 2500);
+    setTimeout(function() {
+        snackbar.style.visibility = "hidden";
+    }, 3000);
+}
+
+function removeEvent() {
+  event.preventDefault();
+    var activeEvent = document.querySelector('.event.active');
+    if (activeEvent) {
+        var eventId = activeEvent.id.replace('event_', '');
+        var formData = new FormData();
+        formData.append('eventId', eventId);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'remove_event.php', true);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                if (xhr.responseText.trim() === 'Event deleted successfully.') {
+                    activeEvent.remove();
+                    showSnackbar('Error deleting event.');
+                } else {
+                    showSnackbar('Event deleted successfully. Refresh to see results');
+                    console.error('Event deleted successfully. Refresh to see results');
+                }
+            } else {
+                showSnackbar('Error deleting event.');
+                console.error('Error deleting event');
+            }
+        };
+        xhr.send(formData);
+    } else {
+        showSnackbar('No active event found.');
+    }
+}
+
+// Function for adding an event
+function addEvent() {
+  event.preventDefault();
     var eventForm = document.getElementById('eventForm');
-
-    // Create a new FormData object to store form data
     var formData = new FormData(eventForm);
-
-    // Create a new XMLHttpRequest object
     var xhr = new XMLHttpRequest();
-
-    // Define the AJAX request
     xhr.open('POST', 'add_event.php', true);
-
-    // Define the callback function when the request is complete
     xhr.onload = function () {
         if (xhr.status === 200) {
-            // Check if the response indicates success
-            if (xhr.responseText !== 'Event added successfully.') {
-                // Show an error message in the console
-                console.error('Error adding event: ' + xhr.responseText);
+            if (xhr.responseText.trim() === 'Event added successfully.') {
+                showSnackbar('Error adding event');
+            } else {
+                showSnackbar('Event added successfully. Refresh to see results');
+                console.error('Event added successfully. Refresh to see results');
             }
-
-            // Clear the form
             eventForm.reset();
         }
     };
-
-    // Send the form data to the server
     xhr.send(formData);
-
-    // Prevent the default form submission
-    return false;
 }
+
+
 
 
     $(document).ready(function(){
@@ -450,6 +504,7 @@ echo '</table>';
             $('#eventDescription').val(eventDescription);
         });
     });
+
 </script>
 
 </div>

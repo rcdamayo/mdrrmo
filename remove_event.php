@@ -1,31 +1,35 @@
 <?php
-// Remove event logic
-if (isset($_GET['id'])) {
-    $db_host = 'localhost';
-    $db_user = 'root';
-    $db_pass = '';
-    $db_name = 'disaster_ready';
+// Establish a database connection (replace with your credentials)
+$mysqli = new mysqli('localhost', 'root', '', 'disaster_ready');
 
-    $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
+// Check for connection errors
+if ($mysqli->connect_error) {
+    die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
+}
 
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+// Retrieve event ID from the form
+$event_id = $_POST['eventId'];
+
+if ($event_id) {
+    // Delete the event from the "events" table
+    $query = "DELETE FROM events WHERE id = ?";
+    $stmt = $mysqli->prepare($query);
+
+    if ($stmt === false) {
+        die('Error preparing statement.');
     }
 
-    $eventId = $_GET['id'];
+    $stmt->bind_param('i', $event_id);
 
-    // SQL to delete the event with the specified id
-    $sql = "DELETE FROM events WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $eventId);
     $stmt->execute();
 
+    // Close the database connection
     $stmt->close();
-    $conn->close();
-
-    // Return success message
-    echo "Event removed successfully.";
+    $mysqli->close();
 } else {
-    echo "Invalid request. Please provide an event ID.";
+    echo 'Event ID not provided.';
 }
+
+header('Location: admin-home.php');
+exit;
 ?>
