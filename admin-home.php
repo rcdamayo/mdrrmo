@@ -31,12 +31,62 @@ if (!isset($_SESSION['id'])) {
       <div class="p2">Municipality of Barugo</div>
       <div class="p3">MDRRMO</div>
     </div>
-    <a href="logout.php" style="width: 100px;">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256">
-        <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z"></path>
-      </svg>
-      <br>Logout
-    </a>
+
+    <div class="dropdown">
+  <?php
+    // Assuming you have stored the logged-in user's ID in a variable named $logged_in_id
+    $logged_in_id = 1; // Example value, change it with the actual logged-in user's ID
+
+    // Connect to your MySQL database
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $database = "disaster_ready";
+
+    $conn = new mysqli($servername, $username, $password, $database);
+
+    // Check the connection
+    if ($conn->connect_error) {
+      die("Connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "SELECT employee_id FROM users WHERE id = $logged_in_id";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+      // Output data of each row
+      while ($row = $result->fetch_assoc()) {
+        $employee_id = $row["employee_id"];
+        echo "<button class='dropbtn'>$employee_id
+                <i class='fa fa-caret-down'></i>
+              </button>
+              <div class='dropdown-content'>
+                <a href='logout.php' style='width: 15em; padding: 0; border-top: 1px solid #e5a920;'>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 256 256'>
+                    <path d='M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z'></path>
+                  </svg>
+                  <p>Logout</p>
+                </a>
+              </div>";
+      }
+    } else {
+      echo "0 results";
+    }
+    $conn->close();
+  ?>
+
+<script>
+  // JavaScript for dropdown functionality
+  document.addEventListener("DOMContentLoaded", function() {
+    var dropdown = document.querySelector(".dropdown");
+    dropdown.addEventListener("click", function() {
+      var dropdownContent = dropdown.querySelector(".dropdown-content");
+      dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
+    });
+  });
+</script>
+</div>
+
 
     <a href="reports-flood.php">
       <div class="navcont">
@@ -72,6 +122,8 @@ if (!isset($_SESSION['id'])) {
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
       <i class="fa fa-bars"></i>
     </a>
+
+  
 </div>
 
 <div class="main">
@@ -82,7 +134,7 @@ if (!isset($_SESSION['id'])) {
 <!-- UPCOMING -->
 
 <div class="upcoming-container" style="margin-top: 2%;">
-  <div class="preview-text">PREVIEW</div>
+  <div class="preview-text"><div class="header-icon">&#x1F441;</div> PREVIEW </div>
     <div class="upcoming-events-container">
     
     <?php
@@ -151,7 +203,7 @@ if (!isset($_SESSION['id'])) {
   <div class="division">
   <form action="add_event.php" method="POST" id="eventForm">
   <div class="input-fields">
-    <div class="input-fields-header">Create an Event</div>
+    <div class="input-fields-header"><div class="header-icon">&#x1F4C5;</div> Create an Event</div>
     
     <div class="textarea-wrapper" style="flex-direction: row;">
       <div class="placeholder">Select a Day</div>

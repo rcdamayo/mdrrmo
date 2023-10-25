@@ -83,7 +83,7 @@ if ($conn->connect_error) {
 }
 
 // Fetching all rows from the table
-$sql = "SELECT * FROM employees"; // Replace with your table name
+$sql = "SELECT * FROM org_chart"; // Replace with your table name
 $result = $conn->query($sql);
 
 // Array to hold the rows

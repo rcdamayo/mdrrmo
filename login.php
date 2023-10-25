@@ -29,12 +29,12 @@ $message = '';
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the submitted username and password
-    $username = $_POST['username'];
+    $employee_id = $_POST['employee_id'];
     $password = $_POST['password'];
 
     // Prepare and execute the SQL statement to retrieve the user credentials
-    $stmt = $conn->prepare("SELECT * FROM admins WHERE username = :username");
-    $stmt->bindParam(':username', $username);
+    $stmt = $conn->prepare("SELECT * FROM users WHERE employee_id = :employee_id");
+    $stmt->bindParam(':employee_id', $employee_id);
     $stmt->execute();
     $user = $stmt->fetch();
 
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($user && password_verify($password, $user['password'])) {
         // Set session variables
         $_SESSION['id'] = $user['id'];
-        $_SESSION['username'] = $user['username'];
+        $_SESSION['employee_id'] = $user['employee_id'];
         $_SESSION['position'] = $user['position'];
 
         // Successful login, redirect to the dashboard
@@ -73,18 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <rect id="Rectangle_2" data-name="Rectangle 2" width="608" height="1080" fill="#043a87" opacity="0.6"/>
     </svg>
 
-    <!-- <div class="arrow">
-        <a href="index.php"> 
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="40" height="40" viewBox="0 0 256 256" xml:space="preserve">
-
-    <defs>
-    </defs>
-    <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)" >
-        <path d="M 90 45 C 90 20.147 69.853 0 45 0 C 20.147 0 0 20.147 0 45 s 20.147 45 45 45 C 69.853 90 90 69.853 90 45 z M 37.95 62.826 L 24.689 47.63 c -0.058 -0.066 -0.099 -0.141 -0.152 -0.211 c -0.072 -0.094 -0.144 -0.186 -0.207 -0.286 c -0.075 -0.118 -0.137 -0.241 -0.198 -0.365 c -0.049 -0.099 -0.101 -0.195 -0.142 -0.298 c -0.057 -0.144 -0.097 -0.292 -0.137 -0.44 c -0.025 -0.093 -0.057 -0.181 -0.075 -0.277 c -0.048 -0.249 -0.076 -0.501 -0.076 -0.754 c 0 -0.253 0.028 -0.505 0.076 -0.754 c 0.018 -0.095 0.05 -0.183 0.075 -0.276 c 0.04 -0.149 0.08 -0.296 0.137 -0.441 c 0.041 -0.103 0.093 -0.199 0.142 -0.298 c 0.061 -0.124 0.123 -0.246 0.198 -0.364 c 0.064 -0.1 0.135 -0.193 0.207 -0.287 c 0.053 -0.069 0.094 -0.144 0.152 -0.21 L 37.95 27.174 c 1.452 -1.665 3.979 -1.836 5.644 -0.384 c 1.665 1.453 1.836 3.979 0.384 5.644 L 36.502 41 h 25.794 c 2.209 0 4 1.791 4 4 s -1.791 4 -4 4 H 36.502 l 7.475 8.566 c 1.453 1.664 1.28 4.19 -0.384 5.644 S 39.402 64.491 37.95 62.826 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
-    </g>
-    </svg>
-    </a>
-</div> -->
 <div class="login-container">
     <a href="index.php"><img src="images/barugo_logo.png" style="float: right; height: 80px;"></a>
 
@@ -92,9 +80,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="input-container">
         <form method="POST" action="">
-            <label for="username">USERNAME</label>
+            <label for="employee_id">EMPLOYEE ID</label>
             <br>
-            <input type="text" id="username" name="username" class="login-input" required>
+            <input type="text" id="username" name="employee_id" class="login-input" required>
             <label for="password">PASSWORD</label>
             <br>
             <input type="password" id="password" name="password" class="login-input" required>

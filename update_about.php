@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $position = $conn->real_escape_string($positions[$i]);
             $position2 = $conn->real_escape_string($positions2[$i]);
 
-            $sql = "UPDATE employees SET employee_name='$employee', position='$position', position2='$position2' WHERE id='$id'";
+            $sql = "UPDATE org_chart SET employee_name='$employee', position='$position', position2='$position2' WHERE id='$id'";
             if ($conn->query($sql) !== TRUE) {
                 echo "Error updating record: " . $conn->error;
                 break;
