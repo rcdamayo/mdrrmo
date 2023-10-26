@@ -402,3 +402,96 @@ h1 {
 .update-orgchart:hover {
     box-shadow: none;
 }
+
+.dropdown {
+    display: flex;
+    float: right;
+    position: relative;
+    text-align: center;
+    justify-content: center;
+    width: 18em;
+    height: 5px;
+    background-color: #f9b314;
+    color: #000000;
+    text-decoration: none;
+    /* padding: 12px 8px 5px 0px; */
+    font-size: 8px;
+    font-weight: 500;
+    transition: 0.3s;
+    padding: 0em 0em 1em 0em;
+    margin: 1.4em 0em 0em 0em;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9b314;
+    width: 17.8em;
+    margin: 0;
+    margin-top: 1em;
+    /* margin-top: 50px; */
+    /* margin-right: -1em; */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    transition: 0.3s;
+  }
+
+  .dropdown-content svg {
+    display: inline-flex;
+    /* margin: 0em 2em; */
+    position: absolute;
+    left: -0.5em;
+}
+  
+  .dropdown-content a {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    position: fixed;
+    background-color: #f9b314;
+    color: black;
+    text-decoration: none;
+    fill: #000000;
+    transition: 0.3s;
+  }
+
+  .dropdown-content a:hover + .dropdown-content > svg {
+    fill: #ffffff;
+}
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+    position: absolute;
+  }
+
+  .dropdown button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9b314;
+    width: 100%;
+    height: auto;
+    margin: -1em 0em;
+    padding: 1em 0em;
+    border: 0;
+    /* border-left: 1px solid #e5a920; */
+    /* border: 1px solid lime; */
+    cursor: pointer;
+  }
+
+  .dropdown button:hover {
+    background-color: #043a87;
+    color: #ffffff;
+  }
+
+  .dropdown button img {
+    display: inline-flex;
+    position: relative;
+    align-items: center;
+    margin: 0em 1.5em 0em -1em;
+    padding: 0;
+    border: 1px solid #ffffff;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
