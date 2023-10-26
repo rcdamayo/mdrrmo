@@ -27,12 +27,69 @@ if (!isset($_SESSION['id'])) {
       <div class="p2">Municipality of Barugo</div>
       <div class="p3">MDRRMO</div>
     </div>
-    <a href="logout.php" style="width: 100px;">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256">
-        <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z"></path>
-      </svg>
-      <br>Logout
-    </a>
+    
+    <div class="dropdown">
+    <?php
+    // Assuming you have stored the logged-in user's ID in a session variable named $_SESSION['id']
+    if(isset($_SESSION['id'])){
+        $logged_in_id = $_SESSION['id'];
+
+        // Connect to your MySQL database
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $database = "disaster_ready";
+
+        $conn = new mysqli($servername, $username, $password, $database);
+
+        // Check the connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        $sql = "SELECT image, employee_id FROM users WHERE id = $logged_in_id";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            // Output data of each row
+            while ($row = $result->fetch_assoc()) {
+                $image = $row["image"];
+                $employee_id = $row["employee_id"];
+                echo "<div class='dropdown'>
+                        <button class='dropbtn'><img src='$image' alt='User Image'>$employee_id
+                            <i class='fa fa-caret-down' style='margin-left: 1em;'></i>
+                        </button>
+                        <div class='dropdown-content'>
+                            <a href='logout.php' style='width: 14em; padding: 0; border-top: 1px solid #e5a920; font-size: 12px; padding-left: 0;'>
+                                <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 256 256'><path d='M112,216a8,8,0,0,1-8,8H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h56a8,8,0,0,1,0,16H48V208h56A8,8,0,0,1,112,216Zm109.66-93.66-40-40A8,8,0,0,0,168,88v32H104a8,8,0,0,0,0,16h64v32a8,8,0,0,0,13.66,5.66l40-40A8,8,0,0,0,221.66,122.34Z'></path></svg>
+                                <p>Logout</p>
+                            </a>
+                        </div>
+                    </div>";
+            }
+        } else {
+            echo "0 results";
+        }
+        $conn->close();
+    } else {
+        // Handle the case where the user is not logged in
+        // You might want to redirect the user to the login page or handle the situation in some other way
+        echo "User not logged in.";
+    }
+?>
+
+
+<script>
+  // JavaScript for dropdown functionality
+  document.addEventListener("DOMContentLoaded", function() {
+    var dropdown = document.querySelector(".dropdown");
+    dropdown.addEventListener("click", function() {
+      var dropdownContent = dropdown.querySelector(".dropdown-content");
+      dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
+    });
+  });
+</script>
+</div>
 
     <a href="reports-flood.php">
       <div class="navcont">

@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $stmt->fetch();
 
     // Validate the username and password
-    if ($user && password_verify($password, $user['password'])) {
+    if ($user && sha1($password) === $user['password']) {
         // Set session variables
         $_SESSION['id'] = $user['id'];
         $_SESSION['employee_id'] = $user['employee_id'];

@@ -3,7 +3,8 @@ body {
     padding: 0px;
     background-color: #ffffff;
     background-image: none;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .register-container {
