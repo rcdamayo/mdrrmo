@@ -323,7 +323,7 @@ body {
 }
 
 .vertical-line {
-    top: 440px;
+    top: 170px;
     height: 280px;
     border: 2px solid black; /* Change color as needed */
     flex: 1;

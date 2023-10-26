@@ -51,17 +51,18 @@
 
 .input-container h1 {
     display: flex;
-    position: absolute;
+    position: fixed;
     align-items: center;
     background-color: #f9b314;
     height: 3em;
-    width: 100%;
+    width: 29em;
     font-size: 16px;
     font-weight: 700;
     /* color: #ffffff; */
     /* text-shadow: 1px 1px 3px #747474; */
     margin: 0;
-    padding-left: 3em;
+    margin-left: 0.5em;
+    padding-left: 1em;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
@@ -97,8 +98,8 @@
   .submit-evac {
     display: flex;
     flex: 1;
-    position: relative;
-    right: -23em;
+    position: fixed;
+    right: 3em;
     justify-content: center;
     align-items: center;
     height: 2.3em;

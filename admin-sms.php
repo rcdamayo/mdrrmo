@@ -234,6 +234,8 @@ $conn->close();
 
 
   <div class="division">
+
+  
     <div class="compose-container">
       <h1 style="width: 93.5%;">COMPOSE MESSAGE</h1>
 
