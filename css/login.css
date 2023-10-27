@@ -8,11 +8,11 @@ body {
 .login-container {
     /* border: 1px solid green; */
     height: 80%;
-    width: 60%;
+    width: 50%;
     padding: 0px;
     float: right;
     margin-top: 5%;
-    margin-right: 5%;
+    margin-right: 8%;
     padding: 50px 0px;
     padding-right: 40px;
 }
@@ -43,7 +43,7 @@ body {
 
 h1 {
     font-size: 20px;
-    font-weight: normal;
+    font-weight: 700;
 }
 
 p, label {
@@ -59,10 +59,10 @@ input[type="text"], [type="password"] {
     margin: 10px;
     margin-left: 0px;
     padding: 5px 20px;
-    box-shadow: 1px -1px 5px #a3a3a3;
+    box-shadow: 1px 1px 3px #7f7f7f;
     display: block;
     border-radius: 50px;
-    border: 1px solid #a3a3a3;
+    border: 0;
 }
 
 input[type="checkbox"] {
@@ -87,3 +87,4 @@ input[type="checkbox"] {
     left: 30%;
     margin-top: 2%;
 }
+

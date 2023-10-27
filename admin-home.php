@@ -51,16 +51,17 @@ if (!isset($_SESSION['id'])) {
             die("Connection failed: " . $conn->connect_error);
         }
 
-        $sql = "SELECT image, employee_id FROM users WHERE id = $logged_in_id";
+        $sql = "SELECT * FROM users WHERE id = $logged_in_id";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             // Output data of each row
             while ($row = $result->fetch_assoc()) {
                 $image = $row["image"];
-                $employee_id = $row["employee_id"];
+                $first_name = $row["first_name"];
+                $last_name = $row["last_name"];
                 echo "<div class='dropdown'>
-                        <button class='dropbtn'><img src='$image' alt='User Image'>$employee_id
+                        <button class='dropbtn'><img src='$image' alt='User Image'>$first_name $last_name
                             <i class='fa fa-caret-down' style='margin-left: 1em;'></i>
                         </button>
                         <div class='dropdown-content'>

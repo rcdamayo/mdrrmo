@@ -246,31 +246,69 @@ echo '</div>';
   </div>
 
   <div class="division">
-  
-    <div class="clock">
-      Philippine Standard Time:
-      <div id="clock" style="margin-top: 10px;"></div>
-    </div>
 
-    <div class="svg-container">
-      <img src="images/hotlines.png" style="z-index: 7;">
-    </div>
+  <div class="warning-system">
+    <table>
+    <tr>
+      <th>RAINFALL ADVISORIES</th>
+      <th>FLOOD POSSIBILITY</th>
+      <th>RESPONSE</th>
+    </tr>
 
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125191.32954780909!2d124.6807399445262!3d11.317962096966223!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33080e7accef4379%3A0x59aeb64fdae6fcee!2sBarugo%2C%20Leyte!5e0!3m2!1sen!2sph!4v1694240429866!5m2!1sen!2sph" width="400" height="300" style="border:0;" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
-  
+    <tr>
+      <td bgcolor="#ff0000">RED TORRENTIAL</td>
+      <td bgcolor="#ce0000">
+        <h1>More than 30mm rain</h1>
+        <p>observe in 1 hour and expected to continue in the next 2 hours.</p>
+        <p>Serious flooding expected in low lying areas</p>
+      </td>
+      <td bgcolor="#ff0000">EVACUATION</td>
+    </tr>
+
+    <tr>
+      <td bgcolor="#ff8000">ORANGE INTENSE</td>
+      <td bgcolor="#d97107">
+        <h1>15-30mm (intense rain)</h1>
+        <p>observe in 1 hour and expected to continue in the next 2 hours.</p>
+        <p>Flooding is threatening</p>
+      </td>
+      <td bgcolor="#ff8000">
+        ALERT
+        <p>for possible evacuation</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td bgcolor="#ffbb00">YELLOW HEAVY</td>
+      <td bgcolor="#dfa401">
+        <h1>7.5-15mm (heavy) rain</h1>
+        <p>observe in 1 hour and expected to continue in the next 2 hours.</p>
+        <p>Flooding is possible</p>
+      </td>
+      <td bgcolor="#ffbb00">
+        MONITOR
+        <p>the weather condition</p>
+      </td>
+    </tr>
+    </table>
+
+    <img src="images/calamity.png">
+
+    </div>
   </div>
 
 
 
   
   <div class="division">
-    <div class="svg-container">
-  <img src="images/hazard-map1.png">
+    <div class="clock">
+      Philippine Standard Time:
+      <div id="clock" style="margin-top: 10px;"></div>
     </div>
 
-    <div class="svg-container">
-    <img src="images/hazard-map2.png" style="z-index: 7;">
-</div>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125191.32954780909!2d124.6807399445262!3d11.317962096966223!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33080e7accef4379%3A0x59aeb64fdae6fcee!2sBarugo%2C%20Leyte!5e0!3m2!1sen!2sph!4v1694240429866!5m2!1sen!2sph" width="300" height="280" style="border:0;" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  
+    
   </div>
 
 </div>

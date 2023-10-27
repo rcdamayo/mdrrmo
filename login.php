@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </script>
 
             <input type="checkbox" id="termsCheckbox" required>
-            <p style="display: inline; font-size: 8px; position: relative; top: -25px; left: 30px;">I agree to the <font color="#ffee00" style="text-decoration: underline;">terms of service</font> and <font color="#ffee00" style="text-decoration: underline;">privacy policy</font></p>
+            <p style="display: inline; font-size: 10px; position: relative; top: -25px; left: 30px;">I agree to the <font color="#043a87" style="text-decoration: underline;">terms of service</font> and <font color="#043a87" style="text-decoration: underline;">privacy policy</font></p>
 
             <input type="submit" id="login-btn" value="Login" class="disabled">
         </form>

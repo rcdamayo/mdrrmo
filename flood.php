@@ -68,45 +68,6 @@
 
   
     <div id="map"></div>
-
-    <div class="early-alert">
-    <h3>EMERGENCY ALERT & WARNING</h3>
-    <div class="alert-message">
-        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#f9b314" viewBox="0 0 256 256" style="position: absolute; top: 40%; left: 5%;">
-            <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path>
-        </svg>
-        <?php
-            // Database connection
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "disaster_ready";
-
-            // Create connection
-            $conn = new mysqli($servername, $username, $password, $dbname);
-
-            // Check connection
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
-
-            // Retrieve the data from the database (latest row within 1 hour)
-            $sql = "SELECT * FROM flood_alert WHERE timestamp >= NOW() - INTERVAL 12 HOUR ORDER BY timestamp DESC LIMIT 1";
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-              // Output data of the latest row within 1 hour
-              while ($row = $result->fetch_assoc()) {
-                  echo "<p>" . nl2br($row["alert_message"]) . "</p>";
-              }
-          } else {
-              echo "No active Emergency Alert and Warning Message as of present time.";
-          }
-      ?>
-  </div>
-</div>
-
-
   
     <?php
     // Connect to your MySQL database
@@ -181,7 +142,44 @@
 </div>
 
     <div class="division">
-        <h1>BARANGAYS PRONE TO FLOOD</h1>
+    <div class="early-alert">
+    <h3>EMERGENCY ALERT & WARNING</h3>
+    <div class="alert-message">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#f9b314" viewBox="0 0 256 256" style="position: absolute; top: 40%; left: 5%;">
+            <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path>
+        </svg>
+        <?php
+            // Database connection
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "disaster_ready";
+
+            // Create connection
+            $conn = new mysqli($servername, $username, $password, $dbname);
+
+            // Check connection
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+
+            // Retrieve the data from the database (latest row within 1 hour)
+            $sql = "SELECT * FROM flood_alert WHERE timestamp >= NOW() - INTERVAL 12 HOUR ORDER BY timestamp DESC LIMIT 1";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+              // Output data of the latest row within 1 hour
+              while ($row = $result->fetch_assoc()) {
+                  echo "<p>" . nl2br($row["alert_message"]) . "</p>";
+              }
+          } else {
+              echo "No active Emergency Alert and Warning Message as of present time.";
+          }
+      ?>
+  </div>
+</div>
+
+        <h1 style="margin-top: 2em;">BARANGAYS PRONE TO FLOOD</h1>
 
         <div class="prone-table">
 
@@ -281,7 +279,7 @@ var map = L.map('map').setView([11.3167, 124.7333], 12); // Coordinates for Baru
 
 // Add tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
+    maxZoom: 30,
     attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
 }).addTo(map);
 

@@ -179,33 +179,7 @@ if ($result->num_rows > 0) {
 }
 $conn->close();
 ?>
-
-<div id='snackbar'></div>
-
-<script>
-    function updatePopulation() {
-        var form = document.getElementById("editPopulation");
-        var formData = new FormData(form);
-
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "update_population.php", true);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    var response = xhr.responseText.trim();
-                    if (response.includes('Error')) {
-                        showSnackbar("Error updating records");
-                    } else {
-                        showSnackbar("Records updated successfully");
-                    }
-                } else {
-                    showSnackbar("Error updating records");
-                }
-            }
-        };
-        xhr.send(formData);
-    }
-</script>
+  </div>
   </div>
 
 
@@ -265,58 +239,6 @@ $conn->close();
     $conn->close();
 ?>
 
-<div id="snackbar"></div>
-
-<script>
-
-function updateHousehold() {
-    var form = document.getElementById("editHousehold");
-    var formData = new FormData(form);
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "update_household.php", true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                var response = xhr.responseText.trim();
-                if (response.includes('Error')) {
-                    showSnackbar("Error updating records");
-                } else {
-                    showSnackbar("Records updated successfully");
-                }
-            } else {
-                showSnackbar("Error updating records");
-            }
-        }
-    };
-    xhr.send(formData);
-}
-
-var cells = document.querySelectorAll("td input");
-cells.forEach(function(cell) {
-    cell.setAttribute("contentEditable", true);
-});
-
-function addRow() {
-    var tables = document.getElementsByClassName('table-data');
-    var table = tables[0]; // Assuming the first table with the class "map-markers-table"
-
-    var newRow = table.insertRow(-1);
-
-    var cell1 = newRow.insertCell(0);
-    var cell2 = newRow.insertCell(1);
-    var cell3 = newRow.insertCell(2);
-    var cell4 = newRow.insertCell(3);
-
-    cell1.innerHTML = "<input type='text' name='year[]' value=''>";
-    cell2.innerHTML = "<input type='text' name='new_household_population[]' value=''>";
-    cell3.innerHTML = "<input type='text' name='new_no_of_households[]' value=''>";
-    cell4.innerHTML = "<input type='text' name='new_average_household_size[]' value=''>";
-    
-}
-
-</script>
-
 
   </div>
 
@@ -365,8 +287,8 @@ if ($result->num_rows > 0) {
 $conn->close();
 ?>
 
-<div id='snackbar'></div>
 
+<div id="snackbar"></div>
 <script>
 
     function updateAge() {
@@ -375,6 +297,75 @@ $conn->close();
 
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "update_age.php", true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var response = xhr.responseText.trim();
+                    if (response.includes('Error')) {
+                        showSnackbar("Error updating records");
+                    } else {
+                        showSnackbar("Records updated successfully");
+                    }
+                } else {
+                    showSnackbar("Error updating records");
+                }
+            }
+        };
+        xhr.send(formData);
+    }
+
+    function updateHousehold() {
+    var form = document.getElementById("editHousehold");
+    var formData = new FormData(form);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "update_household.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                var response = xhr.responseText.trim();
+                if (response.includes('Error')) {
+                    showSnackbar("Error updating records");
+                } else {
+                    showSnackbar("Records updated successfully");
+                }
+            } else {
+                showSnackbar("Error updating records");
+            }
+        }
+    };
+    xhr.send(formData);
+}
+
+var cells = document.querySelectorAll("td input");
+cells.forEach(function(cell) {
+    cell.setAttribute("contentEditable", true);
+});
+
+function addRow() {
+    var tables = document.getElementsByClassName('table-data');
+    var table = tables[0]; // Assuming the first table with the class "map-markers-table"
+
+    var newRow = table.insertRow(-1);
+
+    var cell1 = newRow.insertCell(0);
+    var cell2 = newRow.insertCell(1);
+    var cell3 = newRow.insertCell(2);
+    var cell4 = newRow.insertCell(3);
+
+    cell1.innerHTML = "<input type='text' name='year[]' value=''>";
+    cell2.innerHTML = "<input type='text' name='new_household_population[]' value=''>";
+    cell3.innerHTML = "<input type='text' name='new_no_of_households[]' value=''>";
+    cell4.innerHTML = "<input type='text' name='new_average_household_size[]' value=''>";
+    
+}
+
+function updatePopulation() {
+        var form = document.getElementById("editPopulation");
+        var formData = new FormData(form);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "update_population.php", true);
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {

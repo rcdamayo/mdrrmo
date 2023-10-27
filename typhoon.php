@@ -64,62 +64,46 @@
     </a>
 </div>
 
-<iframe src="https://www.panahon.gov.ph//" width="100%" height="600px" frameborder="0"></iframe>
+<iframe src="https://earth.nullschool.net/#current/wind/surface/level/orthographic=123.55,11.87,1751/loc=124.750,11.305" width="100%" height="600px" frameborder="0"></iframe>
 
-<!-- <div id="map"></div>
-    <div id="typhoon-info"></div>
+  <div class="early-alert">
+    <h3>EMERGENCY ALERT & WARNING</h3>
+    <div class="alert-message">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#f9b314" viewBox="0 0 256 256" style="position: absolute; top: 40%; left: 5%;">
+            <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path>
+        </svg>
+        <?php
+            // Database connection
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "disaster_ready";
 
-    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+            // Create connection
+            $conn = new mysqli($servername, $username, $password, $dbname);
 
-    <script>
-        var map = L.map('map').setView([12.8797, 121.7740], 5);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        var typhoonLayer = L.layerGroup().addTo(map);
-        var typhoonInfoContainer = document.getElementById('typhoon-info');
-
-        function fetchTyphoonData() {
-            var apiKey = 'tWqg1p3aJNfy0rUSOWxzgdcNiJLoDqi0';
-            var typhoonUrl = 'https://dataservice.accuweather.com/tropical/v1/tracks/active?apikey=' + apiKey;
-
-            fetch(typhoonUrl)
-                .then(function(response) {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(function(typhoonData) {
-                    console.log(typhoonData);
-                    updateMapWithTyphoonData(typhoonData);
-                    displayTyphoonInfo(typhoonData);
-                })
-                .catch(function(error) {
-                    console.error('Error fetching typhoon data: ' + error);
-                });
-        }
-
-        function updateMapWithTyphoonData(typhoonData) {
-            typhoonLayer.clearLayers();
-            if (typhoonData.length > 0) {
-                var typhoon = typhoonData[0];
-                var marker = L.marker([typhoon.Center.Latitude, typhoon.Center.Longitude]).addTo(typhoonLayer);
-                marker.bindPopup('Typhoon Name: ' + typhoon.Name);
+            // Check connection
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
             }
-        }
 
-        function displayTyphoonInfo(typhoonData) {
-            if (typhoonData.length > 0) {
-                var typhoon = typhoonData[0];
-                var typhoonInfo = "Typhoon Coordinates: Latitude " + typhoon.Center.Latitude + ", Longitude " + typhoon.Center.Longitude;
-                typhoonInfoContainer.innerText = typhoonInfo;
-            } else {
-                typhoonInfoContainer.innerText = "No active typhoons";
-            }
-        }
+            // Retrieve the data from the database (latest row within 1 hour)
+            $sql = "SELECT * FROM flood_alert WHERE timestamp >= NOW() - INTERVAL 12 HOUR ORDER BY timestamp DESC LIMIT 1";
+            $result = $conn->query($sql);
 
-        fetchTyphoonData();
-        setInterval(fetchTyphoonData, 600000); 
-    </script> -->
+            if ($result->num_rows > 0) {
+              // Output data of the latest row within 1 hour
+              while ($row = $result->fetch_assoc()) {
+                  echo "<p>" . nl2br($row["alert_message"]) . "</p>";
+              }
+          } else {
+              echo "No active Emergency Alert and Warning Message as of present time.";
+          }
+      ?>
+  </div>
+</div>
+
+<div class="container">
+  <a href="https://www.pagasa.dost.gov.ph/index.php" target="_blank"><img src="images/pagasa.png">PAGASA</a>
+  <a href="https://zoom.earth/maps/satellite/#view=11.91,123.46,5z" target="_blank"><img src="images/zoom_earth.png">ZOOM EARTH</a>
+</div>
