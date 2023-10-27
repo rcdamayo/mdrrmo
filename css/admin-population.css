@@ -1,19 +1,35 @@
 .division {
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
+  flex-direction: row;
   flex: 1;
-  /* border: 1px solid green; */
+  width: 100%;
+  border: 1px solid green;
   /* padding: 20px; */
   font-size: 12px;
 }
 
 .division:first-child {
     flex: 2;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding: 0px 20px;
 }
 
 .division:last-child {
     flex: 1;
-    padding: 20px;
+    padding: 0px 20px;
+}
+
+.population-container {
+  width: 100;
+}
+
+.population-table {
+  width: 100;
+}
+
+.population-table input {
+  width: 5em;
+}
+
+input {
+  width: 5em;
 }
