@@ -21,7 +21,7 @@ if (isset($_GET['year']) && isset($_GET['month']) && isset($_GET['day'])) {
     $db_host = 'localhost';
     $db_user = 'root';
     $db_pass = '';
-    $db_name = 'disaster_ready';
+    $db_name = 'edr_db';
 
     $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
 

@@ -42,7 +42,7 @@ if (!isset($_SESSION['id'])) {
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $database = "disaster_ready";
+        $database = "edr_db";
 
         $conn = new mysqli($servername, $username, $password, $database);
 
@@ -138,7 +138,7 @@ if (!isset($_SESSION['id'])) {
 
 
 
-<!-- UPCOMING -->
+<!-- PREVIEW -->
 
 <div class="upcoming-container" style="margin-top: 2%;">
   <div class="preview-text"><div class="header-icon">&#x1F441;</div> Preview </div>
@@ -149,7 +149,7 @@ if (!isset($_SESSION['id'])) {
     $db_host = 'localhost';
     $db_user = 'root';
     $db_pass = '';
-    $db_name = 'disaster_ready';
+    $db_name = 'edr_db';
 
     $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
 

@@ -75,7 +75,7 @@
 $servername = "localhost"; // Replace with your server name
 $username = "root"; // Replace with your username
 $password = ""; // Replace with your password
-$database = "disaster_ready"; // Replace with your database name
+$database = "edr_db"; // Replace with your database name
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);

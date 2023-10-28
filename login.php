@@ -9,7 +9,7 @@ if (isset($_SESSION['id'])) {
 
 // Database connection details
 $host = 'localhost';
-$dbname = 'disaster_ready';
+$dbname = 'edr_db';
 $username = 'root';
 $password = '';
 

@@ -37,7 +37,7 @@ if (!isset($_SESSION['id'])) {
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $database = "disaster_ready";
+        $database = "edr_db";
 
         $conn = new mysqli($servername, $username, $password, $database);
 
@@ -131,7 +131,7 @@ if (!isset($_SESSION['id'])) {
 $servername = "localhost"; // Replace with your server name
 $username = "root"; // Replace with your username
 $password = ""; // Replace with your password
-$database = "disaster_ready"; // Replace with your database name
+$database = "edr_db"; // Replace with your database name
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);

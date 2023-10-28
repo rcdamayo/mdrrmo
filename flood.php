@@ -74,7 +74,7 @@
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $database = "disaster_ready";
+    $database = "edr_db";
 
     $conn = new mysqli($servername, $username, $password, $database);
 
@@ -153,7 +153,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "disaster_ready";
+$dbname = "edr_db";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -193,7 +193,7 @@ if ($result->num_rows > 0) {
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "disaster_ready";
+$database = "edr_db";
 
 $conn = new mysqli($servername, $username, $password, $database);
 

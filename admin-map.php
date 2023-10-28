@@ -43,7 +43,7 @@ if (!isset($_SESSION['id'])) {
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $database = "disaster_ready";
+        $database = "edr_db";
 
         $conn = new mysqli($servername, $username, $password, $database);
 
@@ -150,7 +150,7 @@ if (!isset($_SESSION['id'])) {
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $database = "disaster_ready";
+    $database = "edr_db";
 
     $conn = new mysqli($servername, $username, $password, $database);
 

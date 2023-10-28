@@ -81,7 +81,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "disaster_ready";
+$database = "edr_db";
 
 // Create a connection to the database
 $conn = new mysqli($servername, $username, $password, $database);

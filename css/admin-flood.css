@@ -14,7 +14,7 @@
 .division:last-child {
   flex: 1;
   padding-left: 0px;
-  padding-top: 20px;
+  /* padding-top: 20px; */
 }
 
 .division h1 {
@@ -228,7 +228,7 @@
 
 .early-alert {
   position: relative;
-  margin-top: 0em;
+  /* margin-top: 0em; */
   margin-bottom: 3em;
   border: 0px;
   border: 1px solid #f9b314;

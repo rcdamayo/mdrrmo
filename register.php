@@ -122,7 +122,7 @@ function registerUser($employee_id, $first_name, $middle_name, $last_name, $pass
     $servername = "localhost";
     $username_db = "root";
     $password_db = "";
-    $dbname = "disaster_ready";
+    $dbname = "edr_db";
 
     // Create a database connection (modify as needed based on your database system)
     $conn = new mysqli($servername, $username_db, $password_db, $dbname);

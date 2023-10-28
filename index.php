@@ -205,7 +205,7 @@ echo '</div>';
     $db_host = 'localhost';
     $db_user = 'root';
     $db_pass = '';
-    $db_name = 'disaster_ready';
+    $db_name = 'edr_db';
 
     $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
 

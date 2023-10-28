@@ -1,6 +1,6 @@
 <?php
 // Establish a database connection (replace with your credentials)
-$mysqli = new mysqli('localhost', 'root', '', 'disaster_ready');
+$mysqli = new mysqli('localhost', 'root', '', 'edr_db');
 
 // Check for connection errors
 if ($mysqli->connect_error) {

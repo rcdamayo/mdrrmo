@@ -38,7 +38,7 @@ if (!isset($_SESSION['id'])) {
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $database = "disaster_ready";
+        $database = "edr_db";
 
         $conn = new mysqli($servername, $username, $password, $database);
 
@@ -130,21 +130,6 @@ if (!isset($_SESSION['id'])) {
 <div class="main">
   <div class="division">
 
-  <div class="early-alert">
-    <form action="store_flood_alert.php" method="post" onsubmit="submitForm(event)">
-    <h3>EMERGENCY ALERT & WARNING</h3>
-    <input type="submit" value="DONE">
-    <div class="alert-message">
-        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#f9b314" viewBox="0 0 256 256" style="position: absolute; top: 40%; left: 5%;">
-            <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path>
-        </svg>
-        
-        <textarea id="flood_alert" name="flood_alert" placeholder="Enter Emergency Flood Alert/Warning Message here." onkeydown="if(event.keyCode === 13){if(event.shiftKey){this.value += '\n'} else {event.preventDefault(); this.form.submit()}}"></textarea>
-            
-        </form>
-    </div>
-</div>
-
       <div id="snackbar"></div>
 
       <script>
@@ -187,7 +172,7 @@ if (!isset($_SESSION['id'])) {
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "disaster_ready";
+$database = "edr_db";
 
 $conn = new mysqli($servername, $username, $password, $database);
 
@@ -308,6 +293,21 @@ $conn->close();
 
     <div class="division">
 
+    <div class="early-alert">
+    <form action="store_flood_alert.php" method="post" onsubmit="submitForm(event)">
+    <h3>EMERGENCY ALERT & WARNING</h3>
+    <input type="submit" value="DONE">
+    <div class="alert-message">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#f9b314" viewBox="0 0 256 256" style="position: absolute; top: 40%; left: 5%;">
+            <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path>
+        </svg>
+        
+        <textarea id="flood_alert" name="flood_alert" placeholder="Enter Emergency Flood Alert/Warning Message here." onkeydown="if(event.keyCode === 13){if(event.shiftKey){this.value += '\n'} else {event.preventDefault(); this.form.submit()}}"></textarea>
+            
+        </form>
+    </div>
+    </div>
+
 
         <h1>BARANGAYS PRONE TO FLOOD</h1>
         <form id='editForm' method='post'>
@@ -320,7 +320,7 @@ $conn->close();
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $database = "disaster_ready";
+    $database = "edr_db";
 
     $conn = new mysqli($servername, $username, $password, $database);
 

@@ -78,7 +78,7 @@
         $hostname = 'localhost'; // Change this to your database hostname
         $username = 'root'; // Change this to your database username
         $password = ''; // Change this to your database password
-        $database_name = 'disaster_ready'; // Change this to your database name
+        $database_name = 'edr_db'; // Change this to your database name
 
         // Create a database connection
         $mysqli = new mysqli($hostname, $username, $password, $database_name);
@@ -180,7 +180,7 @@
 $servername = "localhost"; // Change this to your server
 $username = "root"; // Change this to your MySQL username
 $password = ""; // Change this to your MySQL password
-$dbname = "disaster_ready"; // Change this to your database name
+$dbname = "edr_db"; // Change this to your database name
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -310,7 +310,7 @@ showGraph('populationChart');
 $hostname = 'localhost'; // Change this to your database hostname
 $username = 'root'; // Change this to your database username
 $password = ''; // Change this to your database password
-$database_name = 'disaster_ready'; // Change this to your database name
+$database_name = 'edr_db'; // Change this to your database name
 
 // Create a database connection
 $mysqli = new mysqli($hostname, $username, $password, $database_name);
@@ -396,7 +396,7 @@ $mysqli->close();
 $hostname = 'localhost'; // Change this to your database hostname
 $username = 'root'; // Change this to your database username
 $password = ''; // Change this to your database password
-$database_name = 'disaster_ready'; // Change this to your database name
+$database_name = 'edr_db'; // Change this to your database name
 
 // Create a database connection
 $mysqli = new mysqli($hostname, $username, $password, $database_name);
