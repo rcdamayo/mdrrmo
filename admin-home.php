@@ -58,7 +58,7 @@ if (!isset($_SESSION['id'])) {
             // Output data of each row
             while ($row = $result->fetch_assoc()) {
                 $image = $row["image"];
-                $first_name = $row["first_name"];
+                $first_name = $row["first_name"][0] . ".";
                 $last_name = $row["last_name"];
                 echo "<div class='dropdown'>
                         <button class='dropbtn'><img src='$image' alt='User Image'>$first_name $last_name
@@ -141,7 +141,7 @@ if (!isset($_SESSION['id'])) {
 <!-- UPCOMING -->
 
 <div class="upcoming-container" style="margin-top: 2%;">
-  <div class="preview-text"><div class="header-icon">&#x1F441;</div> PREVIEW </div>
+  <div class="preview-text"><div class="header-icon">&#x1F441;</div> Preview </div>
     <div class="upcoming-events-container">
     
     <?php

@@ -128,10 +128,19 @@
     background-color: #043a87;
     color: #ffffff;
     border-radius: 0%;
+    cursor: pointer;
 }
 
 .calendar td.today a {
     background-color: #043a87;
+    color: #ffffff;
+    border-radius: 0%;
+    cursor: pointer;
+}
+
+.calendar td.today:hover {
+  background-color: #0864e6;
+    cursor: pointer;
     color: #ffffff;
     border-radius: 0%;
 }
@@ -309,10 +318,10 @@ input {
   height: 40px;
   width: 100%;
   border: 0px;
-  border-radius: 40px;
+  border-radius: 10px;
   cursor: pointer;
   margin: 0em 1em;
-  box-shadow: 5px 5px 5px #9f9f9f;
+  /* box-shadow: 5px 5px 5px #9f9f9f; */
   transition: 0.3s;
 }
 

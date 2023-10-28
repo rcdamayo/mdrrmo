@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 19, 2023 at 05:07 PM
+-- Generation Time: Oct 28, 2023 at 11:04 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -24,25 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admins`
---
-
-CREATE TABLE `admins` (
-  `id` int(255) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `admins`
---
-
-INSERT INTO `admins` (`id`, `username`, `password`) VALUES
-(1, 'admin', '$2y$10$1V/NnTae5rrQo28foaxGfeHEFOSGXx7Jkb6suhzBqqv2q2kjLmfGK');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `age_group`
 --
 
@@ -58,6 +39,10 @@ CREATE TABLE `age_group` (
 --
 
 INSERT INTO `age_group` (`id`, `age_group`, `population_2015`, `age_percentage`) VALUES
+(11, 'Under 1', 644, 1.97),
+(12, '1 to 4', 3000, 9.16),
+(13, '5 to 9', 3868, 11.81),
+(14, '10 to 14', 3804, 11.62),
 (15, '15 to 19', 3548, 10.84),
 (16, '20 to 24', 2960, 9.04),
 (17, '25 to 29', 2269, 6.93),
@@ -76,6 +61,87 @@ INSERT INTO `age_group` (`id`, `age_group`, `population_2015`, `age_percentage`)
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `alerts`
+--
+
+CREATE TABLE `alerts` (
+  `id` int(11) NOT NULL,
+  `flood_alert` varchar(255) DEFAULT NULL,
+  `typhoon_alert` varchar(255) DEFAULT NULL,
+  `timestamp` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `alerts`
+--
+
+INSERT INTO `alerts` (`id`, `flood_alert`, `typhoon_alert`, `timestamp`) VALUES
+(19, 'I. Flood Alert on Brgy. Abango due to heavy rainfall\r\n\r\nII. Flood Alert on Brgy Tutug-an due to the heavy rainfall. Evacuation is high recommended. The nearest evacuation centers are routed on the map', '', '2023-10-21 07:19:38'),
+(20, '', '', '2023-10-21 15:47:07'),
+(21, 'testing lang', '', '2023-10-23 05:01:11'),
+(22, '', '', '2023-10-23 05:01:30'),
+(23, 'sfinsefilusznef\r\n\r\nesfjdnsdf\r\n\r\nosefnsdf', '', '2023-10-28 06:25:12'),
+(24, 'sfinsefilusznef\r\n\r\nesfjdnsdf\r\n\r\nosefnsdf', '', '2023-10-28 06:25:15'),
+(25, 'sfinsefilusznef\r\n\r\nesfjdnsdf\r\n\r\nosefnsdf\r\n\r\n\r\n\r\nasdasd', '', '2023-10-28 06:25:19'),
+(26, '', '', '2023-10-28 06:26:39'),
+(27, '', '', '2023-10-28 06:26:47'),
+(28, 'asdasd', '', '2023-10-28 06:28:59'),
+(29, '', '', '2023-10-28 06:29:03'),
+(30, 'sfasfasdas\r\n\r\nasfasdas\r\n\r\nadssdg\r\n\r\nadgsfakweufbueskfbzsuydvfkzudsyv\r\n\r\neifybsdf\r\n\r\nsdfybsd', '', '2023-10-28 06:35:40'),
+(31, '', '', '2023-10-28 06:44:04'),
+(32, '', '', '2023-10-28 06:50:11'),
+(33, '', '', '2023-10-28 06:50:25'),
+(34, '', '', '2023-10-28 06:50:52'),
+(35, '', '', '2023-10-28 06:52:05'),
+(36, 'qwqwe', NULL, '2023-10-28 06:54:53'),
+(37, '', NULL, '2023-10-28 07:00:34');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `applications`
+--
+
+CREATE TABLE `applications` (
+  `id` int(11) NOT NULL,
+  `application_name` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `applications`
+--
+
+INSERT INTO `applications` (`id`, `application_name`, `created_at`, `updated_at`) VALUES
+(2, 'HR', '2023-10-19 00:00:00', '2023-10-19 00:00:00'),
+(9, 'MDRRMO', '2023-10-19 00:00:00', '2023-10-19 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `app_access`
+--
+
+CREATE TABLE `app_access` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT 'id ha users',
+  `app_id` int(11) NOT NULL COMMENT 'id ha applications',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `app_access`
+--
+
+INSERT INTO `app_access` (`id`, `user_id`, `app_id`, `created_at`, `updated_at`) VALUES
+(1, 5, 9, '2023-10-28 10:13:57', '2023-10-28 10:13:57'),
+(2, 7, 2, '2023-10-28 10:15:20', '2023-10-28 10:15:20');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `brgys_prone_to_flood`
 --
 
@@ -90,43 +156,27 @@ CREATE TABLE `brgys_prone_to_flood` (
 --
 
 INSERT INTO `brgys_prone_to_flood` (`id`, `barangay`, `status`) VALUES
-(1, 'Abango', 'Flood-Prone Area'),
-(2, 'Amahit', 'Under Construction'),
-(3, 'Balire', 'Flood Watch'),
-(4, 'Abango', 'Flood-Prone Area'),
-(5, 'Amahit', 'Under Construction'),
-(6, 'Balire', 'Flood Watch');
+(14, 'Abango', 'Flood-Prone Area'),
+(15, 'Amahit', 'Flood-Prone');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `employees`
+-- Table structure for table `composed_messages`
 --
 
-CREATE TABLE `employees` (
-  `id` int(255) NOT NULL,
-  `employee_name` varchar(255) NOT NULL,
-  `position` varchar(255) NOT NULL,
-  `position2` varchar(255) NOT NULL
+CREATE TABLE `composed_messages` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `message` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `employees`
+-- Dumping data for table `composed_messages`
 --
 
-INSERT INTO `employees` (`id`, `employee_name`, `position`, `position2`) VALUES
-(1, 'Dr. Aron C. Balais, FPCEM', 'Municipal Mayor', ''),
-(2, 'Roderick L. Balais', 'LDRRMO III', ''),
-(3, 'Jasmin S. Cardenas', 'LDRRMO II', 'Admin & Training'),
-(4, 'Aristle Alcober', 'Research & Planning', ''),
-(5, 'Marvin Castroverde', 'Operations & Warning', ''),
-(6, 'Monrou Aguihap', 'ERT', ''),
-(7, 'Mark Anthony Salvacion', 'ERT', ''),
-(8, 'Franc Oliver Caneda', 'ERT', ''),
-(9, 'Allan Castroverde', 'ERT', ''),
-(10, 'Ryan Jay Acebo', 'ERT', ''),
-(11, 'Zaira Alizondo', 'ERT', ''),
-(12, 'Sean Vital Calim', 'ERT', '');
+INSERT INTO `composed_messages` (`id`, `user_id`, `message`) VALUES
+(1, 1, 'asdasdasd');
 
 -- --------------------------------------------------------
 
@@ -146,7 +196,6 @@ CREATE TABLE `evac_centers` (
 --
 
 INSERT INTO `evac_centers` (`id`, `name`, `latitude`, `longitude`) VALUES
-(5, 'Barugo National High School', 11.300734926328534, 124.76313890990072),
 (6, 'Canomantag Elementary School', 11.301103155027914, 124.76101460056248),
 (7, 'Calingcaguing National High School', 11.307303177135974, 124.76663793255597),
 (8, 'Covered Court', 11.309167210735852, 124.76367181616646),
@@ -154,7 +203,7 @@ INSERT INTO `evac_centers` (`id`, `name`, `latitude`, `longitude`) VALUES
 (10, 'Barugo I Central Elementary School', 11.320844923627595, 124.73717524452563),
 (11, 'Celestino de Guzman MNHS Stand-Alone Senior High School', 11.338375230906749, 124.75753730204220),
 (12, 'De Guzman Basketball Court', 11.337702559045745, 124.75592708230518),
-(13, 'test area', 11.209630383936004, 124.99422706262506);
+(14, 'Barugo National High School', 11.300734926328534, 124.76313890990072);
 
 -- --------------------------------------------------------
 
@@ -179,26 +228,22 @@ INSERT INTO `events` (`id`, `event_date`, `event_name`, `event_time`, `event_des
 (2, '2023-10-20', 'testing lang', '09:11:00', 'skfbzsliyblieszfiusengdv'),
 (3, '2023-10-20', 'testing lang', '09:11:00', 'skfbzsliyblieszfiusengdv'),
 (4, '2023-10-21', 'test', '09:15:00', 'a;wuinluszigbseigblsziegbzkjcvblie fsze fzsef zs  vz ds f zs ef s zr g szf'),
-(5, '2023-10-21', 'test', '09:15:00', 'a;wuinluszigbseigblsziegbzkjcvblie fsze fzsef zs  vz ds f zs ef s zr g szf');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `flood_alert`
---
-
-CREATE TABLE `flood_alert` (
-  `id` int(11) NOT NULL,
-  `alert_message` varchar(255) DEFAULT NULL,
-  `timestamp` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `flood_alert`
---
-
-INSERT INTO `flood_alert` (`id`, `alert_message`, `timestamp`) VALUES
-(3, 'Typhoon Alert!!!', '2023-10-19 16:05:02');
+(5, '2023-10-21', 'test', '09:15:00', 'a;wuinluszigbseigblsziegbzkjcvblie fsze fzsef zs  vz ds f zs ef s zr g szf'),
+(6, '2023-10-22', 'qweqeqweqweqweqew', '00:00:00', 'iwefbw8eyfbseifusbeflsebflsigubsleiyrzglesd'),
+(7, '2023-10-22', 'qweqeqweqweqweqew', '00:00:00', 'iwefbw8eyfbseifusbeflsebflsigubsleiyrzglesd'),
+(10, '2023-10-23', 'shfbsjhf ,zsd', '17:59:00', 'islbzfsefukbskefzsfs'),
+(11, '2023-10-23', 'shfbsjhf ,zsd', '17:59:00', 'islbzfsefukbskefzsfs'),
+(21, '2023-10-27', 'oawnflszuibkfliubsfkd', '13:12:00', 'iufbslzsfkjuiefjusiejnf'),
+(23, '2023-10-28', 'jahsfs,zfyvsmjfvszfdyv', '01:14:00', 'idufbs,efzsjeyfvseyfjves'),
+(24, '2023-10-10', 'jopay', '09:23:00', 'asdhbslkyezs,bgd'),
+(25, '2023-10-10', 'jopay', '09:23:00', 'asdhbslkyezs,bgd'),
+(51, '2023-10-27', 'asgrxgdf', '22:02:00', 'rsgsdrxgf'),
+(56, '2023-10-26', 'awesfes', '23:04:00', 'awesgdgf'),
+(59, '2023-10-26', 'qweqaszf', '14:20:00', 'aesdxvdxer'),
+(64, '0000-00-00', '', '00:00:00', ''),
+(67, '2023-10-26', 'asgds', '01:24:00', 'zasegsgd'),
+(68, '2023-10-28', 'asfdszedf', '10:30:00', 'asefszfd'),
+(71, '2023-10-28', 'test', '11:15:00', 'akjefbkejfkse jf.esun');
 
 -- --------------------------------------------------------
 
@@ -252,7 +297,7 @@ CREATE TABLE `household_data` (
   `year` year(4) NOT NULL,
   `household_population` int(255) NOT NULL,
   `no_of_households` int(255) NOT NULL,
-  `average_household_size` int(255) NOT NULL
+  `average_household_size` decimal(5,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -260,12 +305,12 @@ CREATE TABLE `household_data` (
 --
 
 INSERT INTO `household_data` (`id`, `year`, `household_population`, `no_of_households`, `average_household_size`) VALUES
-(1, '1990', 23811, 4386, 5),
-(2, '1995', 26168, 4826, 5),
-(3, '2000', 26914, 5108, 5),
-(4, '2007', 27562, 5598, 5),
-(5, '2010', 30092, 6148, 5),
-(6, '2015', 32733, 6919, 5);
+(1, '1990', 23811, 4386, 5.43),
+(2, '1995', 26168, 4826, 5.42),
+(3, '2000', 26914, 5108, 5.27),
+(4, '2007', 27562, 5598, 4.92),
+(5, '2010', 30092, 6148, 4.89),
+(6, '2015', 32733, 6919, 4.73);
 
 -- --------------------------------------------------------
 
@@ -278,51 +323,83 @@ CREATE TABLE `map_markers` (
   `barangay` varchar(255) NOT NULL,
   `latitude` decimal(10,8) NOT NULL,
   `longitude` decimal(10,7) NOT NULL,
-  `level` varchar(255) NOT NULL
+  `level` varchar(255) NOT NULL,
+  `display_marker` varchar(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `map_markers`
 --
 
-INSERT INTO `map_markers` (`id`, `barangay`, `latitude`, `longitude`, `level`) VALUES
-(186, 'Abango', 11.26790000, 124.7423000, 'Normal'),
-(187, 'Amahit', 11.27540000, 124.7492000, 'High'),
-(188, 'Balire', 11.28250000, 124.7326000, 'Normal'),
-(189, 'Balud', 11.33880000, 124.7824000, 'Medium'),
-(190, 'Bukid', 11.29550000, 124.7437000, 'Normal'),
-(191, 'Bulod', 11.31530000, 124.7768000, 'Low'),
-(192, 'Busay', 11.32430000, 124.7824000, 'Normal'),
-(193, 'Cabarasan', 11.33620000, 124.7658000, 'Normal'),
-(194, 'Cabolo-an', 11.32900000, 124.8017000, 'Low'),
-(195, 'Calingcaguing', 11.31070000, 124.7625000, 'Normal'),
-(196, 'Can-Isak', 11.26760000, 124.7713000, 'Normal'),
-(197, 'Canomantag', 11.30820000, 124.7216000, 'High'),
-(198, 'Cuta', 11.31830000, 124.7547000, 'Normal'),
-(199, 'Domogdog', 11.33020000, 124.7460000, 'Low'),
-(200, 'Duka', 11.35130000, 124.7796000, 'Normal'),
-(201, 'Guindaohan', 11.29780000, 124.7271000, 'Normal'),
-(202, 'Hiagsam', 11.27810000, 124.7753000, 'Normal'),
-(203, 'Hilaba', 11.31460000, 124.7368000, 'Normal'),
-(204, 'Hinugayan', 11.30320000, 124.7865000, 'Normal'),
-(205, 'Ibag', 11.31170000, 124.8045000, 'Medium'),
-(206, 'Minuhang', 11.32800000, 124.7547000, 'Normal'),
-(207, 'Minuswang', 11.32040000, 124.7250000, 'High'),
-(208, 'Pikas', 11.29050000, 124.7664000, 'Normal'),
-(209, 'Pitogo', 11.27510000, 124.7879000, 'Low'),
-(210, 'Poblacion Dist. I', 11.32280000, 124.7347000, 'Normal'),
-(211, 'Poblacion Dist. II', 11.32040000, 124.7364000, 'Normal'),
-(212, 'Poblacion Dist. III', 11.32560000, 124.7363000, 'Low'),
-(213, 'Poblacion Dist. IV', 11.32300000, 124.7404000, 'Normal'),
-(214, 'Poblacion Dist. V', 11.32480000, 124.7375000, 'Normal'),
-(215, 'Poblacion Dist. VI', 11.32060000, 124.7448000, 'Medium'),
-(216, 'Pongso', 11.27810000, 124.7658000, 'Normal'),
-(217, 'Roosevelt', 11.29520000, 124.7824000, 'Normal'),
-(218, 'San Isidro', 11.31020000, 124.7340000, 'Medium'),
-(219, 'San Roque', 11.30530000, 124.7774000, 'Normal'),
-(220, 'Santa Rosa', 11.28820000, 124.7989000, 'Normal'),
-(221, 'Santarin', 11.32260000, 124.7313000, 'High'),
-(222, 'Tutug-an', 11.30740000, 124.7530000, 'Normal');
+INSERT INTO `map_markers` (`id`, `barangay`, `latitude`, `longitude`, `level`, `display_marker`) VALUES
+(1, 'Abango', 11.26790000, 124.7423000, 'Normal', 'y'),
+(2, 'Amahit', 11.27540000, 124.7492000, 'Normal', 'n'),
+(3, 'Balire', 11.28250000, 124.7326000, 'Low', 'y'),
+(4, 'Balud', 11.33880000, 124.7824000, 'Medium', 'n'),
+(5, 'Bukid', 11.29550000, 124.7437000, 'Normal', 'y'),
+(6, 'Bulod', 11.31530000, 124.7768000, 'Low', 'y'),
+(7, 'Busay', 11.32430000, 124.7824000, 'Medium', 'y'),
+(8, 'Cabarasan', 11.33620000, 124.7658000, 'Medium', 'n'),
+(9, 'Cabolo-an', 11.32900000, 124.8017000, 'Low', 'n'),
+(10, 'Calingcaguing', 11.31070000, 124.7625000, 'Low', 'y'),
+(11, 'Can-Isak', 11.26760000, 124.7713000, 'Normal', 'n'),
+(12, 'Canomantag', 11.30820000, 124.7216000, 'High', 'y'),
+(13, 'Cuta', 11.31830000, 124.7547000, 'Medium', 'y'),
+(14, 'Domogdog', 11.33020000, 124.7460000, 'Normal', 'y'),
+(15, 'Duka', 11.35130000, 124.7796000, 'Low', 'n'),
+(16, 'Guindaohan', 11.29780000, 124.7271000, 'High', 'y'),
+(17, 'Hiagsam', 11.27810000, 124.7753000, 'High', 'n'),
+(18, 'Hilaba', 11.31460000, 124.7368000, 'Low', 'y'),
+(19, 'Hinugayan', 11.30320000, 124.7865000, 'Medium', 'y'),
+(20, 'Ibag', 11.31170000, 124.8045000, 'Medium', 'n'),
+(21, 'Minuhang', 11.32800000, 124.7547000, 'Medium', 'n'),
+(22, 'Minuswang', 11.32040000, 124.7250000, 'High', 'y'),
+(23, 'Pikas', 11.29050000, 124.7664000, 'Low', 'n'),
+(24, 'Pitogo', 11.27510000, 124.7879000, 'Low', 'n'),
+(25, 'Poblacion Dist. I', 11.32280000, 124.7347000, 'Medium', 'y'),
+(26, 'Poblacion Dist. II', 11.32040000, 124.7364000, 'Low', 'y'),
+(27, 'Poblacion Dist. III', 11.32560000, 124.7363000, 'Low', 'y'),
+(28, 'Poblacion Dist. IV', 11.32300000, 124.7404000, 'Medium', 'y'),
+(29, 'Poblacion Dist. V', 11.32480000, 124.7375000, 'High', 'y'),
+(30, 'Poblacion Dist. VI', 11.32060000, 124.7448000, 'Medium', 'y'),
+(31, 'Pongso', 11.27810000, 124.7658000, 'Low', 'n'),
+(32, 'Roosevelt', 11.29520000, 124.7824000, 'Low', 'y'),
+(33, 'San Isidro', 11.31020000, 124.7340000, 'Medium', 'n'),
+(34, 'San Roque', 11.30530000, 124.7774000, 'Low', 'y'),
+(35, 'Santa Rosa', 11.28820000, 124.7989000, 'High', 'y'),
+(36, 'Santarin', 11.32260000, 124.7313000, 'High', 'n'),
+(37, 'Tutug-an', 11.30740000, 124.7530000, 'Normal', 'n');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `org_chart`
+--
+
+CREATE TABLE `org_chart` (
+  `id` int(255) NOT NULL,
+  `employee_name` varchar(255) NOT NULL,
+  `position` varchar(255) NOT NULL,
+  `position2` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `org_chart`
+--
+
+INSERT INTO `org_chart` (`id`, `employee_name`, `position`, `position2`) VALUES
+(1, 'Dr. Aron C. Balais, FPCEM', 'Municipal Mayor', ''),
+(2, 'Roderick L. Balais', 'LDRRMO III', ''),
+(3, 'Aristle Alcober', 'Research & Planning', ''),
+(4, 'Jasmin S. Cardenas', 'LDRRMO II', 'Admin & Training'),
+(5, 'Marvin Castroverde', 'Operations & Warning', ''),
+(6, 'Monrou Aguihap', 'ERT', ''),
+(7, 'Mark Anthony Salvacion', 'ERT', ''),
+(8, 'Franc Oliver Caneda', 'ERT', ''),
+(9, 'Allan Castroverde', 'ERT', ''),
+(10, 'Ryan Jay Acebo', 'ERT', ''),
+(11, 'Zaira Alizondo', 'ERT', ''),
+(12, 'Sean Vital Calim', 'ERT', '');
 
 -- --------------------------------------------------------
 
@@ -387,6 +464,28 @@ INSERT INTO `population_data` (`id`, `barangay`, `population_2015`, `population_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `registered_no`
+--
+
+CREATE TABLE `registered_no` (
+  `id` int(255) NOT NULL,
+  `barangay` varchar(255) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `middle_initial` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `phone_no` bigint(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `registered_no`
+--
+
+INSERT INTO `registered_no` (`id`, `barangay`, `first_name`, `middle_initial`, `last_name`, `phone_no`) VALUES
+(1, 'Abango', 'Ray Christian', 'S. ', 'Damayo', 9613851427);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `typhoon_report`
 --
 
@@ -426,15 +525,37 @@ INSERT INTO `typhoon_report` (`id`, `sitio`, `families`, `persons_m`, `persons_f
 (1, 'Testing la', 5, 34, 40, 4, 4, 6, 6, 5, 4, 3, 3, 4, 2, 4, 8, 7, 11, 8, 5, 5, 5, 4, 5),
 (2, 'try la', 1, 2, 1, 4, 12, 151, 114, 15, 112, 12, 15, 5, 2, 12, 15, 5, 2, 4, 3, 3, 4, 4, 3);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `employee_id` varchar(10) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `middle_name` varchar(50) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `update_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `status` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `employee_id`, `image`, `first_name`, `last_name`, `middle_name`, `password`, `created_at`, `update_at`, `status`) VALUES
+(5, 'EMP-00004', 'uploads/profile.png', 'Ray Christian', 'Damayo', 'S', '8cb2237d0679ca88db6464eac60da96345513964', '2023-10-27 03:30:27', '2023-10-27 03:30:27', 'Active'),
+(7, 'admin', 'uploads/icon.png', 'qweqwe', 'asdasd', '', 'f865b53623b121fd34ee5426c792e5c33af8c227', '2023-10-28 08:05:59', '2023-10-28 08:05:59', ''),
+(9, 'dams123', 'uploads/barugo_logo.png', 'asdasd', 'qweqwe', '', 'cb8389d0e2f189453e95fed083ce18efccfad0ef', '2023-10-28 08:08:48', '2023-10-28 08:08:48', '');
+
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `admins`
---
-ALTER TABLE `admins`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `age_group`
@@ -443,16 +564,37 @@ ALTER TABLE `age_group`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `alerts`
+--
+ALTER TABLE `alerts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `applications`
+--
+ALTER TABLE `applications`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `app_access`
+--
+ALTER TABLE `app_access`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `app_id` (`app_id`);
+
+--
 -- Indexes for table `brgys_prone_to_flood`
 --
 ALTER TABLE `brgys_prone_to_flood`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `employees`
+-- Indexes for table `composed_messages`
 --
-ALTER TABLE `employees`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `composed_messages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `evac_centers`
@@ -464,12 +606,6 @@ ALTER TABLE `evac_centers`
 -- Indexes for table `events`
 --
 ALTER TABLE `events`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `flood_alert`
---
-ALTER TABLE `flood_alert`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -491,9 +627,21 @@ ALTER TABLE `map_markers`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `org_chart`
+--
+ALTER TABLE `org_chart`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `population_data`
 --
 ALTER TABLE `population_data`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `registered_no`
+--
+ALTER TABLE `registered_no`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -503,14 +651,15 @@ ALTER TABLE `typhoon_report`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Indexes for table `users`
 --
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `employee_id` (`employee_id`);
 
 --
--- AUTO_INCREMENT for table `admins`
+-- AUTO_INCREMENT for dumped tables
 --
-ALTER TABLE `admins`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `age_group`
@@ -519,34 +668,46 @@ ALTER TABLE `age_group`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
+-- AUTO_INCREMENT for table `alerts`
+--
+ALTER TABLE `alerts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT for table `applications`
+--
+ALTER TABLE `applications`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `app_access`
+--
+ALTER TABLE `app_access`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `brgys_prone_to_flood`
 --
 ALTER TABLE `brgys_prone_to_flood`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT for table `employees`
+-- AUTO_INCREMENT for table `composed_messages`
 --
-ALTER TABLE `employees`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+ALTER TABLE `composed_messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `evac_centers`
 --
 ALTER TABLE `evac_centers`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `flood_alert`
---
-ALTER TABLE `flood_alert`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `flood_report`
@@ -564,7 +725,13 @@ ALTER TABLE `household_data`
 -- AUTO_INCREMENT for table `map_markers`
 --
 ALTER TABLE `map_markers`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=223;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT for table `org_chart`
+--
+ALTER TABLE `org_chart`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `population_data`
@@ -573,10 +740,39 @@ ALTER TABLE `population_data`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
+-- AUTO_INCREMENT for table `registered_no`
+--
+ALTER TABLE `registered_no`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `typhoon_report`
 --
 ALTER TABLE `typhoon_report`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `app_access`
+--
+ALTER TABLE `app_access`
+  ADD CONSTRAINT `app_access_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `app_access_ibfk_2` FOREIGN KEY (`app_id`) REFERENCES `applications` (`id`);
+
+--
+-- Constraints for table `composed_messages`
+--
+ALTER TABLE `composed_messages`
+  ADD CONSTRAINT `composed_messages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `registered_no` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

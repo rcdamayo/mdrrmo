@@ -234,6 +234,7 @@ body {
     background-color: #f9b314;
     width: 100%;
     border: 0;
+    font-size: 12px;
     border-left: 1px solid #e5a920;
     /* border: 1px solid lime; */
     cursor: pointer;

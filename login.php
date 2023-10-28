@@ -26,7 +26,6 @@ $username = '';
 $password = '';
 $message = '';
 
-// Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the submitted username and password
     $employee_id = $_POST['employee_id'];
@@ -38,16 +37,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
     $user = $stmt->fetch();
 
-    // Validate the username and password
+    // Check if the user exists and if the password matches
     if ($user && sha1($password) === $user['password']) {
-        // Set session variables
-        $_SESSION['id'] = $user['id'];
-        $_SESSION['employee_id'] = $user['employee_id'];
-        $_SESSION['position'] = $user['position'];
+        // Check if the user has access to the app
+        $stmt = $conn->prepare("SELECT * FROM app_access WHERE user_id = :user_id AND app_id = 9");
+        $stmt->bindParam(':user_id', $user['id']);
+        $stmt->execute();
+        $app_access = $stmt->fetch();
 
-        // Successful login, redirect to the dashboard
-        header('Location: admin-home.php');
-        exit;
+        if ($app_access) {
+            // Set session variables
+            $_SESSION['id'] = $user['id'];
+            $_SESSION['employee_id'] = $user['employee_id'];
+            $_SESSION['position'] = $user['position'];
+
+            // Successful login, redirect to the dashboard
+            header('Location: admin-home.php');
+            exit;
+        } else {
+            // Access denied, display an error message
+            $message = 'Access denied. You do not have permission to access this application.';
+        }
     } else {
         // Invalid credentials, display an error message
         $message = 'Invalid username or password.';
