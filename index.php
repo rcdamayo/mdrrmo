@@ -260,6 +260,7 @@ echo '</div>';
       <td bgcolor="#ce0000">
         <h1>More than 30mm rain</h1>
         <p>observe in 1 hour and expected to continue in the next 2 hours.</p>
+        <img src="images/weather-icons/animated/rainy-6.svg">
         <p>Serious flooding expected in low lying areas</p>
       </td>
       <td bgcolor="#ff0000">EVACUATION</td>
@@ -270,6 +271,7 @@ echo '</div>';
       <td bgcolor="#d97107">
         <h1>15-30mm (intense rain)</h1>
         <p>observe in 1 hour and expected to continue in the next 2 hours.</p>
+        <img src="images/weather-icons/animated/rainy-7.svg">
         <p>Flooding is threatening</p>
       </td>
       <td bgcolor="#ff8000">
@@ -283,6 +285,7 @@ echo '</div>';
       <td bgcolor="#dfa401">
         <h1>7.5-15mm (heavy) rain</h1>
         <p>observe in 1 hour and expected to continue in the next 2 hours.</p>
+        <img src="images/weather-icons/animated/rainy-5.svg">
         <p>Flooding is possible</p>
       </td>
       <td bgcolor="#ffbb00">

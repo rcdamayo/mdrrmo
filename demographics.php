@@ -262,38 +262,21 @@ $avgHouseholdSizeJSON = json_encode($avgHouseholdSize);
         }
 
         function createChart(canvasId, label, yearsData, data) {
-            var ctx = document.getElementById(canvasId).getContext("2d");
-            var gradientColors = [];
+    var ctx = document.getElementById(canvasId).getContext("2d");
+    var pastelColors = ['#FFB6C1', '#87CEFA', '#90EE90', '#FFDAB9', '#B0E0E6', '#FFA07A', '#20B2AA', '#F0E68C', '#ADD8E6', '#DDA0DD'];
 
-            function createRandomGradient() {
-                var gradient = ctx.createLinearGradient(0, 0, 0, 300);
-                gradient.addColorStop(0, 'rgba(' +
-                    Math.floor(Math.random() * 256) + ',' +
-                    Math.floor(Math.random() * 256) + ',' +
-                    Math.floor(Math.random() * 256) + ',1)');
-                gradient.addColorStop(1, 'rgba(' +
-                    Math.floor(Math.random() * 256) + ',' +
-                    Math.floor(Math.random() * 256) + ',' +
-                    Math.floor(Math.random() * 256) + ',1)');
-                return gradient;
-            }
-
-            for (var i = 0; i < data.length; i++) {
-                gradientColors.push(createRandomGradient());
-            }
-
-            return new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: yearsData,
-                    datasets: [{
-                        label: label,
-                        data: data,
-                        backgroundColor: gradientColors, // Use the random gradient colors here
-                        borderWidth: 1
-                    }]
-                },
-                options: {
+    return new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: yearsData,
+            datasets: [{
+                label: label,
+                data: data,
+                backgroundColor: pastelColors, // Use the pastel colors here
+                borderWidth: 1
+            }]
+        },
+        options: {
             scales: {
                 x: {
                     beginAtZero: true
@@ -313,11 +296,12 @@ $avgHouseholdSizeJSON = json_encode($avgHouseholdSize);
                 }
             },
         },
-            });
-        }
+    });
+}
 
-        // Automatically show the first graph on page load
-        showGraph('populationChart');
+// Automatically show the first graph on page load
+showGraph('populationChart');
+
     </script>
 
 <!-- SECOND BAR GRAPH -->

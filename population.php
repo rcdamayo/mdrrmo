@@ -239,7 +239,7 @@ $conn->close();
     </div>
 </div>
 
-    <div class="division" style="padding: 40px;">
+    <div class="division" style="padding: 30px;">
 
     <div class="population">
       <div class="graph-container">

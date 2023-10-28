@@ -19,7 +19,7 @@
 
 .division:last-child {
     flex: 1;
-    padding: 40px 20px;
+    padding-left: 20px;
 }
 
 
@@ -344,6 +344,7 @@
     height: 40em;
     /* border: 1px solid lime; */
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .warning-system img {
@@ -421,4 +422,13 @@
 .warning-system tr td:nth-child(2) p:last-child {
     /* width: 100%; */
     margin-top: auto;
+}
+
+.warning-system td img {
+    position: relative;
+    /* margin-left: 4em; */
+    /* margin-top: -5em; */
+    margin: -2em 0em -1em 4em;
+    width: 5em;
+    height: 5em;
 }

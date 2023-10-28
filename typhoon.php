@@ -73,33 +73,38 @@
             <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path>
         </svg>
         <?php
-            // Database connection
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "disaster_ready";
+// Database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "disaster_ready";
 
-            // Create connection
-            $conn = new mysqli($servername, $username, $password, $dbname);
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-            // Check connection
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-            // Retrieve the data from the database (latest row within 1 hour)
-            $sql = "SELECT * FROM flood_alert WHERE timestamp >= NOW() - INTERVAL 12 HOUR ORDER BY timestamp DESC LIMIT 1";
-            $result = $conn->query($sql);
+// Retrieve the data from the database (latest row within 1 hour)
+$sql = "SELECT * FROM alerts WHERE timestamp >= NOW() - INTERVAL 12 HOUR ORDER BY timestamp DESC LIMIT 1";
+$result = $conn->query($sql);
 
-            if ($result->num_rows > 0) {
-              // Output data of the latest row within 1 hour
-              while ($row = $result->fetch_assoc()) {
-                  echo "<p>" . nl2br($row["alert_message"]) . "</p>";
-              }
-          } else {
-              echo "No active Emergency Alert and Warning Message as of present time.";
-          }
-      ?>
+if ($result->num_rows > 0) {
+    // Output data of the latest row within 1 hour
+    while ($row = $result->fetch_assoc()) {
+        $alertMessage = $row["typhoon_alert"];
+        if (!empty(trim($alertMessage))) {
+            echo "<p>" . nl2br($alertMessage) . "</p>";
+        } else {
+            echo "<p>No active Emergency Alert and Warning Message as of present time.</p>";
+        }
+    }
+} else {
+    echo "<p>No active Emergency Alert and Warning Message as of present time.</p>";
+}
+?>
   </div>
 </div>
 

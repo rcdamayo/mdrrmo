@@ -14,11 +14,11 @@ if ($conn->connect_error) {
 }
 
 // Prepare and bind the data
-$stmt = $conn->prepare("INSERT INTO flood_alert (alert_message, timestamp) VALUES (?, ?)");
-$stmt->bind_param("ss", $alert_message, $timestamp);
+$stmt = $conn->prepare("INSERT INTO alerts (flood_alert, timestamp) VALUES (?, ?)");
+$stmt->bind_param("ss", $flood_alert, $timestamp);
 
 // Set parameters and execute
-$alert_message = $_POST["alert_message"];
+$flood_alert = $_POST["flood_alert"];
 $timestamp = date('Y-m-d H:i:s');
 if ($stmt->execute()) {
     echo "Alert added successfully";

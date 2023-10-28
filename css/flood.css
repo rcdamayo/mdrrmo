@@ -15,6 +15,7 @@
   flex: 1;
   padding-left: 0px;
   /* padding-top: 40px; */
+  padding-right: 20px;
 }
 
 .division h1 {
@@ -30,11 +31,11 @@
     display: flex;
     flex-direction: column;
     align-self: center;
-    padding: 40px;
+    padding: 1em;
     flex: 1;
-    width: 70%;
-    min-height: 19.5em;
-    max-height: 19.5em;
+    width: 85%;
+    min-height: 23em;
+    max-height: 23em;
     font-size: 14px;
     background-color: #ffffff;
     overflow-y: auto;
@@ -46,15 +47,6 @@
     border: 1px solid red;
     display: flex;
     flex-direction: column;
-    flex: 1;
-    padding: 10px;
-    margin: 0px;
-}
-
-.prone-brgys {
-    border: 1px solid orange;
-    display: flex;
-    flex-direction: row;
     flex: 1;
     padding: 10px;
     margin: 0px;
@@ -91,7 +83,7 @@ td {
   height: auto;
   width: 5em;
   position: relative;
-  top: -27em;
+  margin-top: -27em;
   left: 1em;
   padding: 10px;
   padding-left: 20px;
@@ -107,6 +99,9 @@ td {
 }
 
 .early-alert {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   position: relative;
   /* top: -43em; */
   /* left: -5em; */
@@ -114,12 +109,13 @@ td {
   border: 1px solid #f9b314;
   background-color: #f9b314;
   border-radius: 5px;
-  width: 25em;
+  width: 29.5em;
   /* height: 80px; */
   padding-bottom: 5%;
   align-self: center;
   font-size: 12px;
-  padding: 15px 10px 0px 7px;
+  padding: 0;
+  padding-top: 1em;
   /* padding-bottom: -10px; */
   text-align: center;
   z-index: 7;
@@ -131,32 +127,36 @@ td {
   font-weight: 400;
   margin: 0px;
   margin-top: -5px;
-  margin-bottom: 5px;
+  /* margin-bottom: 5px; */
 }
 
 .alert-message {
-  display: block;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  text-align: left;
   background-color: #ffffff;
-  padding: 10px;
-  padding-left: 5em;
-  width: 77%;
-  height: 50px;
+  padding: 5px 10px 5px 15px;
+  width: auto;
+  height: 7em;
   border-radius: 5px;
-  margin: 0px;
-  margin-bottom: 5px;
+  margin: 5px;
+  /* overflow-y: auto; */
+  
   /* border: 1px solid lime; */
 }
 
 .alert-message p {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   height: 100%;
   margin: 0px;
   padding-left: 5em;
   padding-right: 3em;
-  /* margin-left: 1em; */
-  align-items: center;
-  justify-content: center;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .hazard-level-button {
