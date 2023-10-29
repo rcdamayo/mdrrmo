@@ -47,21 +47,21 @@ if (!isset($_SESSION['id'])) {
             die("Connection failed: " . $conn->connect_error);
         }
 
-        $sql = "SELECT image, employee_id FROM users WHERE id = $logged_in_id";
+        $sql = "SELECT * FROM users WHERE id = $logged_in_id";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             // Output data of each row
             while ($row = $result->fetch_assoc()) {
                 $image = $row["image"];
-                $employee_id = $row["employee_id"];
+                $first_name = $row["first_name"][0] . ".";
+                $last_name = $row["last_name"];
                 echo "<div class='dropdown'>
-                        <button class='dropbtn'><img src='$image' alt='User Image'>$employee_id
+                        <button class='dropbtn'><img src='$image' alt='User Image'>$first_name $last_name
                             <i class='fa fa-caret-down' style='margin-left: 1em;'></i>
                         </button>
                         <div class='dropdown-content'>
-                            <a href='logout.php' style='width: 14em; padding: 0; border-top: 1px solid #e5a920; font-size: 12px; padding-left: 0;'>
-                                <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 256 256'><path d='M112,216a8,8,0,0,1-8,8H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h56a8,8,0,0,1,0,16H48V208h56A8,8,0,0,1,112,216Zm109.66-93.66-40-40A8,8,0,0,0,168,88v32H104a8,8,0,0,0,0,16h64v32a8,8,0,0,0,13.66,5.66l40-40A8,8,0,0,0,221.66,122.34Z'></path></svg>
+                            <a href='logout.php' style='height: 3em;width: 14em; padding: 0; border-top: 1px solid #e5a920; font-size: 12px;'>
                                 <p>Logout</p>
                             </a>
                         </div>
@@ -292,17 +292,17 @@ $conn->close();
 </div>
 
     <div class="division">
-
-    <div class="early-alert">
     <form action="store_flood_alert.php" method="post" onsubmit="submitForm(event)">
+    <input class="early-alert-btn" type="submit" value="DONE">
+    
+    <div class="early-alert">
     <h3>EMERGENCY ALERT & WARNING</h3>
-    <input type="submit" value="DONE">
     <div class="alert-message">
-        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#f9b314" viewBox="0 0 256 256" style="position: absolute; top: 40%; left: 5%;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#f9b314" viewBox="0 0 256 256" style="position: absolute; top: 45%; left: 5%;">
             <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path>
         </svg>
         
-        <textarea id="flood_alert" name="flood_alert" placeholder="Enter Emergency Flood Alert/Warning Message here." onkeydown="if(event.keyCode === 13){if(event.shiftKey){this.value += '\n'} else {event.preventDefault(); this.form.submit()}}"></textarea>
+        <p><textarea id="flood_alert" name="flood_alert" placeholder="Enter Emergency Flood Alert/Warning Message here." onkeydown="if(event.keyCode === 13){if(!event.shiftKey){this.value += '\n'; event.preventDefault();}}"></textarea></p>
             
         </form>
     </div>

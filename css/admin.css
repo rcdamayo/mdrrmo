@@ -188,6 +188,7 @@ body {
   .dropdown-content {
     display: none;
     position: absolute;
+    text-align: center;
     background-color: #f9b314;
     width: 20em;
     margin: 0;
@@ -208,7 +209,7 @@ body {
   .dropdown-content a {
     display: flex;
     flex-direction: row;
-    justify-content: left;
+    justify-content: center;
     align-items: center;
     position: fixed;
     background-color: #f9b314;

@@ -13,7 +13,7 @@ if (!isset($_SESSION['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disaster Ready: Flood Advisories</title>
+    <title>Disaster Ready Admin: Flood Advisories</title>
     <link rel="stylesheet" href="css/admin.css">
     <link rel="stylesheet" href="css/admin-population.css">
     <link rel="icon" href="images/icon.png">
@@ -47,21 +47,21 @@ if (!isset($_SESSION['id'])) {
             die("Connection failed: " . $conn->connect_error);
         }
 
-        $sql = "SELECT image, employee_id FROM users WHERE id = $logged_in_id";
+        $sql = "SELECT * FROM users WHERE id = $logged_in_id";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             // Output data of each row
             while ($row = $result->fetch_assoc()) {
                 $image = $row["image"];
-                $employee_id = $row["employee_id"];
+                $first_name = $row["first_name"][0] . ".";
+                $last_name = $row["last_name"];
                 echo "<div class='dropdown'>
-                        <button class='dropbtn'><img src='$image' alt='User Image'>$employee_id
+                        <button class='dropbtn'><img src='$image' alt='User Image'>$first_name $last_name
                             <i class='fa fa-caret-down' style='margin-left: 1em;'></i>
                         </button>
                         <div class='dropdown-content'>
-                            <a href='logout.php' style='width: 14em; padding: 0; border-top: 1px solid #e5a920; font-size: 12px; padding-left: 0;'>
-                                <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 256 256'><path d='M112,216a8,8,0,0,1-8,8H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h56a8,8,0,0,1,0,16H48V208h56A8,8,0,0,1,112,216Zm109.66-93.66-40-40A8,8,0,0,0,168,88v32H104a8,8,0,0,0,0,16h64v32a8,8,0,0,0,13.66,5.66l40-40A8,8,0,0,0,221.66,122.34Z'></path></svg>
+                            <a href='logout.php' style='height: 3em;width: 14em; padding: 0; border-top: 1px solid #e5a920; font-size: 12px;'>
                                 <p>Logout</p>
                             </a>
                         </div>
@@ -151,16 +151,16 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     echo "<form id='updateForm' onsubmit='submitForm(event)' method='post' action='update_population.php'>";
-    echo "<h2 class='population-header'>UPDATE POPULATION DATA</h2>";
+    echo "<h2 class='population-header'>POPULATION DATA</h2>";
     echo "<button class='update-population' type='submit'>UPDATE</button>";
     echo "<div class='population-container'>";
     echo "<table class='population-table'>";
     echo "<tr>
-            <th>Barangay</th>
+            <th style='border-top-left-radius: 10px;'>Barangay</th>
             <th>Population (2015)</th>
             <th>Population (2020)</th>
             <th>Population Change</th>
-            <th>Annual Population Growth Rate</th>
+            <th style='border-top-right-radius: 10px;'>Annual Population Growth Rate</th>
         </tr>";
 
     while ($row = $result->fetch_assoc()) {
@@ -168,8 +168,8 @@ if ($result->num_rows > 0) {
         echo "<td>" . $row['barangay'] . "</td>";
         echo "<td><input type='text' name='population_2015[]' value='" . $row['population_2015'] . "'></td>";
         echo "<td><input type='text' name='population_2020[]' value='" . $row['population_2020'] . "'></td>";
-        echo "<td><input type='text' name='population_change[]' value='" . $row['population_change'] . '%' . "'></td>";
-        echo "<td><input type='text' name='rate[]' value='" . $row['rate'] . '%' . "'></td>";
+        echo "<td><input type='text' style='width: 3.5em;' name='population_change[]' value='" . $row['population_change'] . "'> %</td>";
+        echo "<td><input type='text' style='width: 3.5em;' name='rate[]' value='" . $row['rate'] . "'> %</td>";
         echo "</tr>";
     }
     echo "</table>";
@@ -180,17 +180,16 @@ if ($result->num_rows > 0) {
 $conn->close();
 ?>
   </div>
-  </div>
+</div>
 
-
-  <!-- AGE GROUP -->
   <div class="division">
 
 <!-- HOUSEHOLD DATA -->
-  <form id='editForm' method='post'>
-        <button type='button' class='submit-prone' onclick='updateData()'>UPDATE</button>
+  <form id='editHousehold' method='post'>
+  <h2 class='ageGroup-header'>HOUSEHOLD DATA</h2>
+        <button type='button' class='submit-prone' onclick='updateHousehold()'>UPDATE</button>
 
-        <div class="prone-table">
+        <div class="household-container">
 
         <?php
     // Connect to your MySQL database
@@ -211,12 +210,12 @@ $conn->close();
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        echo "<table class='table-data'>
+        echo "<table class='household-table'>
                 <tr>
-                    <th>Year</th>
+                    <th style='border-top-left-radius: 10px;'>Year</th>
                     <th>Household Population</th>
                     <th>No. of Households</th>
-                    <th>Average Household Size</th>
+                    <th style='border-top-right-radius: 10px;'>Average Household Size</th>
                 </tr>";
 
         while ($row = $result->fetch_assoc()) {
@@ -239,8 +238,8 @@ $conn->close();
     $conn->close();
 ?>
 
+        </div>
 
-  </div>
 
   <?php
 // Connect to your MySQL database
@@ -261,22 +260,22 @@ $sql = "SELECT * FROM age_group";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    echo "<form id='updateForm' onsubmit='submitForm(event)' method='post' action='update_ageGroup.php'>";
-    echo "<h2 class='ageGroup-header'>UPDATE AGE GROUP DATA</h2>";
-    echo "<button class='ageGroup-population' type='submit'>UPDATE</button>";
+    echo "<form id='updateForm' onsubmit='updatePopulation(event)' method='post' action='update_ageGroup.php'>";
+    echo "<h2 class='ageGroup-header'>AGE GROUP DATA</h2>";
+    echo "<button class='submit-ageGroup' type='submit'>UPDATE</button>";
     echo "<div class='ageGroup-container'>";
     echo "<table class='ageGroup-table'>";
     echo "<tr>
-            <th>Age Group</th>
+            <th style='border-top-left-radius: 10px;'>Age Group</th>
             <th>Population (2015)</th>
-            <th>Age Group Percentage</th>
+            <th style='border-top-right-radius: 10px;'>Age Group Percentage</th>
         </tr>";
 
     while ($row = $result->fetch_assoc()) {
         echo "<tr>";
         echo "<td>" . $row['age_group'] . "</td>";
         echo "<td><input type='text' name='population_2015[]' value='" . $row['population_2015'] . "'></td>";
-        echo "<td><input type='text' name='age_percentage[]' value='" . $row['age_percentage'] . '%' . "'></td>";
+        echo "<td><input type='text' style='width: 5em;' name='age_percentage[]' value='" . $row['age_percentage'] . "'> %</td>";
         echo "</tr>";
     }
     echo "</table>";
@@ -289,7 +288,25 @@ $conn->close();
 
 
 <div id="snackbar"></div>
+
+  </div>
+</div>
+</div>
 <script>
+    function showSnackbar(message) {
+        var snackbar = document.getElementById("snackbar");
+        snackbar.textContent = message;
+        snackbar.style.visibility = "visible";
+        setTimeout(function() {
+            snackbar.style.opacity = 1;
+        }, 1);
+        setTimeout(function() {
+            snackbar.style.opacity = 0;
+        }, 2500);
+        setTimeout(function() {
+            snackbar.style.visibility = "hidden";
+        }, 3000);
+    }
 
     function updateAge() {
         var form = document.getElementById("editAge");
@@ -343,7 +360,7 @@ cells.forEach(function(cell) {
 });
 
 function addRow() {
-    var tables = document.getElementsByClassName('table-data');
+    var tables = document.getElementsByClassName('household-table');
     var table = tables[0]; // Assuming the first table with the class "map-markers-table"
 
     var newRow = table.insertRow(-1);
@@ -362,6 +379,7 @@ function addRow() {
 
 function updatePopulation() {
         var form = document.getElementById("editPopulation");
+        event.preventDefault();
         var formData = new FormData(form);
 
         var xhr = new XMLHttpRequest();
@@ -383,7 +401,25 @@ function updatePopulation() {
         xhr.send(formData);
     }
 </script>
+</div>
+
+<div class="footer">
+  <div class="foot-txt">
+  <img src="images/footer.png" style="height: 100%; width: 80%;">
+  </div>
+
+  <div class="foot-txt">
+      <font style="font-weight: 700;">REPUBLIC OF THE PHILIPPINES</font>
+      All content is in the public domain unless otherwise stated.
+  </div>
+
+  <div class="foot-txt">
+    <font style="font-weight: 700;">ABOUT GOVPH</font>
+    Learn more about the Philippine government, its structure, how government works and the people behind it.
   </div>
 </div>
+
+
+
 </body>
 </html>
