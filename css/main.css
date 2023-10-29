@@ -64,6 +64,7 @@ body {
 }
 
 .topnav a:first-child {
+    display: flex;
     width: 80px;
     background-color: red;
 }
