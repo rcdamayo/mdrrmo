@@ -77,19 +77,7 @@
         </p>
 
         <?php
-// Replace these with your actual database credentials
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "edr_db";
-
-// Create a connection to the database
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Check the connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'db_connection.php';
 
 echo "<div class='table-container'>";
 echo "<table>";

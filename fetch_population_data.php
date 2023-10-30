@@ -1,16 +1,5 @@
 <?php
-$servername = "localhost";  // Replace with your MySQL server name
-$username = "root";     // Replace with your MySQL username
-$password = "";     // Replace with your MySQL password
-$dbname = "edr_db"; // Replace with your database name
-
-// Create a connection to the database
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check for connection errors
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'db_connection.php';
 
 // Query the database to fetch the data
 $sql = "SELECT barangay, population_2015, population_2020 FROM population_data";

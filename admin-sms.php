@@ -34,18 +34,7 @@ if (!isset($_SESSION['id'])) {
     if(isset($_SESSION['id'])){
         $logged_in_id = $_SESSION['id'];
 
-        // Connect to your MySQL database
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $database = "edr_db";
-
-        $conn = new mysqli($servername, $username, $password, $database);
-
-        // Check the connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        include 'db_connection.php';
 
         $sql = "SELECT image, employee_id FROM users WHERE id = $logged_in_id";
         $result = $conn->query($sql);
@@ -190,16 +179,7 @@ if (!isset($_SESSION['id'])) {
       <h1>LIST OF CONTACTS</h1>
 
       <?php
-      $servername = "localhost";
-$username = "root";
-$password = "";
-$database = "edr_db";
-
-$conn = new mysqli($servername, $username, $password, $database);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+      include 'db_connection.php';
 
 $sql = "SELECT * FROM registered_no";
 $result = $conn->query($sql);

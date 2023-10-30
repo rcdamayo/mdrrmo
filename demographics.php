@@ -75,18 +75,7 @@
         </p>
 
         <?php
-        $hostname = 'localhost'; // Change this to your database hostname
-        $username = 'root'; // Change this to your database username
-        $password = ''; // Change this to your database password
-        $database_name = 'edr_db'; // Change this to your database name
-
-        // Create a database connection
-        $mysqli = new mysqli($hostname, $username, $password, $database_name);
-
-        // Check if the connection was successful
-        if ($mysqli->connect_error) {
-            die('Connection failed: ' . $mysqli->connect_error);
-        }
+        include 'db_connection.php';
 
         // Query to fetch data from the age_group table
         $query = "SELECT * FROM age_group";
@@ -176,18 +165,7 @@
     <div class="division">
     
     <?php
-// Step 1: Database connection
-$servername = "localhost"; // Change this to your server
-$username = "root"; // Change this to your MySQL username
-$password = ""; // Change this to your MySQL password
-$dbname = "edr_db"; // Change this to your database name
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'db_connection.php';
 
 // Step 2: Fetch data from the database
 $sql = "SELECT year, household_population, no_of_households, average_household_size FROM household_data";
@@ -307,18 +285,7 @@ showGraph('populationChart');
 <!-- SECOND BAR GRAPH -->
 
 <?php
-$hostname = 'localhost'; // Change this to your database hostname
-$username = 'root'; // Change this to your database username
-$password = ''; // Change this to your database password
-$database_name = 'edr_db'; // Change this to your database name
-
-// Create a database connection
-$mysqli = new mysqli($hostname, $username, $password, $database_name);
-
-// Check if the connection was successful
-if ($mysqli->connect_error) {
-    die('Connection failed: ' . $mysqli->connect_error);
-}
+include 'db_connection.php';
 
 // Query to fetch data from the age_group table
 $query = "SELECT * FROM age_group";
@@ -393,18 +360,7 @@ $mysqli->close();
 </script>
 
 <?php
-$hostname = 'localhost'; // Change this to your database hostname
-$username = 'root'; // Change this to your database username
-$password = ''; // Change this to your database password
-$database_name = 'edr_db'; // Change this to your database name
-
-// Create a database connection
-$mysqli = new mysqli($hostname, $username, $password, $database_name);
-
-// Check if the connection was successful
-if ($mysqli->connect_error) {
-    die('Connection failed: ' . $mysqli->connect_error);
-}
+include 'db_connection.php';
 
 // Query to fetch data from the age_group table
 $query = "SELECT * FROM age_group";

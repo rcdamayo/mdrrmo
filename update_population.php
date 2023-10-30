@@ -1,16 +1,5 @@
 <?php
-// Connect to your MySQL database
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "edr_db";
-
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Check the connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'db_connection.php';
 
 // Update the data in the database
 $success = true; // Flag to track if the update was successful

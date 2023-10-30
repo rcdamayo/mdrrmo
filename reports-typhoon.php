@@ -38,34 +38,23 @@ if (!isset($_SESSION['id'])) {
     if(isset($_SESSION['id'])){
         $logged_in_id = $_SESSION['id'];
 
-        // Connect to your MySQL database
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $database = "edr_db";
+        include 'db_connection.php';
 
-        $conn = new mysqli($servername, $username, $password, $database);
-
-        // Check the connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
-        $sql = "SELECT image, employee_id FROM users WHERE id = $logged_in_id";
+        $sql = "SELECT * FROM users WHERE id = $logged_in_id";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             // Output data of each row
             while ($row = $result->fetch_assoc()) {
                 $image = $row["image"];
-                $employee_id = $row["employee_id"];
+                $first_name = $row["first_name"][0] . ".";
+                $last_name = $row["last_name"];
                 echo "<div class='dropdown'>
-                        <button class='dropbtn'><img src='$image' alt='User Image'>$employee_id
+                        <button class='dropbtn'><img src='$image' alt='User Image'>$first_name $last_name
                             <i class='fa fa-caret-down' style='margin-left: 1em;'></i>
                         </button>
                         <div class='dropdown-content'>
-                            <a href='logout.php' style='width: 14em; padding: 0; border-top: 1px solid #e5a920; font-size: 12px; padding-left: 0;'>
-                                <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 256 256'><path d='M112,216a8,8,0,0,1-8,8H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h56a8,8,0,0,1,0,16H48V208h56A8,8,0,0,1,112,216Zm109.66-93.66-40-40A8,8,0,0,0,168,88v32H104a8,8,0,0,0,0,16h64v32a8,8,0,0,0,13.66,5.66l40-40A8,8,0,0,0,221.66,122.34Z'></path></svg>
+                            <a href='logout.php' style='height: 3em;width: 14em; padding: 0; border-top: 1px solid #e5a920; font-size: 12px;'>
                                 <p>Logout</p>
                             </a>
                         </div>
@@ -144,8 +133,6 @@ if (!isset($_SESSION['id'])) {
   <p style="margin-top: 8.5%; font-style: italic; font-size: 12px;">
     Example: Storm Surge in every Sitio/Purok/Zone/Block/Street
   </p>
-
-  <div id="print">Print</div>
 
 <div class="division">
   <form action="typhoon_report.php" method="POST">
@@ -249,7 +236,7 @@ if (!isset($_SESSION['id'])) {
       </div>
   </div>
         
-  <div class="textarea-wrapper-row" style="margin-top: 1.6em;width: 68%;">
+  <div class="textarea-wrapper-row" style="margin-top: 1.6em;">
     <div class="textarea-wrapper">
     <div class="identifier">Adult</div>
 
@@ -268,48 +255,36 @@ if (!isset($_SESSION['id'])) {
       <div class="textarea-wrapper">
         <div class="identifier2">60 y/o and above</div>
         <div class="placeholder">Male</div>
-          <input type="number" name="adult2M" style="width: 50%;">
+          <input type="number" name="adult2M">
 
         <div class="placeholder" style="left: 50%;">Female</div>
-          <input type="number" name="adult2F" style="width: 50%;">
+          <input type="number" name="adult2F">
       </div>
     </div>
     </div>
  
 
-  <div class="textarea-wrapper" style="width: 70%;">
+  <div class="textarea-wrapper" style="width: 42%; margin-left: 0.1em; margin-top: 1.6em; padding: 0;">
     <div class="identifier">Pregnant Women</div>
     <div class="outer-wrapper">
       <div class="textarea-wrapper">
-        <input type="number" name="pregnant" style="border-radius: 50px;">
+        <input type="number" name="pregnant" style="width: 50%; margin-top: 0em;margin-right: 0;">
       </div>
     </div>
   </div>
+  <div class="buttons-container">
+  <button type="submit" value="Add Typhoon Report" id="done">Done</button>
+  <button type="button" id="print">Print</button>
+  </div>
   </div> 
 
-
-  <div class="textarea-wrapper-row" style="margin-top: -1.3em;">
-    <button type="submit" value="Add Flood Report" id="done">Done</button>
-  </div>
 </form>
 </div>
 </div>
 
 <div class="main" style="display: flex; justify-content: center;">
 <?php
-// Database connection settings
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "edr_db";
-
-// Create a connection to the database
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Check the connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'db_connection.php';
 
 // SQL query to fetch data
 $sql = "SELECT * FROM typhoon_report";
@@ -339,8 +314,8 @@ if ($result->num_rows > 0) {
     echo '<div class="table-container">';
     echo "<table>";
             echo "<tr>
-                <th rowspan='3' style='min-width: 200px;'>Sitio/Purok/Zone/Block/Street</th>
-                <th rowspan='3' style='min-width: 100px;'>No. of Families</th>
+                <th rowspan='3' style='min-width: 10em;'>Sitio / Purok / Zone / Block / Street</th>
+                <th rowspan='3'>No. of Families</th>
                 <th rowspan='2' colspan='3'>No. of Persons</th>
                 <th colspan='10'>Children (Age 17 and Below)</th>
                 <th colspan='4'>Adult</th>
@@ -360,27 +335,27 @@ if ($result->num_rows > 0) {
             </tr>
             
             <tr>
-              <th scope='col'>Male</th>
-              <th scope='col'>Female</th>
-              <th scope='col'>LGBTQ+</th>
-              <th scope='col'>Male</th>
-              <th scope='col'>Female</th>
-              <th scope='col'>Male</th>
-              <th scope='col'>Female</th>
-              <th scope='col'>Male</th>
-              <th scope='col'>Female</th>
-              <th scope='col'>Male</th>
-              <th scope='col'>Female</th>
-              <th scope='col'>Male</th>
-              <th scope='col'>Female</th>
-              <th scope='col'>Male</th>
-              <th scope='col'>Female</th>
-              <th scope='col'>Male</th>
-              <th scope='col'>Female</th>
-              <th scope='col'>Male</th>
-              <th scope='col'>Female</th>
-              <th scope='col'>Male</th>
-              <th scope='col'>Female</th>
+              <th scope='col'>M</th>
+              <th scope='col'>F</th>
+              <th scope='col' style='font-size: 8px;'>LGBTQ+</th>
+              <th scope='col'>M</th>
+              <th scope='col'>F</th>
+              <th scope='col'>M</th>
+              <th scope='col'>F</th>
+              <th scope='col'>M</th>
+              <th scope='col'>F</th>
+              <th scope='col'>M</th>
+              <th scope='col'>F</th>
+              <th scope='col'>M</th>
+              <th scope='col'>F</th>
+              <th scope='col'>M</th>
+              <th scope='col'>F</th>
+              <th scope='col'>M</th>
+              <th scope='col'>F</th>
+              <th scope='col'>M</th>
+              <th scope='col'>F</th>
+              <th scope='col'>M</th>
+              <th scope='col'>F</th>
             </tr>";
 
             foreach ($totals as $totalRow) {

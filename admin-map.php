@@ -39,34 +39,23 @@ if (!isset($_SESSION['id'])) {
     if(isset($_SESSION['id'])){
         $logged_in_id = $_SESSION['id'];
 
-        // Connect to your MySQL database
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $database = "edr_db";
+        include 'db_connection.php';
 
-        $conn = new mysqli($servername, $username, $password, $database);
-
-        // Check the connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
-        $sql = "SELECT image, employee_id FROM users WHERE id = $logged_in_id";
+        $sql = "SELECT * FROM users WHERE id = $logged_in_id";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             // Output data of each row
             while ($row = $result->fetch_assoc()) {
                 $image = $row["image"];
-                $employee_id = $row["employee_id"];
+                $first_name = $row["first_name"][0] . ".";
+                $last_name = $row["last_name"];
                 echo "<div class='dropdown'>
-                        <button class='dropbtn'><img src='$image' alt='User Image'>$employee_id
+                        <button class='dropbtn'><img src='$image' alt='User Image'>$first_name $last_name
                             <i class='fa fa-caret-down' style='margin-left: 1em;'></i>
                         </button>
                         <div class='dropdown-content'>
-                            <a href='logout.php' style='width: 14em; padding: 0; border-top: 1px solid #e5a920; font-size: 12px; padding-left: 0;'>
-                                <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 256 256'><path d='M112,216a8,8,0,0,1-8,8H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h56a8,8,0,0,1,0,16H48V208h56A8,8,0,0,1,112,216Zm109.66-93.66-40-40A8,8,0,0,0,168,88v32H104a8,8,0,0,0,0,16h64v32a8,8,0,0,0,13.66,5.66l40-40A8,8,0,0,0,221.66,122.34Z'></path></svg>
+                            <a href='logout.php' style='height: 3em;width: 14em; padding: 0; border-top: 1px solid #e5a920; font-size: 12px;'>
                                 <p>Logout</p>
                             </a>
                         </div>
@@ -138,7 +127,7 @@ if (!isset($_SESSION['id'])) {
     <div id="map"></div>
 
     <div class="input-container">
-      <h1>&#x1F4CC; UPDATE MARKERS </h1>
+      <h1>UPDATE MARKERS </h1>
 
       <form id='editForm' method='post'>
         <button type='button' class='submit-evac' onclick='updateData()'>UPDATE</button>
@@ -146,18 +135,7 @@ if (!isset($_SESSION['id'])) {
         <div class="evac-table">
 
         <?php
-    // Connect to your MySQL database
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $database = "edr_db";
-
-    $conn = new mysqli($servername, $username, $password, $database);
-
-    // Check the connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    include 'db_connection.php';
 
     // Fetch hazard-prone area data from the database
     $sql = "SELECT * FROM evac_centers";

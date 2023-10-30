@@ -1,17 +1,5 @@
 <?php
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "edr_db";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'db_connection.php';
 
 // Prepare and bind the data
 $stmt = $conn->prepare("INSERT INTO alerts (flood_alert, timestamp) VALUES (?, ?)");

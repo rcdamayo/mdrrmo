@@ -34,18 +34,7 @@ if (!isset($_SESSION['id'])) {
     if(isset($_SESSION['id'])){
         $logged_in_id = $_SESSION['id'];
 
-        // Connect to your MySQL database
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $database = "edr_db";
-
-        $conn = new mysqli($servername, $username, $password, $database);
-
-        // Check the connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        include 'db_connection.php';
 
         $sql = "SELECT * FROM users WHERE id = $logged_in_id";
         $result = $conn->query($sql);
@@ -168,18 +157,7 @@ if (!isset($_SESSION['id'])) {
 
 
 <?php
-// Connect to your MySQL database
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "edr_db";
-
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Check the connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'db_connection.php';
 
 // Fetch hazard-prone area data from the database
 $sql = "SELECT * FROM map_markers";
@@ -316,18 +294,7 @@ $conn->close();
         <div class="prone-table">
 
         <?php
-    // Connect to your MySQL database
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $database = "edr_db";
-
-    $conn = new mysqli($servername, $username, $password, $database);
-
-    // Check the connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    include 'db_connection.php';
 
     // Fetch hazard-prone area data from the database
     $sql = "SELECT id, barangay, status FROM brgys_prone_to_flood";

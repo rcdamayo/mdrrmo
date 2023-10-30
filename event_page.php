@@ -17,18 +17,7 @@ if (isset($_GET['year']) && isset($_GET['month']) && isset($_GET['day'])) {
     }
 
     // You can connect to your database here (e.g., MySQL)
-    // Replace the placeholders with your actual database connection details
-    $db_host = 'localhost';
-    $db_user = 'root';
-    $db_pass = '';
-    $db_name = 'edr_db';
-
-    $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
-
-    if ($conn->connect_error) {
-        // Handle database connection error
-        die("Connection failed: " . $conn->connect_error);
-    }
+    include 'db_connection.php';
 
     // Assuming you have an "events" table with columns: id, event_date, event_name, event_description
     $eventDate = "$year-$month-$day"; // Create a date string in YYYY-MM-DD format

@@ -54,13 +54,13 @@ p, label {
 }
 
 input[type="text"], [type="password"] {
+    display: block;
     width: 90%;
     height: 20px;
     margin: 10px;
     margin-left: 0px;
     padding: 5px 20px;
     box-shadow: 1px 1px 3px #7f7f7f;
-    display: block;
     border-radius: 50px;
     border: 0;
 }

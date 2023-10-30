@@ -119,18 +119,7 @@ document.getElementById('termsCheckbox').addEventListener('change', function() {
 // Function to register a user (replace with your database logic)
 function registerUser($employee_id, $first_name, $middle_name, $last_name, $password, $image_path) {
     // Placeholder for database connection (replace with your actual database connection logic)
-    $servername = "localhost";
-    $username_db = "root";
-    $password_db = "";
-    $dbname = "edr_db";
-
-    // Create a database connection (modify as needed based on your database system)
-    $conn = new mysqli($servername, $username_db, $password_db, $dbname);
-
-    // Check for connection errors
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    include 'db_connection.php';
 
     // Escape user inputs to prevent SQL injection (consider using prepared statements)
     $employee_id = $conn->real_escape_string($employee_id);

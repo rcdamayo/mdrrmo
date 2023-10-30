@@ -55,7 +55,7 @@
     align-items: center;
     background-color: #f9b314;
     height: 3em;
-    width: 29em;
+    width: 28.5em;
     font-size: 16px;
     font-weight: 700;
     /* color: #ffffff; */
@@ -102,25 +102,25 @@
     right: 3em;
     justify-content: center;
     align-items: center;
-    height: 2.3em;
-    width: 7em;
+    height: 2.5em;
+    width: 8em;
     padding: 10px;
     margin: 0;
-    margin-top: 0.5em;
+    margin-top: 0.8em;
     background-color: #04aa6d;
     border: transparent;
     border-radius: 5px;
     color: #ffffff;
-    font-size: 12spx;
+    font-size: 12px;
     font-weight: 600;
-    box-shadow: 3px 3px 5px #5b5b5b;  
+    /* box-shadow: 3px 3px 5px #5b5b5b;   */
     cursor: pointer;
     transition: 0.3s;
     z-index: 9;
   }
   
   .submit-evac:hover {
-    box-shadow: none;
+    background-color: #03be7a;
   }
   
   .add-row {

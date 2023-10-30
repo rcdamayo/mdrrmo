@@ -38,18 +38,7 @@ if (!isset($_SESSION['id'])) {
     if(isset($_SESSION['id'])){
         $logged_in_id = $_SESSION['id'];
 
-        // Connect to your MySQL database
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $database = "edr_db";
-
-        $conn = new mysqli($servername, $username, $password, $database);
-
-        // Check the connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        include 'db_connection.php';
 
         $sql = "SELECT * FROM users WHERE id = $logged_in_id";
         $result = $conn->query($sql);
@@ -144,17 +133,7 @@ if (!isset($_SESSION['id'])) {
     <div class="upcoming-events-container">
     
     <?php
-    // Connect to your database (same code as before)
-    $db_host = 'localhost';
-    $db_user = 'root';
-    $db_pass = '';
-    $db_name = 'edr_db';
-
-    $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    include 'db_connection.php';
 
     // Fetch upcoming events from the database
     $today = date('Y-m-d');

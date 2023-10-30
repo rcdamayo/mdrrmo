@@ -21,13 +21,13 @@
     padding-left: 0px;
 }
 
-p {
+.main p {
     position: absolute;
     font-size: 14px;
     margin: 40px 20px 20px 40px;
 }
 
-p a {
+.main p a {
     text-decoration: none;
     color: #0000ff;
 }
@@ -49,6 +49,10 @@ p a {
     padding: 0;
     margin: 0px;
     position: relative;
+}
+
+.textarea-wrapper-row:first-child {
+    margin-top: 3.6em;
 }
 
 .outer-wrapper {
@@ -79,14 +83,15 @@ p a {
 }
 
 input {
-    display: block;
+    display: flex;
     height: 30px;
     width: 100%;
     /* text-align: right; */
     margin: 25px 7px 0px 7px;
     padding: 10px 20px 0px 20px;
-    border: 3px solid #b9b9b9;
+    box-shadow: 1px 1px 3px #7f7f7f;
     border-radius: 50px;
+    border: 0;
     text-align: center;
 }
 
@@ -97,7 +102,7 @@ input {
     margin: 20px 1px 0px 1px;
     padding: 0px;
     padding-left: 10px;
-    border: 3px solid #b9b9b9;
+    box-shadow: 1px 1px 3px #7f7f7f;
     border-radius: 0px;
     text-align: center;
 }
@@ -126,51 +131,60 @@ input {
     text-wrap: nowrap;
 }
 
+.buttons-container {
+    display: inline-flex;
+    /* border: 1px solid red; */
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
 #print {
     display: inline-flex;
-    position: absolute;
-    right: 5em;
-    top: 8em;
-    margin-left: 1em;
-    width: 10%;
-    height: 3rem;
+    justify-content: center;
+    align-items: center;
+    margin: 0em 1em;
+    margin-top: 3em;
+    width: 8em;
+    height: 3em;
     border: 1px transparent;
-    border-radius: 50px;
+    border-radius: 10px;
     background-color: #f9b314;
     font-size: 14px;
     font-weight: 600;
-    box-shadow: 5px 5px 5px #888;
+    /* box-shadow: 5px 5px 5px #888; */
     cursor: pointer;
     color: #ffffff;
     transition: 0.3s;
-    justify-content: center;
-    align-items: center;
 }
 
 #print:hover {
-    box-shadow: none;
+    /* box-shadow: none; */
     border-style: none;
     background-color: #f9da14;
 }
 
 #done {
-    display: inline-block;
-    /* margin-left: 2em; */
-    width: 30%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    margin-top: 3em;
+    width: 8em;
     height: 3em;
     border: 1px transparent;
-    border-radius: 50px;
+    border-radius: 10px;
     background-color: #043a87;
     font-size: 14px;
     font-weight: 600;
-    box-shadow: 5px 5px 5px #888;
+    /* box-shadow: 5px 5px 5px #888; */
     cursor: pointer;
     color: #ffffff;
     transition: 0.3s;
 }
 
 #done:hover {
-    box-shadow: none;
+    /* box-shadow: none; */
     border-style: none;
     background-color: #0555c5;
 }
@@ -189,6 +203,7 @@ input {
 table {
     border-collapse: collapse;
     width: 100%;
+    table-layout:auto;
     /* margin: 40px; */
 }
 table, th, td {
@@ -197,12 +212,13 @@ table, th, td {
 th, td {
     padding: 8px;
     text-align: center;
-    min-width: 50px;
-    font-size: 14px;
+    min-width: 1em;
+    font-size: 12px;
+    /* white-space: nowrap; */
 }
 
 th {
-    font-size: 14px;
+    font-size: 10px;
     font-weight: 700;
 }
 
