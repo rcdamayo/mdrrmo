@@ -150,9 +150,9 @@ $sql = "SELECT * FROM population_data";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    echo "<form id='updateForm' onsubmit='submitForm(event)' method='post' action='update_population.php'>";
+    echo "<form id='editPopulation' onsubmit='submitForm(event)' method='post'>";
     echo "<h2 class='population-header'>POPULATION DATA</h2>";
-    echo "<button class='update-population' type='submit'>UPDATE</button>";
+    echo "<button type='submit' class='update-population'>UPDATE</button>";
     echo "<div class='population-container'>";
     echo "<table class='population-table'>";
     echo "<tr>
@@ -180,16 +180,55 @@ if ($result->num_rows > 0) {
 $conn->close();
 ?>
   </div>
+
+  <div id="snackbar"></div>
+
+  <script>
+    function showSnackbar(message) {
+    var snackbar = document.getElementById("snackbar");
+    snackbar.textContent = message;
+    snackbar.style.visibility = "visible";
+    setTimeout(function() {
+        snackbar.style.opacity = 1;
+    }, 1);
+    setTimeout(function() {
+        snackbar.style.opacity = 0;
+    }, 2500);
+    setTimeout(function() {
+        snackbar.style.visibility = "hidden";
+    }, 3000);
+}
+
+    function submitForm(event) {
+        event.preventDefault();
+        var form = document.getElementById("editPopulation");
+        var formData = new FormData(form);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "update_population.php", true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var response = xhr.responseText.trim();
+                    if (response.includes('Error')) {
+                        showSnackbar("Error updating records");
+                    } else {
+                        showSnackbar("Records updated successfully");
+                    }
+                } else {
+                    showSnackbar("Error updating records");
+                }
+            }
+        };
+        xhr.send(formData);
+    }
+    </script>
+
 </div>
 
   <div class="division">
 
 <!-- HOUSEHOLD DATA -->
-  <form id='editHousehold' method='post'>
-  <h2 class='ageGroup-header'>HOUSEHOLD DATA</h2>
-        <button type='button' class='submit-prone' onclick='updateHousehold()'>UPDATE</button>
-
-        <div class="household-container">
 
         <?php
     // Connect to your MySQL database
@@ -210,6 +249,11 @@ $conn->close();
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
+        echo "<form id='editHousehold' onsubmit='submitForm(event)' method='post' action='update_household.php'>";
+        echo "<h2 class='ageGroup-header'>HOUSEHOLD DATA</h2>";
+        echo "<button type='submit' class='submit-prone' onclick='updateHousehold()'>UPDATE</button>";
+
+        echo "<div class='household-container'>";
         echo "<table class='household-table'>
                 <tr>
                     <th style='border-top-left-radius: 10px;'>Year</th>
@@ -240,99 +284,25 @@ $conn->close();
 
         </div>
 
-
-  <?php
-// Connect to your MySQL database
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "edr_db";
-
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Check the connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Fetch hazard-prone area data from the database
-$sql = "SELECT * FROM age_group";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    echo "<form id='updateForm' onsubmit='updatePopulation(event)' method='post' action='update_ageGroup.php'>";
-    echo "<h2 class='ageGroup-header'>AGE GROUP DATA</h2>";
-    echo "<button class='submit-ageGroup' type='submit'>UPDATE</button>";
-    echo "<div class='ageGroup-container'>";
-    echo "<table class='ageGroup-table'>";
-    echo "<tr>
-            <th style='border-top-left-radius: 10px;'>Age Group</th>
-            <th>Population (2015)</th>
-            <th style='border-top-right-radius: 10px;'>Age Group Percentage</th>
-        </tr>";
-
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td>" . $row['age_group'] . "</td>";
-        echo "<td><input type='text' name='population_2015[]' value='" . $row['population_2015'] . "'></td>";
-        echo "<td><input type='text' style='width: 5em;' name='age_percentage[]' value='" . $row['age_percentage'] . "'> %</td>";
-        echo "</tr>";
-    }
-    echo "</table>";
-    echo "</form>";
-} else {
-    echo "0 results";
-}
-$conn->close();
-?>
-
-
-<div id="snackbar"></div>
-
-  </div>
-</div>
-</div>
 <script>
-    function showSnackbar(message) {
-        var snackbar = document.getElementById("snackbar");
-        snackbar.textContent = message;
-        snackbar.style.visibility = "visible";
-        setTimeout(function() {
-            snackbar.style.opacity = 1;
-        }, 1);
-        setTimeout(function() {
-            snackbar.style.opacity = 0;
-        }, 2500);
-        setTimeout(function() {
-            snackbar.style.visibility = "hidden";
-        }, 3000);
-    }
-
-    function updateAge() {
-        var form = document.getElementById("editAge");
-        var formData = new FormData(form);
-
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "update_age.php", true);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    var response = xhr.responseText.trim();
-                    if (response.includes('Error')) {
-                        showSnackbar("Error updating records");
-                    } else {
-                        showSnackbar("Records updated successfully");
-                    }
-                } else {
-                    showSnackbar("Error updating records");
-                }
-            }
-        };
-        xhr.send(formData);
-    }
+function showSnackbar(message) {
+    var snackbar = document.getElementById("snackbar");
+    snackbar.textContent = message;
+    snackbar.style.visibility = "visible";
+    setTimeout(function() {
+        snackbar.style.opacity = 1;
+    }, 1);
+    setTimeout(function() {
+        snackbar.style.opacity = 0;
+    }, 2500);
+    setTimeout(function() {
+        snackbar.style.visibility = "hidden";
+    }, 3000);
+}
 
     function updateHousehold() {
     var form = document.getElementById("editHousehold");
+    event.preventDefault();
     var formData = new FormData(form);
 
     var xhr = new XMLHttpRequest();
@@ -370,20 +340,87 @@ function addRow() {
     var cell3 = newRow.insertCell(2);
     var cell4 = newRow.insertCell(3);
 
-    cell1.innerHTML = "<input type='text' name='year[]' value=''>";
+    cell1.innerHTML = "<input type='text' name='new_year[]' value=''>";
     cell2.innerHTML = "<input type='text' name='new_household_population[]' value=''>";
     cell3.innerHTML = "<input type='text' name='new_no_of_households[]' value=''>";
     cell4.innerHTML = "<input type='text' name='new_average_household_size[]' value=''>";
     
 }
+</script>
 
-function updatePopulation() {
-        var form = document.getElementById("editPopulation");
+
+<?php
+// Connect to your MySQL database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "edr_db";
+
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check the connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch hazard-prone area data from the database
+$sql = "SELECT * FROM age_group";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    echo "<form id='editAgeGroup' onsubmit='updateAgeGroup(event)' method='post'>";
+    echo "<h2 class='ageGroup-header'>AGE GROUP DATA</h2>";
+    echo "<button type='submit' class='submit-ageGroup'>UPDATE</button>";
+    echo "<div class='ageGroup-container'>";
+    echo "<table class='ageGroup-table'>";
+    echo "<tr>
+            <th style='border-top-left-radius: 10px;'>Age Group</th>
+            <th>Population (2015)</th>
+            <th style='border-top-right-radius: 10px;'>Age Group Percentage</th>
+        </tr>";
+
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . $row['age_group'] . "</td>";
+        echo "<td><input type='text' name='population_2015[]' value='" . $row['population_2015'] . "'></td>";
+        echo "<td><input type='text' style='width: 5em;' name='age_percentage[]' value='" . $row['age_percentage'] . "'> %</td>";
+        echo "</tr>";
+    }
+    echo "</table>";
+    echo "</form>";
+} else {
+    echo "0 results";
+}
+$conn->close();
+?>
+
+
+<div id="snackbar"></div>
+
+
+<script>
+    function showSnackbar(message) {
+        var snackbar = document.getElementById("snackbar");
+        snackbar.textContent = message;
+        snackbar.style.visibility = "visible";
+        setTimeout(function() {
+            snackbar.style.opacity = 1;
+        }, 1);
+        setTimeout(function() {
+            snackbar.style.opacity = 0;
+        }, 2500);
+        setTimeout(function() {
+            snackbar.style.visibility = "hidden";
+        }, 3000);
+    }
+
+    function updateAgeGroup(event) {
         event.preventDefault();
+        var form = document.getElementById("editAgeGroup");
         var formData = new FormData(form);
 
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "update_population.php", true);
+        xhr.open("POST", "update_ageGroup.php", true);
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
@@ -400,7 +437,14 @@ function updatePopulation() {
         };
         xhr.send(formData);
     }
+
+
 </script>
+
+  </div>
+</div>
+</div>
+
 </div>
 
 <div class="footer">
