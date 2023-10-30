@@ -1,11 +1,5 @@
 <?php
-// Establish a database connection (replace with your credentials)
-$mysqli = new mysqli('localhost', 'root', '', 'edr_db');
-
-// Check for connection errors
-if ($mysqli->connect_error) {
-    die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
-}
+include 'db_connection.php';
 
 // Retrieve event ID from the form
 $event_id = $_POST['eventId'];
