@@ -14,7 +14,7 @@ if (!isset($_SESSION['id'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Disaster Ready: Official Website of MDRRMO Barugo</title>
+  <title>Disaster Ready: Admin</title>
   <link rel="stylesheet" href="css/admin.css">
   <link rel="stylesheet" href="css/admin-home.css">
   <link rel="icon" href="images/icon.png">
@@ -113,7 +113,7 @@ if (!isset($_SESSION['id'])) {
     </a>
 
     <a href="admin-about.php">About</a>
-    <a href="admin-sms.php">SMS</a>
+    <a href="admin-email.php">Email</a>
     <a href="admin-flood.php">Flood</a>
     <a href="admin-home.php" class="active">Home</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">

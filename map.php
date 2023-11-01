@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Disaster Ready: Maps</title>
+  <title>Disaster Ready: Map</title>
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/map.css">
   <link rel="icon" href="images/icon.png">
