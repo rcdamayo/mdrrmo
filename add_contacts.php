@@ -1,6 +1,6 @@
 <?php
 
-include 'db_connection.php';
+include 'db_connection2.php';
 
 // Retrieve event details from the form
 $barangay = $_POST['barangay'];

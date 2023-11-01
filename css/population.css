@@ -101,7 +101,7 @@ div::-webkit-scrollbar-thumb {
     font-weight: 600;
     text-align: center;
     margin-top: 0px;
-    margin: 30px 0px;
+    margin: 1em 0em;
 }
 
 .summary {

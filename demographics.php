@@ -75,7 +75,7 @@
         </p>
 
         <?php
-        include 'db_connection.php';
+        include 'db_connection2.php';
 
         // Query to fetch data from the age_group table
         $query = "SELECT * FROM age_group";
@@ -285,7 +285,7 @@ showGraph('populationChart');
 <!-- SECOND BAR GRAPH -->
 
 <?php
-include 'db_connection.php';
+include 'db_connection2.php';
 
 // Query to fetch data from the age_group table
 $query = "SELECT * FROM age_group";
@@ -360,7 +360,7 @@ $mysqli->close();
 </script>
 
 <?php
-include 'db_connection.php';
+include 'db_connection2.php';
 
 // Query to fetch data from the age_group table
 $query = "SELECT * FROM age_group";

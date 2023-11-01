@@ -1,5 +1,5 @@
 <?php
-include 'db_connection.php';
+include 'db_connection2.php';
 
 // Retrieve event ID from the form
 $event_id = $_POST['eventId'];

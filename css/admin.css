@@ -77,6 +77,7 @@ body {
 .topnav a:nth-child(-n + 6) {
     width: 40px;
     background-color: #f9b314;
+    border-right: 1px solid #e5a920;
     color: #000000;
     text-decoration: none;
     padding: 8px 28px 5px 0px;
@@ -98,7 +99,6 @@ body {
 
 .navcont {
     border: 0px;
-    border-right: 1px solid #e5a920;
     width: 67px;
     margin: 0px;
     height: 40px;

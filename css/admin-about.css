@@ -17,7 +17,7 @@
     padding: 0;
     padding-bottom: 1.5em;
     margin: 0;
-    margin-top: -50px;
+    margin-top: -5em;
     height: 250px;
     /* background-image: url('../images/about.png'); */
     background-attachment: fixed;
@@ -123,7 +123,7 @@
 }
 
 .vertical-line {
-    top: 80px;
+    top: 8em;
     height: 300px;
     border: 2px solid black; /* Change color as needed */
     flex: 1;
@@ -180,15 +180,17 @@ input {
     align-self: center;
     align-items: center;
     /* top: -4em; */
-    left: 36em;
-    height: 35px;
-    width: 7em;
+    left: 40.5em;
+    height: 2.5em;
+    width: 9em;
     padding: 5px;
-    font-size: 16px;
-    font-weight: 800;
+    margin-bottom: 3em;
+    font-size: 14px;
+    font-weight: 900;
     color: #ffffff;
     background-color: #04aa6d;
     border: 0;
+    border-radius: 10px;
     /* box-shadow: 3px 3px 8px #4e4e4e; */
     cursor: pointer;
     transition: 0.3s;

@@ -119,6 +119,10 @@ h2 {
   transition: 0.3s;
 }
 
+.update-population:hover, .submit-prone:hover, .submit-ageGroup:hover {
+  background-color: #01d789;
+}
+
 .add-row {
   display: flex;
   align-self: center;

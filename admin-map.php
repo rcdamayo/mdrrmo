@@ -127,7 +127,7 @@ if (!isset($_SESSION['id'])) {
     <div id="map"></div>
 
     <div class="input-container">
-      <h1>UPDATE MARKERS </h1>
+      <h1>MARKERS </h1>
 
       <form id='editForm' method='post'>
         <button type='button' class='submit-evac' onclick='updateData()'>UPDATE</button>

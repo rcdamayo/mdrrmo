@@ -181,7 +181,7 @@ if (!isset($_SESSION['id'])) {
       <?php
       include 'db_connection.php';
 
-$sql = "SELECT * FROM registered_no";
+$sql = "SELECT * FROM registered_emails";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -189,14 +189,14 @@ if ($result->num_rows > 0) {
       <tr>
         <th>Name</th>
         <th>Barangay</th>
-        <th>Phone</th>
+        <th>Email</th>
       </tr>";
 
     while ($row = $result->fetch_assoc()) {
         echo "<tr>
           <td>" . $row["first_name"] . "<p style='display: inline'> </p>" . $row["last_name"] . "</td>
           <td>" . $row["barangay"] . "</td>
-          <td>" .  $row["phone_no"] . "</td>
+          <td>" .  $row["email"] . "</td>
         </tr>";
     }
 

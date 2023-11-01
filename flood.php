@@ -64,34 +64,8 @@
 </div>
 
 <div class="main">
-  <div class="division">
 
-  
-    <div id="map"></div>
-  
-    <?php
-    include 'db_connection.php';
-
-    // Fetch hazard-prone area data from the database
-    $sql = "SELECT * FROM map_markers";
-    $result = $conn->query($sql);
-
-    $hazardAreas = [];
-
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $hazardAreas[] = [
-                'display' => $row['display_marker'],
-                'lat' => $row['latitude'],
-                'lng' => $row['longitude'],
-                'name' => $row['barangay'],
-                'level' => $row['level']
-            ];
-        }
-    }
-    ?>
-
-  <div class="legend-cont">
+<div class="legend-cont">
     <h3>LEGEND</h3>
       <div class="button-container">
 
@@ -122,15 +96,30 @@
     </div>
   </div>
 
-    
-  <!-- <div class="svg-container">
-  <img src="images/hazard-map1.png">
+    <div id="map"></div>
+  
+    <?php
+    include 'db_connection.php';
 
-    <img src="images/hazard-map2.png" style="left: 50%;">
-  </div> -->
-</div>
+    // Fetch hazard-prone area data from the database
+    $sql = "SELECT * FROM map_markers";
+    $result = $conn->query($sql);
 
-    <div class="division">
+    $hazardAreas = [];
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $hazardAreas[] = [
+                'display' => $row['display_marker'],
+                'lat' => $row['latitude'],
+                'lng' => $row['longitude'],
+                'name' => $row['barangay'],
+                'level' => $row['level']
+            ];
+        }
+    }
+    ?>
+
     <div class="early-alert">
     <h3>EMERGENCY ALERT & WARNING</h3>
     <div class="alert-message">
@@ -161,10 +150,10 @@ if ($result->num_rows > 0) {
   </div>
 </div>
 
-        <h1 style="margin-top: 1em;">BARANGAYS PRONE TO FLOOD</h1>
+        
 
         <div class="prone-table">
-
+          <h1>BARANGAYS PRONE TO FLOOD</h1>
             <?php
 
 include 'db_connection.php';
@@ -197,10 +186,6 @@ $conn->close();
             
         </div>
 
-
-        
-
-    </div>
 
     
 </div>
@@ -248,7 +233,7 @@ $conn->close();
     });
 
    // Initialize Leaflet map
-var map = L.map('map').setView([11.3167, 124.7333], 12); // Coordinates for Barugo, Leyte
+var map = L.map('map').setView([11.2900, 124.8000], 12); // Coordinates for Barugo, Leyte
 
 // Add tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

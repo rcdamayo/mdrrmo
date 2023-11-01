@@ -16,7 +16,8 @@ body {
   position: relative;
   border: 0px;
   /* border: 1px solid #f9b314; */
-  background-color: #f9b314;
+  background-color: #000000;
+  color: #ffffff;
   border-radius: 5px;
   width: 29.5em;
   /* height: 80px; */
@@ -29,6 +30,7 @@ body {
   padding-top: 1em;
   /* padding-bottom: -10px; */
   text-align: center;
+  opacity: 0.9;
   z-index: 7;
   }
   
@@ -46,7 +48,8 @@ body {
     flex-wrap: nowrap;
     align-items: center;
     text-align: left;
-    background-color: #ffffff;
+    background-color: #272727;
+    color: #ffffff;
     padding: 5px 10px 5px 15px;
     width: auto;
     height: 7em;

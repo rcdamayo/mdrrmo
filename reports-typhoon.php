@@ -274,7 +274,7 @@ if (!isset($_SESSION['id'])) {
   </div>
   <div class="buttons-container">
   <button type="submit" value="Add Typhoon Report" id="done">Done</button>
-  <button type="button" id="print">Print</button>
+  <button type="button" id="print" onclick="exportTableToExcel('table.xls')">Save as Excel</button>
   </div>
   </div> 
 
@@ -312,78 +312,78 @@ if ($result->num_rows > 0) {
 
     // Display the table
     echo '<div class="table-container">';
-    echo "<table>";
-            echo "<tr>
-                <th rowspan='3' style='min-width: 10em;'>Sitio / Purok / Zone / Block / Street</th>
-                <th rowspan='3'>No. of Families</th>
-                <th rowspan='2' colspan='3'>No. of Persons</th>
-                <th colspan='10'>Children (Age 17 and Below)</th>
-                <th colspan='4'>Adult</th>
-                <th rowspan='2' colspan='2'>Persons with Disabilities</th>
-                <th rowspan='2' colspan='2'>Persons with Diseases (All Ages)</th>
-                <th rowspan='3' style='min-width: 100px;'>Pregnant Women</th>
+    echo "<table style='border-collapse: collapse; table-layout:auto; border: 1px solid black;'>";
+            echo "<tr style='font-size: 14px;background-color:#043a87; height: 100px;'>
+                <th rowspan='3' style='color: #ffffff; font-weight: 700; text-align: center;padding: 8px;border: 1px solid black; min-width: 10em;'>Sitio / Purok / Zone / Block / Street</th>
+                <th rowspan='3' style='color: #ffffff; font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;'>No. of Families</th>
+                <th rowspan='2' style='color: #ffffff; font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;' colspan='3'>No. of Persons</th>
+                <th colspan='10' style='color: #ffffff; font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;'>Children (Age 17 and Below)</th>
+                <th colspan='4' style='color: #ffffff; font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;'>Adult</th>
+                <th rowspan='2' style='color: #ffffff; font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;' colspan='2'>Persons with Disabilities</th>
+                <th rowspan='2' style='color: #ffffff; font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;' colspan='2'>Persons with Diseases (All Ages)</th>
+                <th rowspan='3' style='color: #ffffff; font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;'>Pregnant Women</th>
                 
             </tr>
-            <tr>
-              <th scope='col' colspan='2'>0-6 mos</th>
-              <th scope='col' colspan='2'>7 mos to 2 y/o</th>
-              <th scope='col' colspan='2'>3-5 y/o</th>
-              <th scope='col' colspan='2'>6-12 y/o</th>
-              <th scope='col' colspan='2'>13-17 y/o</th>
-              <th scope='col' colspan='2'>18-59 y/o</th>
-              <th scope='col' colspan='2'>60 y/o and above</th>
+            <tr style='font-size: 14px;'>
+              <th style='width: 100px; height: 50px; text-align: center;border: 1px solid black;' scope='col' colspan='2'>0-6 mos</th>
+              <th style='width: 100px; height: 50px; text-align: center;border: 1px solid black;' scope='col' colspan='2'>7 mos to 2 y/o</th>
+              <th style='width: 100px; height: 50px; text-align: center;border: 1px solid black;' scope='col' colspan='2'>3-5 y/o</th>
+              <th style='width: 100px; height: 50px; text-align: center;border: 1px solid black;' scope='col' colspan='2'>6-12 y/o</th>
+              <th style='width: 100px; height: 50px; text-align: center;border: 1px solid black;' scope='col' colspan='2'>13-17 y/o</th>
+              <th style='width: 100px; height: 50px; text-align: center;border: 1px solid black;' scope='col' colspan='2'>18-59 y/o</th>
+              <th style='width: 100px; height: 50px; text-align: center;border: 1px solid black;' scope='col' colspan='2'>60 y/o and above</th>
             </tr>
             
             <tr>
-              <th scope='col'>M</th>
-              <th scope='col'>F</th>
-              <th scope='col' style='font-size: 8px;'>LGBTQ+</th>
-              <th scope='col'>M</th>
-              <th scope='col'>F</th>
-              <th scope='col'>M</th>
-              <th scope='col'>F</th>
-              <th scope='col'>M</th>
-              <th scope='col'>F</th>
-              <th scope='col'>M</th>
-              <th scope='col'>F</th>
-              <th scope='col'>M</th>
-              <th scope='col'>F</th>
-              <th scope='col'>M</th>
-              <th scope='col'>F</th>
-              <th scope='col'>M</th>
-              <th scope='col'>F</th>
-              <th scope='col'>M</th>
-              <th scope='col'>F</th>
-              <th scope='col'>M</th>
-              <th scope='col'>F</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;' scope='col'>M</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;' scope='col'>F</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;font-size: 8px;' scope='col'>LGBTQ+</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;' scope='col'>M</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;' scope='col'>F</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;' scope='col'>M</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;' scope='col'>F</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;' scope='col'>M</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;' scope='col'>F</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;' scope='col'>M</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;' scope='col'>F</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;' scope='col'>M</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;' scope='col'>F</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;' scope='col'>M</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;' scope='col'>F</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;' scope='col'>M</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;' scope='col'>F</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;' scope='col'>M</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;' scope='col'>F</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;' scope='col'>M</th>
+              <th style='width: 50px; text-align: center;border: 1px solid black;' scope='col'>F</th>
             </tr>";
 
             foreach ($totals as $totalRow) {
               echo "<tr>
-                  <td>".$totalRow['sitio']."</td>
-                  <td>".$totalRow['families']."</td>
-                  <td>".$totalRow['persons_m']."</td>
-                  <td>".$totalRow['persons_f']."</td>
-                  <td>".$totalRow['persons_lgbt']."</td>
-                  <td>".$totalRow['disabilities_m']."</td>
-                  <td>".$totalRow['disabilities_f']."</td>
-                  <td>".$totalRow['diseases_m']."</td>
-                  <td>".$totalRow['diseases_f']."</td>
-                  <td>".$totalRow['children1_m']."</td>
-                  <td>".$totalRow['children1_f']."</td>
-                  <td>".$totalRow['children2_m']."</td>
-                  <td>".$totalRow['children2_f']."</td>
-                  <td>".$totalRow['children3_m']."</td>
-                  <td>".$totalRow['children3_f']."</td>
-                  <td>".$totalRow['children4_m']."</td>
-                  <td>".$totalRow['children4_f']."</td>
-                  <td>".$totalRow['children5_m']."</td>
-                  <td>".$totalRow['children5_f']."</td>
-                  <td>".$totalRow['adult1_m']."</td>
-                  <td>".$totalRow['adult1_f']."</td>
-                  <td>".$totalRow['adult2_m']."</td>
-                  <td>".$totalRow['adult2_f']."</td>
-                  <td>".$totalRow['pregnant']."</td>
+                <td style='text-align: center;'>".$totalRow['sitio']."</td>
+                <td style='text-align: center;'>".$totalRow['families']."</td>
+                <td style='text-align: center;'>".$totalRow['persons_m']."</td>
+                <td style='text-align: center;'>".$totalRow['persons_f']."</td>
+                <td style='text-align: center;'>".$totalRow['persons_lgbt']."</td>
+                <td style='text-align: center;'>".$totalRow['children1_m']."</td>
+                <td style='text-align: center;'>".$totalRow['children1_f']."</td>
+                <td style='text-align: center;'>".$totalRow['children2_m']."</td>
+                <td style='text-align: center;'>".$totalRow['children2_f']."</td>
+                <td style='text-align: center;'>".$totalRow['children3_m']."</td>
+                <td style='text-align: center;'>".$totalRow['children3_f']."</td>
+                <td style='text-align: center;'>".$totalRow['children4_m']."</td>
+                <td style='text-align: center;'>".$totalRow['children4_f']."</td>
+                <td style='text-align: center;'>".$totalRow['children5_m']."</td>
+                <td style='text-align: center;'>".$totalRow['children5_f']."</td>
+                <td style='text-align: center;'>".$totalRow['adult1_m']."</td>
+                <td style='text-align: center;'>".$totalRow['adult1_f']."</td>
+                <td style='text-align: center;'>".$totalRow['adult2_m']."</td>
+                <td style='text-align: center;'>".$totalRow['adult2_f']."</td>
+                <td style='text-align: center;'>".$totalRow['disabilities_m']."</td>
+                <td style='text-align: center;'>".$totalRow['disabilities_f']."</td>
+                <td style='text-align: center;'>".$totalRow['diseases_m']."</td>
+                <td style='text-align: center;'>".$totalRow['diseases_f']."</td>
+                <td style='text-align: center;'>".$totalRow['pregnant']."</td>
               </tr>";
           }
       
@@ -398,7 +398,42 @@ if ($result->num_rows > 0) {
       ?>
 
 </div>
-
+<script>
+  function exportTableToExcel(filename) {
+    var filename = "MDRRMO_Typhoon_Report.xls";
+    var table = document.querySelector('table');
+    var uri = 'data:application/vnd.ms-excel;base64,';
+    var template =
+      '<html xmlns:x="urn:schemas-microsoft-com:office:excel">' +
+      '<head>' +
+      '<!--[if gte mso 9]>' +
+      '<xml>' +
+      '<x:ExcelWorkbook>' +
+      '<x:ExcelWorksheets>' +
+      '<x:ExcelWorksheet>' +
+      '<x:Name>Sheet 1</x:Name>' +
+      '<x:WorksheetOptions>' +
+      '<x:DisplayGridlines/>' +
+      '</x:WorksheetOptions>' +
+      '</x:ExcelWorksheet>' +
+      '</x:ExcelWorksheets>' +
+      '</x:ExcelWorkbook>' +
+      '</xml>' +
+      '<![endif]-->' +
+      '</head>' +
+      '<body>' +
+      '<table>' + table.innerHTML + '</table>' +
+      '</body>' +
+      '</html>';
+    var base64 = function(s) {
+      return window.btoa(unescape(encodeURIComponent(s)));
+    };
+    var link = document.createElement('a');
+    link.download = filename; // Change the filename here
+    link.href = uri + base64(template);
+    link.click();
+  }
+</script>
 </body>
 </html>
 

@@ -51,6 +51,7 @@ body {
     text-decoration: none;
     font-size: 12px;
     font-weight: 600;
+    transition: 0.2s;
 }
 
 .topnav a:hover {
@@ -59,6 +60,7 @@ body {
 }
 
 .topnav a.active {
+    font-weight: 700;
     color: #043a87;
     fill: #ffffff;
 }
@@ -74,6 +76,7 @@ body {
     background-color: #f9b314;
     color: #000000;
     text-decoration: none;
+    border-right: 1px solid #e5a920;
     padding: 8px 28px 5px 0px;
     margin: 0px;
     font-size: 8px;
@@ -93,12 +96,12 @@ body {
 
 .navcont {
     border: 0px;
-    border-right: 1px solid #e5a920;
     width: 67px;
     margin: 0px;
     height: 40px;
     padding-right: 1px;
 }
+
 
 .navcont svg {
     height: 20px;

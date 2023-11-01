@@ -236,7 +236,7 @@
   border: 1px solid #f9b314;
   background-color: #f9b314;
   border-radius: 5px;
-  width: 95%;
+  width: 100%;
   padding-bottom: 5%;
   align-self: center;
   font-size: 12px;
@@ -253,7 +253,7 @@
   height: 1.5em;
   /* border: 1px solid red; */
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 700;
   margin: 0px;
   /* padding-bottom: 1em; */
   /* margin-left: 1em; */
@@ -294,7 +294,7 @@
   position: relative;
   height: 2.2em;
   width: 20%;
-  margin: 1em 3em -2.7em 0em;
+  margin: 1em 0.5em -2.7em 0em;
   float: right;
   justify-content: center;
   align-items: center;
