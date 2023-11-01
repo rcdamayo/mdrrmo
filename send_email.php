@@ -1,40 +1,59 @@
 <?php
-// Establish a connection to the database
-$servername = "localhost";
-$username = "root"; // Replace with your database username
-$password = ""; // Replace with your database password
-$dbname = "edr_db"; // Replace with your database name
+// Include the Composer autoload file or the PHPMailer file, depending on your setup
+require 'vendor/autoload.php'; // or the path to PHPMailer if not using Composer
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+use PHPMailer\PHPMailer\PHPMailer;
 
-// Check the connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// Fetch email addresses from the residents table
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $database = "edr_db";
 
-// Fetch all email addresses from the database
-$sql = "SELECT * FROM registered_emails";
+    $conn = new mysqli($servername, $username, $password, $database);
+
+    // Check the connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+$sql = "SELECT email FROM residents";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $email = $row["email"];
+    $subject = $_POST['subject'];
+    $message = $_POST['message'];
 
-        // Set the subject and message from the input fields
-        $subject = $_POST['subject'];
-        $message = $_POST['message'];
+    // Initialize PHPMailer
+    $mail = new PHPMailer(true);
+    $mail->isSMTP(); // Set mailer to use SMTP
+    $mail->Host = 'smtp.sendgrid.net'; // Specify main and backup SMTP servers
+    $mail->SMTPAuth = true; // Enable SMTP authentication
+    $mail->Username = 'apikey'; // SMTP username
+    $mail->Password = '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'; // SMTP password
+    $mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
+    $mail->Port = 587; // TCP port to connect to
 
-        // Send email to each address
-        // You can use the Mailgun API or PHP's built-in mail() function to send emails
-        // Example using PHP's mail() function
-        $to = $email;
-        $headers = "From: mailgun@sandboxb341a6c17d2642a7aca021df8f197fa3.mailgun.org" . "\r\n";
+    try {
+        while ($row = $result->fetch_assoc()) {
+            $to_email = $row["email"];
+            $mail->setFrom('damayo714@gmail.com', 'MDRRMO Barugo'); // Replace with your email and name
+            $mail->addAddress($to_email); // Add a recipient
 
-        mail($to, $subject, $message, $headers);
+            $mail->isHTML(true); // Set email format to HTML
+            $mail->Subject = $subject;
+            $mail->Body = $message;
+
+            $mail->send();
+            echo "Email successfully sent to $to_email<br>";
+            $mail->clearAddresses(); // Clear all addresses for the next iteration
+        }
+    } catch (Exception $e) {
+        echo "Email sending failed. Error: {$mail->ErrorInfo}";
     }
 } else {
-    echo "No results found in the database.";
+    echo "No results found";
 }
 
+// Close the database connection
 $conn->close();
 ?>

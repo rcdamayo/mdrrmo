@@ -119,9 +119,10 @@ if (!isset($_SESSION['id'])) {
 <div class="main">
   <div class="division">
     <div class="register-container">
-      <h1>REGISTER MOBILE NO.</h1>
+      <h1>Register Email</h1>
 
       <form action="add_contacts.php" method="POST">
+      <button type="submit">REGISTER</button>
       <div class="input-container">
         <input type="text" name="firstName" placeholder="First Name">
         <input type="text" name="middleInitial" placeholder="Middle Initial">
@@ -169,19 +170,19 @@ if (!isset($_SESSION['id'])) {
           <option value="Santarin">Santarin</option>
           <option value="Tutug-an">Tutug-an</option>
         </select>
-        <input type="text" name="phoneNo" placeholder="Phone No." maxlength="11">
-        <button type="submit">REGISTER</button>
+        <input type="email" name="email" placeholder="Email Address">
+        <input type="number" name="phoneNo" placeholder="Phone No.">
       </form>
       </div>
     </div>
 
     <div class="list-container">
-      <h1>LIST OF CONTACTS</h1>
+      <h1>Registered Emails</h1>
 
       <?php
       include 'db_connection.php';
 
-$sql = "SELECT * FROM registered_emails";
+$sql = "SELECT * FROM residents";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -190,6 +191,7 @@ if ($result->num_rows > 0) {
         <th>Name</th>
         <th>Barangay</th>
         <th>Email</th>
+        <th>Phone No.</th>
       </tr>";
 
     while ($row = $result->fetch_assoc()) {
@@ -197,6 +199,7 @@ if ($result->num_rows > 0) {
           <td>" . $row["first_name"] . "<p style='display: inline'> </p>" . $row["last_name"] . "</td>
           <td>" . $row["barangay"] . "</td>
           <td>" .  $row["email"] . "</td>
+          <td>" . $row["phone_no"] . "</td>
         </tr>";
     }
 
@@ -215,13 +218,13 @@ $conn->close();
 
   <div class="division">
 
-  
+  <form id="emailForm" method="post" action="send_email2.php">
     <div class="compose-container">
-      <h1 style="width: 93.5%;">COMPOSE MESSAGE</h1>
+      <h1 style="width: 93.5%;">Compose Email</h1>
 
       <div class="input-container">
         <select name="barangay">
-            <option value="">Barangay</option>
+            <option value="All">All</option>
             <option value="abango">Abango</option>
             <option value="amahit">Amahit</option>
             <option value="balire">Balire</option>
@@ -261,13 +264,22 @@ $conn->close();
             <option value="tutug_an">Tutug-an</option>
           </select>
 
-          <button type="submit" name="compose">SEND</button>
+          <!-- <button type="submit" name="compose"> -->
+          <button type="submit" value="Send Email">SEND</button>
+      </div>
+      <div class="input-container">
+        <input type="email" id="email" name="email" placeholder="Email Address" required>
+      </div>
+
+      <div class="input-container">
+        <input type="text" id="subject" name="subject" placeholder="Subject" required>
       </div>
 
           <div class="input-container">
-            <textarea name="compose-sms" placeholder="Enter message here..."></textarea>
+          <textarea id="message" name="message" rows="4" cols="50" Placeholder="Enter Message here..." required></textarea>
           </div>
     </div>
+    </form>
   </div>
 
 
@@ -296,6 +308,39 @@ $conn->close();
 
 
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('#emailForm').submit(function (e) {
+            e.preventDefault();
+            var emailData = {
+                email: $('#email').val(),
+                subject: $('#subject').val(),
+                message: $('#message').val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "https://api.mailgun.net/v3/sandboxb341a6c17d2642a7aca021df8f197fa3.mailgun.org/messages",
+                headers: {
+                    "Authorization": "Basic " + btoa("api:bb6b42441a354b3d161f78a7e8300e37-3e508ae1-30d3ff8c"),
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                data: {
+                    from: "MDRRMO Barugo <mailgun@sandboxb341a6c17d2642a7aca021df8f197fa3.mailgun.org>",
+                    to: emailData.email,
+                    subject: emailData.subject,
+                    text: emailData.message
+                },
+                success: function () {
+                    alert('Email sent successfully!');
+                },
+                error: function () {
+                    alert('Failed to send email.');
+                }
+            });
+        });
+    </script>
 <div class="footer">
   <div class="foot-txt">
   <img src="images/footer.png" style="height: 100%; width: 80%;">

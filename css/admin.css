@@ -62,8 +62,9 @@ body {
 }
 
 .topnav a.active {
-    color: #043a87;
-    fill: #ffffff;
+  font-weight: 700;
+  color: #043a87;
+  fill: #ffffff;
 }
 
 .topnav a:first-child {
