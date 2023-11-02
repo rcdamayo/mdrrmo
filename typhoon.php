@@ -64,7 +64,7 @@
     </a>
 </div>
 
-<iframe src="https://earth.nullschool.net/#current/wind/surface/level/orthographic=123.55,11.87,1751/loc=124.750,11.305" width="100%" height="600px" frameborder="0"></iframe>
+<iframe src="https://earth.nullschool.net/#current/wind/surface/level/orthographic=123.55,11.87,1751/loc=124.750,11.305" width="100%" height="590px" frameborder="0"></iframe>
 
   <div class="early-alert">
     <h3>EMERGENCY ALERT & WARNING</h3>
@@ -100,3 +100,82 @@ if ($result->num_rows > 0) {
   <a href="https://www.pagasa.dost.gov.ph/index.php" target="_blank"><img src="images/pagasa.png">PAGASA</a>
   <a href="https://zoom.earth/maps/satellite/#view=11.91,123.46,5z" target="_blank"><img src="images/zoom_earth.png">ZOOM EARTH</a>
 </div>
+
+<?php
+// Replace with your actual database credentials
+include "db_connection.php";
+
+// Fetch the last row from the table
+$sql = "SELECT * FROM typhoon_bulletin WHERE updated_on >= NOW() - INTERVAL 12 HOUR ORDER BY id DESC LIMIT 1";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+  // Output data of the last row
+  $row = $result->fetch_assoc();
+  $int_name = $row["int_name"];
+  $local_name = $row["local_name"];
+  $location = $row["location"];
+  $wind_speed = $row["wind_speed"];
+  $gust = $row["gust"];
+  $movement = $row["movement"];
+  $direction = $row["direction"];
+  $updated_on = $row["updated_on"];
+} else {
+  $int_name = "N/A";
+  $local_name = "N/A";
+  $location = "N/A";
+  $wind_speed = "N/A";
+  $gust = "N/A";
+  $movement = "N/A";
+  $direction = "N/A";
+  $updated_on = "N/A";
+}
+$conn->close();
+?>
+
+
+<div class="bulletin">
+  <h1>Typhoon Bulletin</h1>
+  <div class="bulletin-info">
+    <table>
+      <tr>
+        <td>International Name:</td>
+        <td><input type="text" name="int_name" id="int_name" value="<?php echo $int_name; ?>" disabled></td>
+      </tr>
+
+      <tr>
+        <td>Local Name:</td>
+        <td><input type="text" name="local_name" id="local_name" value="<?php echo $local_name; ?>" disabled></td>
+      </tr>
+
+      <tr>
+        <td>Location:</td>
+        <td><input type="text" name="location" id="location" value="<?php echo $location; ?>" disabled></td>
+      </tr>
+
+      <tr>
+        <td>Wind Speed:</td>
+        <td><input type="text" name="wind_speed" id="wind_speed" value="<?php echo $wind_speed; ?>" disabled></td>
+      </tr>
+
+      <tr>
+        <td>Gustiness:</td>
+        <td><input type="text" name="gust" id="gust" value="<?php echo $gust; ?>" disabled></td>
+      </tr>
+
+      <tr>
+        <td>Movement:</td>
+        <td><input type="text" name="movement" id="movement" value="<?php echo $movement; ?>" disabled></td>
+      </tr>
+
+      <tr>
+        <td>Direction:</td>
+        <td><input type="text" name="direction" id="direction" value="<?php echo $direction; ?>" disabled></td>
+      </tr>
+
+      <tr>
+        <td>Update On:</td>
+        <td><input type="text" name="updated_on" id="direction" value="<?php echo $updated_on; ?>" disabled></td>
+      </tr>
+    </table>
+  </div>

@@ -118,39 +118,173 @@ if (!isset($_SESSION['id'])) {
     </a>
 </div>
 
-<iframe src="https://earth.nullschool.net/#current/wind/surface/level/orthographic=123.55,11.87,1751/loc=124.750,11.305" width="100%" height="600px" frameborder="0"></iframe>
+<iframe src="https://earth.nullschool.net/#current/wind/surface/level/orthographic=123.55,11.87,1751/loc=124.750,11.305" width="100%" height="590px" frameborder="0"></iframe>
 
-<div class="early-alert">
-  <h3>EMERGENCY ALERT & WARNING</h3>
-  <div class="alert-message">
-      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#f9b314" viewBox="0 0 256 256" style="position: absolute; top: 40%; left: 5%;">
-          <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path>
-      </svg>
-      <?php
-include 'db_connection.php';
-
-// Retrieve the data from the database (latest row within 1 hour)
-$sql = "SELECT * FROM alerts WHERE timestamp >= NOW() - INTERVAL 12 HOUR ORDER BY timestamp DESC LIMIT 1";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-  // Output data of the latest row within 1 hour
-  while ($row = $result->fetch_assoc()) {
-      $alertMessage = $row["typhoon_alert"];
-      if (!empty(trim($alertMessage))) {
-          echo "<p>" . nl2br($alertMessage) . "</p>";
-      } else {
-          echo "<p>No active Emergency Alert and Warning Message as of present time.</p>";
-      }
-  }
-} else {
-  echo "<p>No active Emergency Alert and Warning Message as of present time.</p>";
-}
-?>
-</div>
+  <form action="store_typhoon_alert.php" method="post" onsubmit="submitForm(event)">
+  <div class="early-alert">
+    <h3>EMERGENCY ALERT & WARNING</h3>
+    <button class="early-alert-btn" type="submit" value="Done">Done</button>
+    <div class="alert-message">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#f9b314" viewBox="0 0 256 256" style="position: absolute; top: 40%; left: 5%;">
+            <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path>
+        </svg>
+        <p><textarea id="typhoon_alert" name="typhoon_alert" placeholder="Enter Emergency Flood Alert/Warning Message here." onkeydown="if(event.keyCode === 13){if(!event.shiftKey){this.value += '\n'; event.preventDefault();}}"></textarea></p>
+            
+            </form>
+            <script>
+        function submitForm(event) {
+            event.preventDefault();
+            var form = event.target;
+            var formData = new FormData(form);
+    
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", form.action, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = xhr.responseText.trim();
+                    showSnackbar(response);
+                }
+            };
+            xhr.send(formData);
+        }
+    
+        function showSnackbar(message) {
+            var snackbar = document.getElementById("snackbar");
+            snackbar.textContent = message;
+            snackbar.style.visibility = "visible";
+            setTimeout(function() {
+                snackbar.style.opacity = 1;
+            }, 1);
+            setTimeout(function() {
+                snackbar.style.opacity = 0;
+            }, 2500);
+            setTimeout(function() {
+                snackbar.style.visibility = "hidden";
+            }, 3000);
+        }
+    </script>
+    <div id="snackbar"></div>
+        </div>
 </div>
 
 <div class="container">
 <a href="https://www.pagasa.dost.gov.ph/index.php" target="_blank"><img src="images/pagasa.png">PAGASA</a>
 <a href="https://zoom.earth/maps/satellite/#view=11.91,123.46,5z" target="_blank"><img src="images/zoom_earth.png">ZOOM EARTH</a>
+</div>
+
+
+<?php
+// Replace with your actual database credentials
+include "db_connection.php";
+
+// Fetch the last row from the table
+$sql = "SELECT * FROM typhoon_bulletin WHERE updated_on >= NOW() - INTERVAL 12 HOUR ORDER BY id DESC LIMIT 1";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+  // Output data of the last row
+  $row = $result->fetch_assoc();
+  $int_name = $row["int_name"];
+  $local_name = $row["local_name"];
+  $location = $row["location"];
+  $wind_speed = $row["wind_speed"];
+  $gust = $row["gust"];
+  $movement = $row["movement"];
+  $direction = $row["direction"];
+  $updated_on = $row["updated_on"];
+} else {
+  $int_name = "N/A";
+  $local_name = "N/A";
+  $location = "N/A";
+  $wind_speed = "N/A";
+  $gust = "N/A";
+  $movement = "N/A";
+  $direction = "N/A";
+  $updated_on = "N/A";
+}
+$conn->close();
+?>
+
+
+<div class="bulletin">
+  <h1>Typhoon Bulletin</h1>
+  <form action="add_typhoon_bulletin.php" method="post" onsubmit="submitBulletin(event)">
+  <button type="submit" value="Confirm">Confirm</button>
+  <div class="bulletin-info">
+    <table>
+      <tr>
+        <td>International Name:</td>
+        <td><input type="text" name="int_name" id="int_name" placeholder="<?php echo $int_name; ?>"></td>
+      </tr>
+
+      <tr>
+        <td>Local Name:</td>
+        <td><input type="text" name="local_name" id="local_name" placeholder="<?php echo $local_name; ?>"></td>
+      </tr>
+
+      <tr>
+        <td>Location:</td>
+        <td><input type="text" name="location" id="location" placeholder="<?php echo $location; ?>"></td>
+      </tr>
+
+      <tr>
+        <td>Wind Speed:</td>
+        <td><input type="text" name="wind_speed" id="wind_speed" placeholder="<?php echo $wind_speed; ?>"></td>
+      </tr>
+
+      <tr>
+        <td>Gustiness:</td>
+        <td><input type="text" name="gust" id="gust" placeholder="<?php echo $gust; ?>"></td>
+      </tr>
+
+      <tr>
+        <td>Movement:</td>
+        <td><input type="text" name="movement" id="movement" placeholder="<?php echo $movement; ?>"></td>
+      </tr>
+
+      <tr>
+        <td>Direction:</td>
+        <td><input type="text" name="direction" id="direction" placeholder="<?php echo $direction; ?>"></td>
+      </tr>
+
+      <tr>
+        <td>Update On:</td>
+        <td><input type="text" name="updated_on" id="direction" value="<?php echo $updated_on; ?>" style="outline: none;" disabled></td>
+      </tr>
+    </table>
+  </div>
+  </form>
+  <script>
+        function submitBulletin(event) {
+            event.preventDefault();
+            var form = event.target;
+            var formData = new FormData(form);
+    
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", form.action, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = xhr.responseText.trim();
+                    showSnackbar(response);
+                }
+            };
+            xhr.send(formData);
+        }
+    
+        function showSnackbar(message) {
+            var snackbar = document.getElementById("snackbar");
+            snackbar.textContent = message;
+            snackbar.style.visibility = "visible";
+            setTimeout(function() {
+                snackbar.style.opacity = 1;
+            }, 1);
+            setTimeout(function() {
+                snackbar.style.opacity = 0;
+            }, 2500);
+            setTimeout(function() {
+                snackbar.style.visibility = "hidden";
+            }, 3000);
+        }
+    </script>
+    <div id="snackbar"></div>
 </div>

@@ -123,41 +123,6 @@ if (!isset($_SESSION['id'])) {
 
       <div id="snackbar"></div>
 
-      <script>
-    function submitForm(event) {
-        event.preventDefault();
-        var form = event.target;
-        var formData = new FormData(form);
-
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", form.action, true);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                var response = xhr.responseText.trim();
-                showSnackbar(response);
-            }
-        };
-        xhr.send(formData);
-    }
-
-    function showSnackbar(message) {
-        var snackbar = document.getElementById("snackbar");
-        snackbar.textContent = message;
-        snackbar.style.visibility = "visible";
-        setTimeout(function() {
-            snackbar.style.opacity = 1;
-        }, 1);
-        setTimeout(function() {
-            snackbar.style.opacity = 0;
-        }, 2500);
-        setTimeout(function() {
-            snackbar.style.visibility = "hidden";
-        }, 3000);
-    }
-</script>
-
-
-
 <?php
 include 'db_connection.php';
 
@@ -285,6 +250,38 @@ $conn->close();
         <p><textarea id="flood_alert" name="flood_alert" placeholder="Enter Emergency Flood Alert/Warning Message here." onkeydown="if(event.keyCode === 13){if(!event.shiftKey){this.value += '\n'; event.preventDefault();}}"></textarea></p>
             
         </form>
+        <script>
+    function submitForm(event) {
+        event.preventDefault();
+        var form = event.target;
+        var formData = new FormData(form);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", form.action, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = xhr.responseText.trim();
+                showSnackbar(response);
+            }
+        };
+        xhr.send(formData);
+    }
+
+    function showSnackbar(message) {
+        var snackbar = document.getElementById("snackbar");
+        snackbar.textContent = message;
+        snackbar.style.visibility = "visible";
+        setTimeout(function() {
+            snackbar.style.opacity = 1;
+        }, 1);
+        setTimeout(function() {
+            snackbar.style.opacity = 0;
+        }, 2500);
+        setTimeout(function() {
+            snackbar.style.visibility = "hidden";
+        }, 3000);
+    }
+</script>
     </div>
     </div>
 
