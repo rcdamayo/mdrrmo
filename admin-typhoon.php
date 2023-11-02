@@ -209,7 +209,6 @@ $conn->close();
 <div class="bulletin">
   <h1>Typhoon Bulletin</h1>
   <form action="add_typhoon_bulletin.php" method="post" onsubmit="submitBulletin(event)">
-  <button type="submit" value="Confirm">Confirm</button>
   <div class="bulletin-info">
     <table>
       <tr>
@@ -224,17 +223,17 @@ $conn->close();
 
       <tr>
         <td>Location:</td>
-        <td><input type="text" name="location" id="location" placeholder="<?php echo $location; ?>"></td>
+        <td><input type="text" name="location" id="location" placeholder="<?php echo $location; ?> km/h"></td>
       </tr>
 
       <tr>
         <td>Wind Speed:</td>
-        <td><input type="text" name="wind_speed" id="wind_speed" placeholder="<?php echo $wind_speed; ?>"></td>
+        <td><input type="text" name="wind_speed" id="wind_speed" placeholder="<?php echo $wind_speed; ?> km/h"></td>
       </tr>
 
       <tr>
         <td>Gustiness:</td>
-        <td><input type="text" name="gust" id="gust" placeholder="<?php echo $gust; ?>"></td>
+        <td><input type="text" name="gust" id="gust" placeholder="<?php echo $gust; ?> km/h"></td>
       </tr>
 
       <tr>
@@ -253,6 +252,8 @@ $conn->close();
       </tr>
     </table>
   </div>
+  <button type="submit" value="Confirm">Confirm</button>
+
   </form>
   <script>
         function submitBulletin(event) {

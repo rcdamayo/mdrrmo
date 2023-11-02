@@ -155,12 +155,12 @@ $conn->close();
 
       <tr>
         <td>Wind Speed:</td>
-        <td><input type="text" name="wind_speed" id="wind_speed" value="<?php echo $wind_speed; ?>" disabled></td>
+        <td><input type="text" name="wind_speed" id="wind_speed" value="<?php echo $wind_speed; ?> km/h" disabled></td>
       </tr>
 
       <tr>
         <td>Gustiness:</td>
-        <td><input type="text" name="gust" id="gust" value="<?php echo $gust; ?>" disabled></td>
+        <td><input type="text" name="gust" id="gust" value="<?php echo $gust; ?> km/h" disabled></td>
       </tr>
 
       <tr>

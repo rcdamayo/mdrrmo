@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="css/home.css">
   <link rel="icon" href="images/icon.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+  integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="js/script.js"></script>
 </head>
 <body>
@@ -61,8 +64,9 @@
       <i class="fa fa-bars"></i>
     </a>
 </div>
-
 <div class="main">
+
+
 
   <div class="division">
   <?php
@@ -294,14 +298,171 @@ echo '</div>';
 
   
   <div class="division">
+    <div class="socials">
+    <ul>
+		<li>
+		  <a class="facebook" href="https://www.facebook.com/mdrrmobarugo" target="_blank">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<i class=" fa-brands fa-facebook" aria-hidden="true"></i>
+		  </a>
+		</li>
+		<li>
+		  <a class="map" href="https://maps.app.goo.gl/An7D2A34QZyg9QvW6" target="_blank">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<i class="fa fa-map-marker" aria-hidden="true"></i>
+		  </a>
+		</li>
+		<li>
+		  <a class="google" href="" target="_blank">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<i class="fa fa-envelope" aria-hidden="true"></i>
+		  </a>
+		</li>
+	  </ul>
+      
+    </div>
+
     <div class="clock">
       Philippine Standard Time:
       <div id="clock" style="margin-top: 10px;"></div>
     </div>
 
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125191.32954780909!2d124.6807399445262!3d11.317962096966223!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33080e7accef4379%3A0x59aeb64fdae6fcee!2sBarugo%2C%20Leyte!5e0!3m2!1sen!2sph!4v1694240429866!5m2!1sen!2sph" width="300" height="280" style="border:0;" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125191.32954780909!2d124.6807399445262!3d11.317962096966223!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33080e7accef4379%3A0x59aeb64fdae6fcee!2sBarugo%2C%20Leyte!5e0!3m2!1sen!2sph!4v1694240429866!5m2!1sen!2sph" width="300" height="280" style="border:0;" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
   
-    
+    <div class="hotlines-container">
+      <h1>EMERGENCY HOTLINES</h1>
+
+      <div class="national-hotline">
+        <h2>NATIONAL EMERGENCY HOTLINE</h2>
+        <p>911</p>
+      </div>
+
+      <div class="outer-hotlines">
+        <div class="hotlines">
+          <h2>MDRRMO</h2>
+        </div>
+
+        <div class="hotlines">
+          <h2>...</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="registration">
+      <h1>REGISTER HERE</h1>
+        <form id="addData" action="add_contacts2.php" method="POST" onsubmit="submitForm(event)">
+        <div class="input-container">
+          <input type="text" name="firstName" placeholder="First Name" style="margin-right: 0.5em;">
+          <input type="text" name="lastName" placeholder="Last Name" style="margin-left: 0.5em;">
+        </div>
+
+        <div class="input-container">
+        <select name="barangay">
+          <option value=""></option>
+          <option value="Abango">Abango</option>
+          <option value="Amahit">Amahit</option>
+          <option value="Balire">Balire</option>
+          <option value="Balud">Balud</option>
+          <option value="Bukid">Bukid</option>
+          <option value="Bulod">Bulod</option>
+          <option value="Busay">Busay</option>
+          <option value="Cabarasan">Cabarasan</option>
+          <option value="Cabolo-an">Cabolo-an</option>
+          <option value="Calingcaguing">Calingcaguin</option>
+          <option value="Can-isak">Can-Isak</option>
+          <option value="Canomantag">Canomantag</option>
+          <option value="Cuta">Cuta</option>
+          <option value="Domogdog">Domogdog</option>
+          <option value="Duka">Duka</option>
+          <option value="Guindaohan">Guindaohan</option>
+          <option value="Hiagsam">Hiagsam</option>
+          <option value="Hilaba">Hilaba</option>
+          <option value="Hinugayan">Hinugayan</option>
+          <option value="Ibag">Ibag</option>
+          <option value="Minuhang">Minuhang</option>
+          <option value="Minuswang">Minuswang</option>
+          <option value="Pikas">Pikas</option>
+          <option value="Pitogo">Pitogo</option>
+          <option value="Poblacion Dist. I">Poblacion Dist. I</option>
+          <option value="Poblacion Dist. II">Poblacion Dist. II</option>
+          <option value="Poblacion Dist. III">Poblacion Dist. III</option>
+          <option value="Poblacion Dist. IV">Poblacion Dist. IV</option>
+          <option value="Poblacion Dist. V">Poblacion Dist. V</option>
+          <option value="Poblacion Dist. VI">Poblacion Dist. VI</option>
+          <option value="Pongso">Pongso</option>
+          <option value="Roosevelt">Roosevelt</option>
+          <option value="San Isidro">San Isidro</option>
+          <option value="San Roque">San Roque</option>
+          <option value="Santa Rosa">Santa Rosa</option>
+          <option value="Santarin">Santarin</option>
+          <option value="Tutug-an">Tutug-an</option>
+        </select>
+        </div>
+
+        <div class="input-container">
+        <input type="email" name="email" placeholder="Email Address">
+        </div>
+
+        <div class="input-container">
+        <input type="number" name="phoneNo" placeholder="Phone No.">
+        </div>
+        <button type="submit" onclick='submitForm()'>REGISTER</button>
+    <!-- <input class="early-alert-btn" type="submit" value="DONE"> -->
+
+      </form>
+      </div>
+
+
+      <script>
+    function submitForm() {
+    event.preventDefault();
+    var form = document.getElementById("addData");
+    var formData = new FormData(form);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "update_prone.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                var response = xhr.responseText.trim();
+                if (response.includes('Error')) {
+                    showSnackbar("Error Registering Information");
+                } else {
+                    showSnackbar("Information Successfully Registered");
+                }
+            } else {
+                showSnackbar("Error Registering Information");
+            }
+        }
+    };
+    xhr.send(formData);
+}
+
+    function showSnackbar(message) {
+        var snackbar = document.getElementById("snackbar");
+        snackbar.textContent = message;
+        snackbar.style.visibility = "visible";
+        setTimeout(function() {
+            snackbar.style.opacity = 1;
+        }, 1);
+        setTimeout(function() {
+            snackbar.style.opacity = 0;
+        }, 2500);
+        setTimeout(function() {
+            snackbar.style.visibility = "hidden";
+        }, 3000);
+    }
+</script>
+    </div>
   </div>
 
 </div>
@@ -389,5 +550,8 @@ function updateClock() {
 updateClock(); // Call once to initialize the clock
 setInterval(updateClock, 1000); // Update every second
 </script>
+
+<div id="snackbar"></div>
+
 </body>
 </html>
