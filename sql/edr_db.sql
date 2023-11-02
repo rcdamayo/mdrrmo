@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 28, 2023 at 11:04 AM
+-- Generation Time: Nov 02, 2023 at 03:11 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `disaster_ready`
+-- Database: `edr_db`
 --
 
 -- --------------------------------------------------------
@@ -39,24 +39,24 @@ CREATE TABLE `age_group` (
 --
 
 INSERT INTO `age_group` (`id`, `age_group`, `population_2015`, `age_percentage`) VALUES
-(11, 'Under 1', 644, 1.97),
-(12, '1 to 4', 3000, 9.16),
-(13, '5 to 9', 3868, 11.81),
-(14, '10 to 14', 3804, 11.62),
-(15, '15 to 19', 3548, 10.84),
-(16, '20 to 24', 2960, 9.04),
-(17, '25 to 29', 2269, 6.93),
-(18, '30 to 34', 1903, 5.81),
-(19, '35 to 39', 1735, 5.30),
-(20, '40 to 44', 1665, 5.08),
-(21, '45 to 49', 1584, 4.84),
-(22, '50 to 54', 1431, 4.37),
-(23, '55 to 59', 1278, 3.90),
-(24, '60 to 64', 953, 2.91),
-(25, '65 to 69', 772, 2.36),
-(26, '70 to 74', 546, 1.67),
-(27, '75 to 79', 353, 1.08),
-(28, '80 and over', 432, 1.32);
+(1, 'Under 1', 644, 1.97),
+(2, '1 to 4', 3000, 9.16),
+(3, '5 to 9', 3868, 11.81),
+(4, '10 to 14', 3804, 11.62),
+(5, '15 to 19', 3548, 10.84),
+(6, '20 to 24', 2960, 9.04),
+(7, '25 to 29', 2269, 6.93),
+(8, '30 to 34', 1903, 5.81),
+(9, '35 to 39', 1735, 5.30),
+(10, '40 to 44', 1665, 5.08),
+(11, '45 to 49', 1584, 4.84),
+(12, '50 to 54', 1431, 4.37),
+(13, '55 to 59', 1278, 3.90),
+(14, '60 to 64', 953, 2.91),
+(15, '65 to 69', 772, 2.36),
+(16, '70 to 74', 546, 1.67),
+(17, '75 to 79', 353, 1.08),
+(18, '80 and over', 432, 1.32);
 
 -- --------------------------------------------------------
 
@@ -94,7 +94,30 @@ INSERT INTO `alerts` (`id`, `flood_alert`, `typhoon_alert`, `timestamp`) VALUES
 (34, '', '', '2023-10-28 06:50:52'),
 (35, '', '', '2023-10-28 06:52:05'),
 (36, 'qwqwe', NULL, '2023-10-28 06:54:53'),
-(37, '', NULL, '2023-10-28 07:00:34');
+(37, '', NULL, '2023-10-28 07:00:34'),
+(38, 'asdasdasd', NULL, '2023-10-29 11:05:25'),
+(39, 'asdasd', NULL, '2023-10-29 11:06:19'),
+(40, 'asdasdasd\r\nasdas\r\nda\r\nsda\r\nsd\r\nasd', NULL, '2023-10-29 11:09:00'),
+(41, '', NULL, '2023-10-29 11:09:06'),
+(42, 'asdasd', NULL, '2023-10-31 03:31:08'),
+(43, '', NULL, '2023-10-31 03:31:22'),
+(44, 'asdasd', NULL, '2023-11-02 05:27:20'),
+(45, '', NULL, '2023-11-02 05:27:34'),
+(46, 'asdasd', NULL, '2023-11-02 05:45:17'),
+(47, 'asdasd', NULL, '2023-11-02 05:45:18'),
+(48, NULL, 'asdasd', '2023-11-02 05:47:50'),
+(49, NULL, 'asdasd', '2023-11-02 05:48:14'),
+(50, NULL, '', '2023-11-02 05:49:23'),
+(51, NULL, NULL, '2023-11-02 06:05:14'),
+(52, NULL, NULL, '2023-11-02 06:05:19'),
+(53, NULL, NULL, '2023-11-02 06:05:30'),
+(54, NULL, 'asdasd', '2023-11-02 06:12:10'),
+(55, NULL, 'asdas', '2023-11-02 06:12:51'),
+(56, NULL, 'qewqweqwe', '2023-11-02 06:13:30'),
+(57, NULL, '', '2023-11-02 06:13:39'),
+(58, 'qweqweqweqeqwe', NULL, '2023-11-02 15:01:25'),
+(59, 'qweqweqweqeqwe', NULL, '2023-11-02 15:01:31'),
+(60, '', NULL, '2023-11-02 15:01:37');
 
 -- --------------------------------------------------------
 
@@ -157,26 +180,10 @@ CREATE TABLE `brgys_prone_to_flood` (
 
 INSERT INTO `brgys_prone_to_flood` (`id`, `barangay`, `status`) VALUES
 (14, 'Abango', 'Flood-Prone Area'),
-(15, 'Amahit', 'Flood-Prone');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `composed_messages`
---
-
-CREATE TABLE `composed_messages` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `message` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `composed_messages`
---
-
-INSERT INTO `composed_messages` (`id`, `user_id`, `message`) VALUES
-(1, 1, 'asdasdasd');
+(15, 'Amahit', 'Flood-Prone'),
+(17, 'Bukid', 'Evacuation Alert!'),
+(18, 'Busay', 'Flood Watch'),
+(19, 'Guindaohan', 'Expected Flood in 1 hour');
 
 -- --------------------------------------------------------
 
@@ -243,7 +250,13 @@ INSERT INTO `events` (`id`, `event_date`, `event_name`, `event_time`, `event_des
 (64, '0000-00-00', '', '00:00:00', ''),
 (67, '2023-10-26', 'asgds', '01:24:00', 'zasegsgd'),
 (68, '2023-10-28', 'asfdszedf', '10:30:00', 'asefszfd'),
-(71, '2023-10-28', 'test', '11:15:00', 'akjefbkejfkse jf.esun');
+(71, '2023-10-28', 'test', '11:15:00', 'akjefbkejfkse jf.esun'),
+(72, '2023-10-30', 'Trial', '08:00:00', 'zexdrcftvgbhnjfcgvhbjnmsqwialudsf ls fsdf szef\r\nsdf\r\nzdg\r\n\r\n\r\n\r\naserfseurberaseraseres\r\naesasaesgags\r\naegsrhaseaefuaysbefisetbkfsyeflasefbsybfekshjbdjxhbvkxjdbvkxydvbksf'),
+(75, '2023-10-30', 'Election Day', '00:00:00', 'Vote wisely!'),
+(76, '2023-11-01', 'All Saints Day', '00:00:00', 'asdasdasdasdqweqw qwe'),
+(80, '2023-11-03', 'System Checking', '00:00:00', 'ajhdajsgdjahsd'),
+(81, '2023-11-07', 'Capstone Mock Defense', '10:00:00', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i'),
+(82, '2023-11-06', 'First day for Capstone Defense', '08:00:00', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut fermentum ante in lectus congue imperdiet. Suspendisse faucibus justo enim, sit amet gravida dui egestas nec. Mauris at tortor id elit cursus fermentum ac ut orci. Donec mollis sollicitudin velit');
 
 -- --------------------------------------------------------
 
@@ -284,7 +297,13 @@ CREATE TABLE `flood_report` (
 --
 
 INSERT INTO `flood_report` (`id`, `sitio`, `families`, `persons_m`, `persons_f`, `persons_lgbt`, `disabilities_m`, `disabilities_f`, `diseases_m`, `diseases_f`, `children1_m`, `children1_f`, `children2_m`, `children2_f`, `children3_m`, `children3_f`, `children4_m`, `children4_f`, `children5_m`, `children5_f`, `adult1_m`, `adult1_f`, `adult2_m`, `adult2_f`, `pregnant`) VALUES
-(1, 'Testing la', 5, 34, 40, 4, 4, 6, 6, 5, 4, 3, 3, 4, 2, 4, 8, 7, 11, 8, 5, 5, 5, 4, 5);
+(1, 'Testing la', 5, 34, 40, 4, 4, 6, 6, 5, 4, 3, 3, 4, 2, 4, 8, 7, 11, 8, 5, 5, 5, 4, 5),
+(2, 'aasdasd', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1),
+(3, 'Testing la', 0, -30, -35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -4, 0, -5, 0, 0),
+(4, 'Testing la', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -5, 0, 0),
+(5, 'Testing la', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0),
+(6, 'Test', 4, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23),
+(7, 'try', 1, 2, 3, 4, 19, 20, 21, 22, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 23);
 
 -- --------------------------------------------------------
 
@@ -332,13 +351,13 @@ CREATE TABLE `map_markers` (
 --
 
 INSERT INTO `map_markers` (`id`, `barangay`, `latitude`, `longitude`, `level`, `display_marker`) VALUES
-(1, 'Abango', 11.26790000, 124.7423000, 'Normal', 'y'),
+(1, 'Abango', 11.26790000, 124.7423000, 'High', 'y'),
 (2, 'Amahit', 11.27540000, 124.7492000, 'Normal', 'n'),
 (3, 'Balire', 11.28250000, 124.7326000, 'Low', 'y'),
 (4, 'Balud', 11.33880000, 124.7824000, 'Medium', 'n'),
 (5, 'Bukid', 11.29550000, 124.7437000, 'Normal', 'y'),
 (6, 'Bulod', 11.31530000, 124.7768000, 'Low', 'y'),
-(7, 'Busay', 11.32430000, 124.7824000, 'Medium', 'y'),
+(7, 'Busay', 11.32430000, 124.7824000, 'Normal', 'n'),
 (8, 'Cabarasan', 11.33620000, 124.7658000, 'Medium', 'n'),
 (9, 'Cabolo-an', 11.32900000, 124.8017000, 'Low', 'n'),
 (10, 'Calingcaguing', 11.31070000, 124.7625000, 'Low', 'y'),
@@ -464,24 +483,70 @@ INSERT INTO `population_data` (`id`, `barangay`, `population_2015`, `population_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `registered_no`
+-- Table structure for table `residents`
 --
 
-CREATE TABLE `registered_no` (
+CREATE TABLE `residents` (
   `id` int(255) NOT NULL,
   `barangay` varchar(255) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `middle_initial` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) NOT NULL,
-  `phone_no` bigint(11) NOT NULL
+  `email` varchar(255) DEFAULT NULL,
+  `phone_no` bigint(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `registered_no`
+-- Dumping data for table `residents`
 --
 
-INSERT INTO `registered_no` (`id`, `barangay`, `first_name`, `middle_initial`, `last_name`, `phone_no`) VALUES
-(1, 'Abango', 'Ray Christian', 'S. ', 'Damayo', 9613851427);
+INSERT INTO `residents` (`id`, `barangay`, `first_name`, `middle_initial`, `last_name`, `email`, `phone_no`) VALUES
+(10, 'Abango', 'Ray Christian', 'S', 'Damayo', 'damayo714@gmail.com', 9613851427),
+(11, 'Amahit', 'Jasper', NULL, 'Quiminales', 'jasper.quiminales@evsu.edu.ph', 0),
+(12, 'Roosevelt', 'Christian', '', 'Damayo', 'raychristian.damayo@evsu.edu.ph', 0),
+(13, 'Abango', 'Faith', NULL, 'Uy', 'faithuysingle@gmail.com', 0),
+(14, 'Poblacion Dist. I', 'Akira', NULL, 'Capoquian', 'akiracaps2001@gmail.com', NULL),
+(15, 'Abango', 'testing', '', 'Damayo', NULL, 9613851427),
+(16, 'Abango', 'testing', '', 'Damayo', NULL, 9613851427),
+(17, 'Canomantag', 'try ha ', NULL, 'home', NULL, 9123455621),
+(18, 'Hinugayan', 'try', NULL, 'utro', NULL, 9613851427),
+(19, 'Hiagsam', 'last', NULL, 'na', NULL, 9613851427),
+(20, 'San Isidro', 'final', NULL, 'talaga', NULL, 9613851427),
+(21, 'Duka', 'sure na ', NULL, 'ini', NULL, 9613851427),
+(22, 'Hiagsam', 'sure na ini', NULL, 'talaga', NULL, 9613851427),
+(23, 'Canomantag', 'pls ', NULL, 'lang', NULL, 9613851427),
+(24, 'Canomantag', 'pls ', NULL, 'lang', NULL, 9613851427),
+(25, 'Poblacion Dist. III', 'amo na', NULL, 'talaga ini', NULL, 9613851427),
+(26, 'Hiagsam', 'dre', NULL, 'gud', NULL, 9613851427),
+(27, 'Cabolo-an', 'iausfksd', NULL, 'sidjbs', NULL, 9613851427),
+(28, 'Abango', 'afaesgss', NULL, 'asdfasdf', NULL, 9613851427),
+(29, 'Balire', 'dsfd', NULL, 'fsad', NULL, 9613851427),
+(30, 'Hiagsam', 'sdvzxb', NULL, 'zdxvzvd', NULL, 9613851427);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `typhoon_bulletin`
+--
+
+CREATE TABLE `typhoon_bulletin` (
+  `id` int(255) NOT NULL,
+  `int_name` varchar(255) NOT NULL,
+  `local_name` varchar(255) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  `wind_speed` int(255) DEFAULT NULL,
+  `gust` int(255) DEFAULT NULL,
+  `movement` varchar(255) DEFAULT NULL,
+  `direction` varchar(255) DEFAULT NULL,
+  `updated_on` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `typhoon_bulletin`
+--
+
+INSERT INTO `typhoon_bulletin` (`id`, `int_name`, `local_name`, `location`, `wind_speed`, `gust`, `movement`, `direction`, `updated_on`) VALUES
+(3, 'Haiyan', 'Yolanda', '209 km east-northeast of Palau', 315, 380, '34 km/h', 'West', '2023-11-02 05:38:36');
 
 -- --------------------------------------------------------
 
@@ -523,7 +588,11 @@ CREATE TABLE `typhoon_report` (
 
 INSERT INTO `typhoon_report` (`id`, `sitio`, `families`, `persons_m`, `persons_f`, `persons_lgbt`, `disabilities_m`, `disabilities_f`, `diseases_m`, `diseases_f`, `children1_m`, `children1_f`, `children2_m`, `children2_f`, `children3_m`, `children3_f`, `children4_m`, `children4_f`, `children5_m`, `children5_f`, `adult1_m`, `adult1_f`, `adult2_m`, `adult2_f`, `pregnant`) VALUES
 (1, 'Testing la', 5, 34, 40, 4, 4, 6, 6, 5, 4, 3, 3, 4, 2, 4, 8, 7, 11, 8, 5, 5, 5, 4, 5),
-(2, 'try la', 1, 2, 1, 4, 12, 151, 114, 15, 112, 12, 15, 5, 2, 12, 15, 5, 2, 4, 3, 3, 4, 4, 3);
+(2, 'try la', 1, 2, 1, 4, 12, 151, 114, 15, 112, 12, 15, 5, 2, 12, 15, 5, 2, 4, 3, 3, 4, 4, 3),
+(3, 'qweqwe', 2, 2, 2, 1, 1, 2, 1, 2, 1, 2, 1, 2, 3, 4, 2, 3, 1, 3, 1, 1, 2, 4, 1),
+(4, 'try la', 0, 0, 0, 0, 0, -150, -100, 0, -100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5, 'Testing la', 0, -30, -35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -8, 0, 0, 0, 0, 0, 0),
+(6, 'try la', 0, 0, 0, 0, -10, 0, -10, -10, -10, -10, -10, 0, 0, -10, -10, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -590,13 +659,6 @@ ALTER TABLE `brgys_prone_to_flood`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `composed_messages`
---
-ALTER TABLE `composed_messages`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
-
---
 -- Indexes for table `evac_centers`
 --
 ALTER TABLE `evac_centers`
@@ -639,9 +701,15 @@ ALTER TABLE `population_data`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `registered_no`
+-- Indexes for table `residents`
 --
-ALTER TABLE `registered_no`
+ALTER TABLE `residents`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `typhoon_bulletin`
+--
+ALTER TABLE `typhoon_bulletin`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -671,13 +739,13 @@ ALTER TABLE `age_group`
 -- AUTO_INCREMENT for table `alerts`
 --
 ALTER TABLE `alerts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `applications`
 --
 ALTER TABLE `applications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `app_access`
@@ -689,13 +757,7 @@ ALTER TABLE `app_access`
 -- AUTO_INCREMENT for table `brgys_prone_to_flood`
 --
 ALTER TABLE `brgys_prone_to_flood`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
--- AUTO_INCREMENT for table `composed_messages`
---
-ALTER TABLE `composed_messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `evac_centers`
@@ -707,19 +769,19 @@ ALTER TABLE `evac_centers`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `flood_report`
 --
 ALTER TABLE `flood_report`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `household_data`
 --
 ALTER TABLE `household_data`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `map_markers`
@@ -740,16 +802,22 @@ ALTER TABLE `population_data`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
--- AUTO_INCREMENT for table `registered_no`
+-- AUTO_INCREMENT for table `residents`
 --
-ALTER TABLE `registered_no`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+ALTER TABLE `residents`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `typhoon_bulletin`
+--
+ALTER TABLE `typhoon_bulletin`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `typhoon_report`
 --
 ALTER TABLE `typhoon_report`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -767,12 +835,6 @@ ALTER TABLE `users`
 ALTER TABLE `app_access`
   ADD CONSTRAINT `app_access_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `app_access_ibfk_2` FOREIGN KEY (`app_id`) REFERENCES `applications` (`id`);
-
---
--- Constraints for table `composed_messages`
---
-ALTER TABLE `composed_messages`
-  ADD CONSTRAINT `composed_messages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `registered_no` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
