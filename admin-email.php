@@ -107,6 +107,7 @@ if (!isset($_SESSION['id'])) {
       </div>
     </a>
 
+    <a href="admin-typhoon.php">Typhoon</a>
     <a href="admin-about.php">About</a>
     <a href="admin-sms.php" class="active">Email</a>
     <a href="admin-flood.php">Flood</a>
@@ -218,7 +219,7 @@ $conn->close();
 
   <div class="division">
 
-  <form id="emailForm" method="post" action="send_email2.php">
+  <form id="emailForm" method="post" action="send_email.php">
     <div class="compose-container">
       <h1 style="width: 93.5%;">Compose Email</h1>
 

@@ -26,10 +26,10 @@ if ($result->num_rows > 0) {
     // Initialize PHPMailer
     $mail = new PHPMailer(true);
     $mail->isSMTP(); // Set mailer to use SMTP
-    $mail->Host = 'smtp.sendgrid.net'; // Specify main and backup SMTP servers
+    $mail->Host = 'smtp.mailgun.org'; // Specify main and backup SMTP servers
     $mail->SMTPAuth = true; // Enable SMTP authentication
-    $mail->Username = 'apikey'; // SMTP username
-    $mail->Password = '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'; // SMTP password
+    $mail->Username = 'postmaster@sandboxb341a6c17d2642a7aca021df8f197fa3.mailgun.org'; // SMTP username
+    $mail->Password = '002b2fc37e1a9d45ca2d1e02de543454-3e508ae1-afbf7183'; // SMTP password
     $mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
     $mail->Port = 587; // TCP port to connect to
 

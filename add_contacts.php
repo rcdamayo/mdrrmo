@@ -10,7 +10,7 @@ $last_name = $_POST['lastName'];
 $phone_no = $_POST['phoneNo'];
 
 // Insert event data into the "events" table
-$query = "INSERT INTO registered_no (barangay, first_name, middle_initial, last_name, phone_no) VALUES (?, ?, ?, ?, ?)";
+$query = "INSERT INTO residents (barangay, first_name, middle_initial, last_name, phone_no) VALUES (?, ?, ?, ?, ?)";
 $stmt = $mysqli->prepare($query);
 
 if ($stmt === false) {
@@ -21,7 +21,7 @@ $stmt->bind_param('ssssi', $barangay, $first_name, $middle_initial, $last_name, 
 
 if ($stmt->execute()) {
     
-    header('Location: admin-sms.php');
+    header('Location: admin-email.php');
     $eventAddedSuccessfully = true;
 } else {
     $eventAddedSuccessfully = false;

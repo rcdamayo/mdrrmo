@@ -1,40 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Vonage SMS Sender</title>
+  <title>Send SMS</title>
 </head>
 <body>
-  <h1>Send SMS via Vonage</h1>
-  <label for="phoneNumber">Phone Number:</label>
-  <input type="text" id="phoneNumber" /><br><br>
-  <label for="message">Message:</label>
-  <input type="text" id="message" /><br><br>
-  <button onclick="sendSMS()">Send SMS</button>
+  <h2>Send SMS</h2>
+  <form id="smsForm">
+    <label for="phoneNumber">Phone Number:</label><br>
+    <input type="text" id="phoneNumber" name="phoneNumber"><br><br>
+    <label for="message">Message:</label><br>
+    <textarea id="message" name="message" rows="4" cols="50"></textarea><br><br>
+    <button type="button" onclick="sendSMS()">Send SMS</button>
+  </form>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>
     function sendSMS() {
-      var phoneNumber = $('#phoneNumber').val();
-      var message = $('#message').val();
+      var phoneNumber = document.getElementById('phoneNumber').value;
+      var message = document.getElementById('message').value;
+      var apiKey = 'MzY2YjU1NTc1MDY1NTIzMzM4NjQ0YjZjNjQ2NzZlNzA='; // Replace with your Textlocal API key
+      var sender = 'MDRRMO '; // Replace with your Textlocal sender ID
 
-      $.ajax({
-        url: 'https://rest.nexmo.com/sms/json',
-        type: 'POST',
-        data: {
-          api_key: 'Master (22e5cc02) ',
-          api_secret: 'PajCFQYVmd4ZkQVN',
-          to: phoneNumber,
-          from: '+639613851427',
-          text: message
-        },
-        success: function(data) {
-          alert('SMS sent successfully!');
-        },
-        error: function(err) {
-          console.error('Error:', err);
-          alert('Failed to send SMS.');
+      var url = 'https://api.textlocal.in/send/?apikey=' + apiKey + '&numbers=' + phoneNumber + '&message=' + message + '&sender=' + sender;
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", url, true);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          alert("SMS sent successfully!");
+        } else {
+          alert("Failed to send SMS. Please try again later.");
         }
-      });
+      };
+      xhr.send();
     }
   </script>
 </body>

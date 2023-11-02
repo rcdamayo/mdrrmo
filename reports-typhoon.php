@@ -111,6 +111,7 @@ if (!isset($_SESSION['id'])) {
       </div>
     </a>
 
+    <a href="admin-typhoon.php">Typhoon</a>
     <a href="admin-about.php">About</a>
     <a href="admin-email.php">Email</a>
     <a href="admin-flood.php">Flood</a>
