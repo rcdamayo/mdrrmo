@@ -70,7 +70,7 @@
       <div class="button-container">
 
       <button class="hazard-level-button" data-level="All">
-        <div class="hazard-level-color" style="background-color: #000000;"></div>
+        <div class="hazard-level-color active" style="background-color: #000000;"></div>
         <p>All</p>
       </button>
 
@@ -297,10 +297,19 @@ function getHazardLevel(icon) {
 var buttons = document.querySelectorAll('.hazard-level-button');
 buttons.forEach(function(button) {
     button.addEventListener('click', function() {
+        // Remove the 'active' class from all buttons
+        buttons.forEach(function(btn) {
+            btn.querySelector('.hazard-level-color').classList.remove('active');
+        });
+
+        // Add the 'active' class to the clicked button
+        this.querySelector('.hazard-level-color').classList.add('active');
+
         var selectedLevel = this.getAttribute('data-level');
         updateMarkers(selectedLevel);
     });
 });
+
 
 // Initially, show all markers
 updateMarkers('All');

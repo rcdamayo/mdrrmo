@@ -18,7 +18,7 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $email = $row["email"];
+        $email = $_POST["email"];
 
         // Set the subject and message from the input fields
         $subject = $_POST['subject'];

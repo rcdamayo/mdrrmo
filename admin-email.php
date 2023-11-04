@@ -120,14 +120,139 @@ if (!isset($_SESSION['id'])) {
 
 <div class="main">
   <div class="division">
-    <div class="register-container">
-      <h1>Register Email</h1>
+    <div class="list-container">
+      <h1>Registered Emails</h1>
 
-      <form action="add_contacts.php" method="POST">
-      <button type="submit">REGISTER</button>
+      <?php
+include 'db_connection.php';
+
+$sql = "SELECT * FROM residents";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    echo "<form id='updateForm' onsubmit='updateData(event)' method='post' action='update_email_verif.php'>";
+    // echo "<button class='update-marker' type='submit'>UPDATE</button>";
+    echo "<table>
+      <tr>
+        <th>Name</th>
+        <th>Barangay</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Verification</th>
+      </tr>";
+
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>
+          <td style='min-width: 12em;'>" . $row["first_name"] . "<p style='display: inline;'> </p>" . $row["last_name"] . "</td>
+          <td>" . $row["barangay"] . "</td>
+          <td>0" . $row["phone_no"] . "</td>
+          <td style='min-width: 10em;'>" .  $row["email"] . "</td>
+          <td>
+            <button class='switch' onclick='toggleDisplay(this, " . $row['id'] . ")'>" . ($row['verified'] === 'y' ? '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#0043a8" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path></svg>' : 
+              '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#f9b314" viewBox="0 0 256 256"><path d="M232,128A104,104,0,1,1,128,24,104.13,104.13,0,0,1,232,128Z"></path></svg>') . "</button>
+            <input type='hidden' name='verified[]' value='" . $row['verified'] . "'>
+            <input type='hidden' name='id[]' value='" . $row['id'] . "'>
+          </td>
+        </tr>";
+    }
+
+    echo "</table>";
+    echo "</form>";
+} else {
+    echo "No results found";
+}
+
+$conn->close();
+?>
+
+</div>
+
+<div id='snackbar'></div>
+
+<script>
+function showSnackbar(message) {
+    var snackbar = document.getElementById("snackbar");
+    snackbar.textContent = message;
+    snackbar.style.visibility = "visible";
+    setTimeout(function() {
+        snackbar.style.opacity = 1;
+    }, 1);
+    setTimeout(function() {
+        snackbar.style.opacity = 0;
+    }, 2500);
+    setTimeout(function() {
+        snackbar.style.visibility = "hidden";
+    }, 3000);
+}
+
+function toggleDisplay(button, id) {
+    var currentValue = button.nextElementSibling.value;
+
+    // Toggle the value and button text
+    if (currentValue === 'y') {
+        button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#f9b314" viewBox="0 0 256 256"><path d="M232,128A104,104,0,1,1,128,24,104.13,104.13,0,0,1,232,128Z"></path></svg>';
+        button.nextElementSibling.value = 'n';
+    } else {
+        button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#0043a8" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path></svg>';
+        button.nextElementSibling.value = 'y';
+    }
+}
+
+function updateData(event) {
+    event.preventDefault();
+    var form = document.getElementById("updateForm");
+    var formData = new FormData(form);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "update_email_verif.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                var response = xhr.responseText.trim();
+                if (response.includes('Error')) {
+                    showSnackbar("Error marking email");
+                } else {
+                    showSnackbar("Email verification marked successfully");
+                }
+            } else {
+                showSnackbar("Error marking email");
+            }
+        }
+    };
+    xhr.send(formData);
+}
+</script>
+
+</div>
+
+
+
+
+
+  <div class="division">
+    <div class="verify-register-box">
+      <div class="verify-container">
+        <h1>Verify Email</h1>
+        <p>To successfully confirm the validity of email addresses, enabling them to receive emails, please visit the following page and look for the Authorized Recipients.</p>
+        
+        <a href="https://app.mailgun.com/app/sending/domains/sandboxb341a6c17d2642a7aca021df8f197fa3.mailgun.org" target="_blank">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+          <img src="images/mailgun.png" style="width: 6em;">
+        </a>
+        
+      </div>
+
+
+
+      <div class="register-container">
+        <h1>Register Email</h1>
+
+        <form action="add_contacts.php" method="POST">
       <div class="input-container">
         <input type="text" name="firstName" placeholder="First Name">
-        <input type="text" name="middleInitial" placeholder="Middle Initial">
         <input type="text" name="lastName" placeholder="Last Name">
       </div>
 
@@ -172,105 +297,26 @@ if (!isset($_SESSION['id'])) {
           <option value="Santarin">Santarin</option>
           <option value="Tutug-an">Tutug-an</option>
         </select>
-        <input type="email" name="email" placeholder="Email Address">
-        <input type="number" name="phoneNo" placeholder="Phone No.">
-      </form>
       </div>
+      <div class="input-container">
+        <input type="email" name="email" placeholder="Email Address" style="margin: 5px;">
+      </div>
+
+      <div class="input-container">
+        <input type="number" name="phoneNo" placeholder="Phone No." style="margin: 5px;">
+      </div>
+      <button type="submit">REGISTER</button>
+
+      </form>
     </div>
-
-    <div class="list-container">
-      <h1>Registered Emails</h1>
-
-      <?php
-      include 'db_connection.php';
-
-$sql = "SELECT * FROM residents";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    echo "<table>
-      <tr>
-        <th>Name</th>
-        <th>Barangay</th>
-        <th>Email</th>
-        <th>Phone No.</th>
-      </tr>";
-
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>
-          <td>" . $row["first_name"] . "<p style='display: inline'> </p>" . $row["last_name"] . "</td>
-          <td>" . $row["barangay"] . "</td>
-          <td>" .  $row["email"] . "</td>
-          <td>" . $row["phone_no"] . "</td>
-        </tr>";
-    }
-
-    echo "</table>";
-} else {
-    echo "No results found";
-}
-
-$conn->close();
-?>
-
     </div>
-  </div>
-
-
-
-  <div class="division">
 
   <form id="emailForm" method="post" action="send_email.php">
     <div class="compose-container">
       <h1 style="width: 93.5%;">Compose Email</h1>
-
-      <div class="input-container">
-        <select name="barangay">
-            <option value="All">All</option>
-            <option value="abango">Abango</option>
-            <option value="amahit">Amahit</option>
-            <option value="balire">Balire</option>
-            <option value="balud">Balud</option>
-            <option value="bukid">Bukid</option>
-            <option value="bulod">Bulod</option>
-            <option value="busay">Busay</option>
-            <option value="cabarasan">Cabarasan</option>
-            <option value="cabolo-an">Cabolo-an</option>
-            <option value="calingcaguing">Calingcaguin</option>
-            <option value="can_isak">Can-Isak</option>
-            <option value="canomantag">Canomantag</option>
-            <option value="cuta">Cuta</option>
-            <option value="domogdog">Domogdog</option>
-            <option value="duka">Duka</option>
-            <option value="guindaohan">Guindaohan</option>
-            <option value="hiagsam">Hiagsam</option>
-            <option value="hilaba">Hilaba</option>
-            <option value="hinugayan">Hinugayan</option>
-            <option value="ibag">Ibag</option>
-            <option value="minuhang">Minuhang</option>
-            <option value="minuswang">Minuswang</option>
-            <option value="pikas">Pikas</option>
-            <option value="pitogo">Pitogo</option>
-            <option value="poblacion1">Poblacion Dist. I</option>
-            <option value="poblacion2">Poblacion Dist. II</option>
-            <option value="poblacion3">Poblacion Dist. III</option>
-            <option value="poblacion4">Poblacion Dist. IV</option>
-            <option value="poblacion5">Poblacion Dist. V</option>
-            <option value="poblacion6">Poblacion Dist. VI</option>
-            <option value="pongso">Pongso</option>
-            <option value="roosevelt">Roosevelt</option>
-            <option value="san_isidro">San Isidro</option>
-            <option value="san_roque">San Roque</option>
-            <option value="santa_rosa">Santa Rosa</option>
-            <option value="santarin">Santarin</option>
-            <option value="tutug_an">Tutug-an</option>
-          </select>
-
-          <!-- <button type="submit" name="compose"> -->
           <button type="submit" value="Send Email">SEND</button>
-      </div>
-      <div class="input-container">
-        <input type="email" id="email" name="email" placeholder="Email Address" required>
+      <div class="input-container" style="margin-top: 1em;">
+      <input type="text" id="email" name="email" placeholder="Email Addresses (Separate multiple emails with a comma or semicolon)" required>
       </div>
 
       <div class="input-container">

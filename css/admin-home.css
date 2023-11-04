@@ -78,18 +78,18 @@
 
 /* Add CSS to style the calendar */
 .calendar-table {
-    width: 100%; /* Set the table width to 100% to make columns equal */
+    width: 100%;
     height: 70%;;
-    table-layout: fixed; /* Use fixed table layout */
+    table-layout: fixed;
 }
 
 .calendar-table th,
 .calendar-table td {
-    width: 14.28%; /* Set the width for each column (100% divided by 7 days) */
-    height: 100px; /* Set the height for each cell */
-    text-align: center; /* Center-align text in cells */
-    vertical-align: middle; /* Vertically align content in cells */
-    padding: 10px; /* Add padding to cells as needed */
+    width: 14.28%;
+    height: 100px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
 }
 
 .calendar table {

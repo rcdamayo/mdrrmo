@@ -208,79 +208,90 @@ $avgHouseholdSizeJSON = json_encode($avgHouseholdSize);
 </div>
 
 <script>
-        var currentChart = null;
+    var currentChart = null;
 
-        function showGraph(graphId) {
-            if (currentChart !== null) {
-                currentChart.destroy();
-            }
-
-            // Hide all canvases
-            var canvases = document.querySelectorAll("#chartContainer canvas");
-            canvases.forEach(function(canvas) {
-                canvas.style.display = "none";
-            });
-
-            // Show the selected canvas
-            var selectedCanvas = document.getElementById(graphId);
-            selectedCanvas.style.display = "block";
-
-            // Redraw the selected chart
-            switch (graphId) {
-                case "populationChart":
-                    currentChart = createChart("populationChart", "Household Population (1990-2015)", <?php echo $yearsJSON; ?>, <?php echo $populationJSON; ?>);
-                    break;
-                case "householdsChart":
-                    currentChart = createChart("householdsChart", "Number of Households (1990-2015)", <?php echo $yearsJSON; ?>, <?php echo $householdsJSON; ?>);
-                    break;
-                case "avgHouseholdSizeChart":
-                    currentChart = createChart("avgHouseholdSizeChart", "Average Household Size (1990-2015)", <?php echo $yearsJSON; ?>, <?php echo $avgHouseholdSizeJSON; ?>);
-                    break;
-            }
+    function showGraph(graphId) {
+        if (currentChart !== null) {
+            currentChart.destroy();
         }
 
-        function createChart(canvasId, label, yearsData, data) {
-    var ctx = document.getElementById(canvasId).getContext("2d");
-    var pastelColors = ['#FFB6C1', '#87CEFA', '#90EE90', '#FFDAB9', '#B0E0E6', '#FFA07A', '#20B2AA', '#F0E68C', '#ADD8E6', '#DDA0DD'];
+        // Hide all canvases
+        var canvases = document.querySelectorAll("#chartContainer canvas");
+        canvases.forEach(function (canvas) {
+            canvas.style.display = "none";
+        });
 
-    return new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: yearsData,
-            datasets: [{
-                label: label,
-                data: data,
-                backgroundColor: pastelColors, // Use the pastel colors here
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                x: {
-                    beginAtZero: true
-                },
-                y: {
-                    beginAtZero: true
-                }
+        // Deactivate all buttons
+        var buttons = document.querySelectorAll(".buttons-container button");
+        buttons.forEach(function (button) {
+            button.classList.remove("active");
+        });
+
+        // Show the selected canvas
+        var selectedCanvas = document.getElementById(graphId);
+        selectedCanvas.style.display = "block";
+
+        // Activate the corresponding button
+        var activeButton = document.querySelector('[onclick="showGraph(\'' + graphId + '\')"]');
+        activeButton.classList.add("active");
+
+        // Redraw the selected chart
+        switch (graphId) {
+            case "populationChart":
+                currentChart = createChart("populationChart", "Household Population", <?php echo $yearsJSON; ?>, <?php echo $populationJSON; ?>);
+                break;
+            case "householdsChart":
+                currentChart = createChart("householdsChart", "Number of Households", <?php echo $yearsJSON; ?>, <?php echo $householdsJSON; ?>);
+                break;
+            case "avgHouseholdSizeChart":
+                currentChart = createChart("avgHouseholdSizeChart", "Average Household Size", <?php echo $yearsJSON; ?>, <?php echo $avgHouseholdSizeJSON; ?>);
+                break;
+        }
+    }
+
+    function createChart(canvasId, label, yearsData, data) {
+        var ctx = document.getElementById(canvasId).getContext("2d");
+        var pastelColors = ["#f9b314", "#043a87"];
+
+        return new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: yearsData,
+                datasets: [
+                    {
+                        label: label,
+                        data: data,
+                        backgroundColor: pastelColors, // Use the pastel colors here
+                        borderWidth: 1,
+                    },
+                ],
             },
-            plugins: {
-                legend: {
-                    display: false // Hide the legend
+            options: {
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                    },
+                    y: {
+                        beginAtZero: true,
+                    },
                 },
-                title: {
-                    display: true,
-                    text: "Household (1990-2015)",
-                    position: "top"
-                }
+                plugins: {
+                    legend: {
+                        display: false, // Hide the legend
+                    },
+                    title: {
+                        display: true,
+                        text: "Household",
+                        position: "top",
+                    },
+                },
             },
-        },
-    });
-}
+        });
+    }
 
-// Automatically show the first graph on page load
-showGraph('populationChart');
-
-    </script>
+    // Automatically show the first graph on page load
+    showGraph("populationChart");
+</script>
 
 <!-- SECOND BAR GRAPH -->
 

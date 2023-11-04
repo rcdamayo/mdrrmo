@@ -196,7 +196,6 @@ td {
   min-height: 40px;
   margin: 0px;
   margin-left: 13%;
-  padding: 0px;
   transition: 0.3s ease;
   z-index: 7;
 }
@@ -206,11 +205,22 @@ td {
   max-width: 100px;
 }
 
+.hazard-level-color.active {
+  min-width: 75%;
+  max-width: 100px;
+}
+
+.hazard-level-button .hazard-level-color.active + p {
+  color: #ffffff;
+  text-shadow: 2px 2px 1px #000000;
+}
+
 .hazard-level-button p {
   display: flex;
   position: relative;
   height: 100%;
-  /* border: 1px solid green; */
+  color: #000000;
+  /* text-shadow: 1px 1px 1px  #ffffff; */
   padding: 0px;
   margin: 0;
   align-items: center;

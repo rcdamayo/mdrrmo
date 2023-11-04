@@ -4,7 +4,8 @@ require 'vendor/autoload.php'; // or the path to PHPMailer if not using Composer
 
 use PHPMailer\PHPMailer\PHPMailer;
 
-// Fetch email addresses from the residents table
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Fetch email addresses from the residents table
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -16,10 +17,10 @@ use PHPMailer\PHPMailer\PHPMailer;
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-$sql = "SELECT email FROM residents";
-$result = $conn->query($sql);
 
-if ($result->num_rows > 0) {
+    $emailList = $_POST['email']; // List of email addresses separated by commas or semicolons
+    $emails = explode(',', $emailList); // Separate the email addresses into an array
+
     $subject = $_POST['subject'];
     $message = $_POST['message'];
 
@@ -34,8 +35,7 @@ if ($result->num_rows > 0) {
     $mail->Port = 587; // TCP port to connect to
 
     try {
-        while ($row = $result->fetch_assoc()) {
-            $to_email = $row["email"];
+        foreach ($emails as $to_email) {
             $mail->setFrom('damayo714@gmail.com', 'MDRRMO Barugo'); // Replace with your email and name
             $mail->addAddress($to_email); // Add a recipient
 
@@ -50,10 +50,10 @@ if ($result->num_rows > 0) {
     } catch (Exception $e) {
         echo "Email sending failed. Error: {$mail->ErrorInfo}";
     }
-} else {
-    echo "No results found";
-}
 
-// Close the database connection
-$conn->close();
+    // Close the database connection
+    $conn->close();
+} else {
+    echo "Invalid request";
+}
 ?>

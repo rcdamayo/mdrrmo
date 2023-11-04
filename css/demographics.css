@@ -125,6 +125,11 @@ button:hover {
     background-color: #f3bc3d;
 }
 
+.buttons-container button.active {
+    background-color: #043a87;
+    color: white;
+}
+
 .chart-container .chartjs-chart-legend {
     display: none;
 }
