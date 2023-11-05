@@ -187,32 +187,6 @@ if (!isset($_SESSION['id'])) {
 </div>
 </div>
 
-  <div class="division">
-  <form action="add_event.php" method="POST" id="eventForm">
-  <div class="input-fields">
-    <div class="input-fields-header"><div class="header-icon">&#x1F4C5;</div> Create an Event</div>
-    
-    <div class="textarea-wrapper" style="flex-direction: row;">
-      <div class="placeholder">Select a Day</div>
-      <input type="text" name="eventDate" id="eventDate" required style="margin-right: 10px;">
-
-        <div class="placeholder" style="left: 52%;">Time</div>
-        <input type="time" name="eventTime" id="eventTime" required>
-      </div>
-    
-      <div class="textarea-wrapper">
-        <div class="placeholder">Title</div>
-        <input type="text" name="eventTitle" id="eventTitle" required>
-      </div>
-
-      <div class="textarea-wrapper">
-        <div class="placeholder" style="top: 0; left: 0;">Event</div>
-        <textarea name="eventDescription" id="eventDescription"></textarea>
-      </div>
-  </div>
-  </div>
-
-
 
 <div class="division">
     <?php
@@ -339,20 +313,49 @@ while ($firstDay != 0) {
 echo '</table>';
 ?>
 
-<div class="buttons-container">
-    <button class="done" type="submit" value="Add Event" onclick="addEvent(event)">Done</button>
-  </form>
-  <form action="remove_event.php" method="POST" id="removeForm">
-    <button class="remove" onclick="removeEvent(event)" id="removeButton">Remove</button>
-  </form>
-  </div>
+
   <div id="snackbar"></div>
 
 </div>
 
 
 
+
 </div>
+
+<div class="division">
+  <form action="add_event.php" method="POST" id="eventForm">
+  <div class="input-fields">
+    <div class="input-fields-header"><div class="header-icon">&#x1F4C5;</div> Create an Event</div>
+    
+    <div class="textarea-wrapper" style="flex-direction: row;">
+      <div class="placeholder">Select a Day</div>
+      <input type="text" name="eventDate" id="eventDate" required style="margin-right: 10px;">
+
+        <div class="placeholder" style="left: 52%;">Time</div>
+        <input type="time" name="eventTime" id="eventTime" required>
+      </div>
+    
+      <div class="textarea-wrapper">
+        <div class="placeholder">Title</div>
+        <input type="text" name="eventTitle" id="eventTitle" required>
+      </div>
+
+      <div class="textarea-wrapper">
+        <div class="placeholder" style="top: 0; left: 0;">Event</div>
+        <textarea name="eventDescription" id="eventDescription"></textarea>
+      </div>
+  </div>
+
+  <div class="buttons-container">
+    <button class="done" type="submit" value="Add Event" onclick="addEvent(event)">Done</button>
+  </form>
+  <form action="remove_event.php" method="POST" id="removeForm">
+    <button class="remove" onclick="removeEvent(event)" id="removeButton">Remove</button>
+  </form>
+  </div>
+  
+  </div>
 
     <script>
     // JavaScript function to handle date cell background color
