@@ -71,6 +71,15 @@ body {
     background-color: red;
 }
 
+.topnav a svg {
+  display: none;
+}
+
+.topnav a p {
+  display: block;
+  margin-top: 0;
+}
+
 .topnav a:nth-child(-n + 5) {
     width: 40px;
     background-color: #f9b314;
@@ -82,6 +91,10 @@ body {
     font-size: 8px;
     font-weight: 500;
     transition: 0.3s;
+}
+
+.topnav a:nth-child(-n + 5) svg {
+  display: inline-block;
 }
 
 .topnav a:nth-child(-n + 5) p {
@@ -289,11 +302,10 @@ body {
     background: #555;
   }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 800px) {
   .topnav a:not(:first-child) {
     display: none;
   }
-
   .topnav a.icon {
       float: right;
       display: block;
@@ -311,6 +323,26 @@ body {
   .topnav.responsive img {
     display: none;
   }
+}
+
+@media screen and (max-width: 600px) {
+  .topnav a svg {
+    display: block;
+    position: relative;
+    fill: #f9b314;
+  }
+
+  .topnav a p {
+    display: none;
+  }
+
+  .topnav a:hover svg {
+    fill: #043a87;
+  }
+
+  .topnav a.active svg {
+    fill: #043a87;
+  }
 
   .topnav.responsive .icon {
       position: absolute;
@@ -327,7 +359,7 @@ body {
   }
 
   .topnav a:nth-child(-n + 5) {
-    width: 20px;
+    width: 30px;
     background-color: #f9b314;
     color: #000000;
     text-decoration: none;
@@ -337,7 +369,23 @@ body {
     font-size: 8px;
     font-weight: 500;
     transition: 0.3s;
-    
+  }
+  
+  .topnav a:nth-child(-n + 5) svg {
+    fill: #000000;
+    /* margin: 0; */
+    margin: 1em;
+    margin-right: 2em;
+    margin-top: 1em;
+    /* padding: 0; */
+  }
+
+  .topnav a:nth-child(-n + 5):hover svg {
+    fill: #ffffff;
+  }
+
+  .topnav a i {
+    font-size: 14px;
   }
 
   .topnav.responsive a:first-child {
