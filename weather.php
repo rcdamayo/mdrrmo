@@ -2477,6 +2477,16 @@ function updateCurrentTime() {
 // Call the updateCurrentTime function initially to display the current time
 updateCurrentTime();
 
+
+// TOPNAV
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
 </script>
 </body>
 </html>

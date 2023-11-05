@@ -246,6 +246,16 @@ $conn->close();
     Learn more about the Philippine government, its structure, how government works and the people behind it.
   </div>
 </div>
-
+<script>
+// TOPNAV
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+</script>
 </body>
 </html>

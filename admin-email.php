@@ -388,6 +388,16 @@ function updateData(event) {
                 }
             });
         });
+
+        // TOPNAV
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
     </script>
 <div class="footer">
   <div class="foot-txt">

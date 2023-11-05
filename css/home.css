@@ -35,7 +35,7 @@
 .calendar {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     width: 100%;
-    height: 320px;
+    height: auto;
     padding: 0px;
     /* padding-top: 0px; */
     background-color: #ffffff;
