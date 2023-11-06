@@ -375,7 +375,7 @@ echo '</div>';
 
     <div class="registration">
       <h1>REGISTER HERE</h1>
-        <form id="addData" action="add_contacts2.php" method="POST" onsubmit="submitForm(event)">
+        <form id="addData" action="add_contacts.php" method="POST" onsubmit="submitForm(event)">
         <div class="input-container">
           <input type="text" name="firstName" placeholder="First Name" style="margin-right: 0.5em;">
           <input type="text" name="lastName" placeholder="Last Name" style="margin-left: 0.5em;">
@@ -445,7 +445,7 @@ echo '</div>';
     var formData = new FormData(form);
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "update_prone.php", true);
+    xhr.open("POST", "add_contacts.php", true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {

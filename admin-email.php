@@ -126,7 +126,7 @@ if (!isset($_SESSION['id'])) {
       <?php
 include 'db_connection.php';
 
-$sql = "SELECT * FROM residents";
+$sql = "SELECT * FROM residents ORDER BY barangay";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -143,7 +143,7 @@ if ($result->num_rows > 0) {
 
     while ($row = $result->fetch_assoc()) {
         echo "<tr>
-          <td style='min-width: 12em;'>" . $row["first_name"] . "<p style='display: inline;'> </p>" . $row["last_name"] . "</td>
+          <td style='min-width: 12em;'>" . $row["last_name"] . "<p style='display: inline;'>, </p>" . $row["first_name"] . "</td>
           <td>" . $row["barangay"] . "</td>
           <td>0" . $row["phone_no"] . "</td>
           <td style='min-width: 10em;'>" .  $row["email"] . "</td>
@@ -250,7 +250,8 @@ function updateData(event) {
       <div class="register-container">
         <h1>Register Email</h1>
 
-        <form action="add_contacts.php" method="POST">
+        <form id='updateContacts' onsubmit='addContacts(event)' method='post' action='add_contacts.php'>
+        <!-- <form action="add_contacts.php" method="POST"> -->
       <div class="input-container">
         <input type="text" name="firstName" placeholder="First Name">
         <input type="text" name="lastName" placeholder="Last Name">
@@ -328,6 +329,49 @@ function updateData(event) {
           </div>
     </div>
     </form>
+
+    <div id='snackbar'></div>
+
+<script>
+function showSnackbar(message) {
+    var snackbar = document.getElementById("snackbar");
+    snackbar.textContent = message;
+    snackbar.style.visibility = "visible";
+    setTimeout(function() {
+        snackbar.style.opacity = 1;
+    }, 1);
+    setTimeout(function() {
+        snackbar.style.opacity = 0;
+    }, 2500);
+    setTimeout(function() {
+        snackbar.style.visibility = "hidden";
+    }, 3000);
+}
+
+function addContacts(event) {
+    event.preventDefault();
+    var form = document.getElementById("updateContacts");
+    var formData = new FormData(form);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "add_contacts.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                var response = xhr.responseText.trim();
+                if (response.includes('Error')) {
+                    showSnackbar("Information added successfully. Refresh to see results");
+                } else {
+                    showSnackbar("Information added successfully. Refresh to see results");
+                }
+            } else {
+                showSnackbar("Information added successfully. Refresh to see results");
+            }
+        }
+    };
+    xhr.send(formData);
+}
+</script>
   </div>
 
 
