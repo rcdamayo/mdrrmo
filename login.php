@@ -8,10 +8,10 @@ if (isset($_SESSION['id'])) {
 }
 
 // Database connection details
-$host = 'localhost';
+$host = 'edr.topfavlists.com';
 $dbname = 'admin_db';
-$username = 'root';
-$password = '';
+$username = 'admin_usr';
+$password = '6Lb4Prraot';
 
 // Establish a database connection
 try {

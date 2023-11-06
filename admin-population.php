@@ -34,7 +34,7 @@ if (!isset($_SESSION['id'])) {
     if(isset($_SESSION['id'])){
         $logged_in_id = $_SESSION['id'];
 
-        include 'db_connection.php';
+        include 'admin_db_connection.php';
 
         $sql = "SELECT * FROM users WHERE id = $logged_in_id";
         $result = $conn->query($sql);

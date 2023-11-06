@@ -5,18 +5,7 @@ require 'vendor/autoload.php'; // or the path to PHPMailer if not using Composer
 use PHPMailer\PHPMailer\PHPMailer;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Fetch email addresses from the residents table
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $database = "edr_db";
-
-    $conn = new mysqli($servername, $username, $password, $database);
-
-    // Check the connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    include "db_connection.php";
 
     $emailList = $_POST['email']; // List of email addresses separated by commas or semicolons
     $emails = explode(',', $emailList); // Separate the email addresses into an array

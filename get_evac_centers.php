@@ -1,17 +1,5 @@
 <?php
-// Database connection settings
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "edr_db";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include "db_connection.php";
 
 // Fetch data from the "evac_centers" table
 $sql = "SELECT name, latitude, longitude FROM evac_centers";
