@@ -448,7 +448,21 @@ function myFunction() {
 }
 </script>
 
+<div class="footer">
+  <div class="foot-txt">
+  <img src="images/footer.png" style="height: 100%; width: 80%;">
+  </div>
 
+  <div class="foot-txt">
+      <font style="font-weight: 700;">REPUBLIC OF THE PHILIPPINES</font>
+      All content is in the public domain unless otherwise stated.
+  </div>
+
+  <div class="foot-txt">
+    <font style="font-weight: 700;">ABOUT GOVPH</font>
+    Learn more about the Philippine government, its structure, how government works and the people behind it.
+  </div>
+  
 </body>
 </html>
 

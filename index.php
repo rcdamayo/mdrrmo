@@ -47,6 +47,9 @@
     </a>
 
     <a href="about.php">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256">
+        <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z"></path>
+      </svg>
       <p>About</p>
     </a>
     <a href="typhoon.php">
@@ -76,6 +79,7 @@
       </svg>
       <p>Home</p> 
     </a>
+    
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
       <i class="fa fa-bars"></i>
     </a>
@@ -186,25 +190,27 @@ for ($day = 1; $day <= $daysInMonth; $day++) {
 
 // Complete the last row with empty cells if needed
 while ($firstDay != 0) {
-    // Calculate the day from the next month
-    $nextMonthDay = 1 + $firstDay;
-    
-    // Output the next month's day in gray
-    echo '<td class="gray">' . $nextMonthDay . '</td>';
-    
-    // If it's Saturday (6), end the row
-    if ($firstDay == 6) {
-        echo '</tr>';
-    }
-    
-    // Increment the firstDay counter
-    $firstDay++;
-    
-    // Reset the counter at the end of the week (Sunday)
-    if ($firstDay == 7) {
-        $firstDay = 0;
-    }
+  // Calculate the day from the next month
+  $nextMonthDay = ($nextMonthDay ?? 0) + 1;
+  
+  // Output the next month's day in gray
+  echo '<td class="gray">' . $nextMonthDay . '</td>';
+  
+  // If it's Saturday (6), end the row
+  if ($firstDay == 6) {
+      echo '</tr>';
+  }
+  
+  // Increment the firstDay counter
+  $firstDay++;
+  
+  // Reset the counter at the end of the week (Sunday)
+  if ($firstDay == 7) {
+      $firstDay = 0;
+  }
 }
+
+
 
 echo '</table>';
 echo '</div>';

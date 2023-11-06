@@ -290,24 +290,24 @@ for ($day = 1; $day <= $daysInMonth; $day++) {
 
 // Complete the last row with empty cells if needed
 while ($firstDay != 0) {
-    // Calculate the day from the next month
-    $nextMonthDay = 1 + $firstDay;
-    
-    // Output the next month's day in gray
-    echo '<td class="gray">' . $nextMonthDay . '</td>';
-    
-    // If it's Saturday (6), end the row
-    if ($firstDay == 6) {
-        echo '</tr>';
-    }
-    
-    // Increment the firstDay counter
-    $firstDay++;
-    
-    // Reset the counter at the end of the week (Sunday)
-    if ($firstDay == 7) {
-        $firstDay = 0;
-    }
+  // Calculate the day from the next month
+  $nextMonthDay = ($nextMonthDay ?? 0) + 1;
+  
+  // Output the next month's day in gray
+  echo '<td class="gray">' . $nextMonthDay . '</td>';
+  
+  // If it's Saturday (6), end the row
+  if ($firstDay == 6) {
+      echo '</tr>';
+  }
+  
+  // Increment the firstDay counter
+  $firstDay++;
+  
+  // Reset the counter at the end of the week (Sunday)
+  if ($firstDay == 7) {
+      $firstDay = 0;
+  }
 }
 
 echo '</table>';
