@@ -110,7 +110,7 @@ if (!isset($_SESSION['id'])) {
     
     <a href="admin-about.php">About</a>
     <a href="admin-typhoon.php" class="active">Typhoon</a>
-    <a href="admin-email.php">Email</a>
+    <a href="admin-contact.php">Contact</a>
     <a href="admin-flood.php">Flood</a>
     <a href="admin-home.php">Home</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">

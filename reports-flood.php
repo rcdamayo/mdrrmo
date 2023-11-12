@@ -114,7 +114,7 @@ if (!isset($_SESSION['id'])) {
     
     <a href="admin-about.php">About</a>
     <a href="admin-typhoon.php">Typhoon</a>
-    <a href="admin-email.php">Email</a>
+    <a href="admin-contact.php">Contact</a>
     <a href="admin-flood.php">Flood</a>
     <a href="admin-home.php">Home</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
@@ -147,14 +147,21 @@ if (!isset($_SESSION['id'])) {
 
     <div class="textarea-wrapper-row">
       <div class="textarea-wrapper">
-        <div class="identifier">Pregnant Women</div>
-          <input type="number" name="pregnant">
-      </div>
-
-      <div class="textarea-wrapper">
         <div class="identifier">No. of Families</div>
         <input type="number" name="families" style="height: 40px; padding-top: 0px;">
       </div>
+
+      <div class="textarea-wrapper">
+        <div class="identifier">No. of LGBTQ+</div>
+          <input type="number" name="personsLgbt">
+        </div>
+
+      <div class="textarea-wrapper">
+        <div class="identifier">Pregnant Women</div>
+          <input type="number" name="pregnant">
+        </div>
+
+      
     </div>
     
     <div class="textarea-wrapper-row">

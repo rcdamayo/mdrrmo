@@ -4,8 +4,8 @@ include 'db_connection2.php';
 // Retrieve event details from the form
 $sitio = $_POST['sitio'];
 $families = $_POST['families'];
-$persons_m = $_POST['personsM'];
-$persons_f = $_POST['personsF'];
+$persons_m = $_POST['children1M'] + $_POST['children2M'] + $_POST['children3M'] + $_POST['children4M'] + $_POST['children5M'] + $_POST['adult1M'] + $_POST['adult2M'];
+$persons_f = $_POST['children1F'] + $_POST['children2F'] + $_POST['children3F'] + $_POST['children4F'] + $_POST['children5F'] + $_POST['adult1F'] + $_POST['adult2F'];
 $persons_lgbt = $_POST['personsLgbt'];
 $disabilities_m = $_POST['disabilitiesM'];
 $disabilities_f = $_POST['disabilitiesF'];
@@ -38,7 +38,6 @@ if ($stmt === false) {
 $stmt->bind_param('ssiiiiiiiiiiiiiiiiiiiiii', $sitio, $families, $persons_m, $persons_f, $persons_lgbt, $disabilities_m, $disabilities_f, $diseases_m, $diseases_f, $children1_m, $children1_f, $children2_m, $children2_f, $children3_m, $children3_f, $children4_m, $children4_f, $children5_m, $children5_f, $adult1_m, $adult1_f, $adult2_m, $adult2_f, $pregnant);
 
 if ($stmt->execute()) {
-    
     header('Location: reports-flood.php');
     $eventAddedSuccessfully = true;
 } else {

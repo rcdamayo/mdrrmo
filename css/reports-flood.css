@@ -60,7 +60,7 @@
     flex-direction: row;
     flex-wrap: nowrap;
     height: auto;
-    border: 1px solid cyan;
+    /* border: 1px solid cyan; */
     width: 9em;
     height: auto;
     position: relative;
@@ -135,7 +135,7 @@ input {
 .buttons-container {
     display: inline-flex;
     justify-content: left;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     width: auto;
     padding: 0;
     margin: 0;

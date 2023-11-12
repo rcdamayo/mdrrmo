@@ -21,7 +21,7 @@ $stmt->bind_param('ssssi', $barangay, $first_name, $last_name, $email, $phone_no
 
 if ($stmt->execute()) {
 
-    header('Location: admin-email.php');
+    header('Location: admin-contact.php');
     $eventAddedSuccessfully = true;
 } else {
     $eventAddedSuccessfully = false;

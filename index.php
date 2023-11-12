@@ -383,7 +383,7 @@ echo '</div>';
       <h1>Contact Us</h1>
       <div class="chat-message" id="chat-message">
         <p>Welcome to the chat! Start by typing a message below:</p>
-    </div>
+      </div>
         <div class="input-container">
         <input type="text" id="user-input" placeholder="Type your message here">
         <button type="submit" onclick='sendMessage()'>
@@ -423,19 +423,30 @@ function loadMessages() {
     // Retrieve messages from the server
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            var chats = JSON.parse(xhr.responseText);
-            var chatMessage = document.getElementById('chat-message');
-            chatMessage.innerHTML = ''; // Clear existing messages
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                var chats = JSON.parse(xhr.responseText);
+                var chatMessage = document.getElementById('chat-message');
+                chatMessage.innerHTML = ''; // Clear existing messages
 
-            chats.forEach(function (msg) {
-                var newMessage = document.createElement('p');
-                newMessage.innerHTML = '<strong>' + msg.user + ':</strong> ' + msg.message;
-                chatMessage.appendChild(newMessage);
-            });
+                if (chats.length > 0) {
+                    chats.forEach(function (msg) {
+                        var newMessage = document.createElement('p');
+                        newMessage.innerHTML = '<strong>' + msg.user + ':</strong> ' + msg.message;
+                        chatMessage.appendChild(newMessage);
+                    });
+                } else {
+                    // Display a message when there are no messages
+                    var noMessages = document.createElement('p');
+                    noMessages.innerHTML = 'Welcome to the chat! Type a message below to chat with the MDRRMO office for any concerns.';
+                    chatMessage.appendChild(noMessages);
+                }
 
-            // Scroll to the bottom after loading messages
-            chatMessage.scrollTop = chatMessage.scrollHeight;
+                // Scroll to the bottom after loading messages
+                chatMessage.scrollTop = chatMessage.scrollHeight;
+            } else {
+                console.error('Error loading messages:', xhr.status, xhr.statusText);
+            }
         }
     };
     xhr.open('GET', 'save_message.php', true);
@@ -456,8 +467,9 @@ document.getElementById('user-input').addEventListener('keypress', function (e) 
 // Automatically load messages every 5 seconds (adjust as needed)
 setInterval(function () {
     loadMessages();
-}, 1000); // Adjust the interval as needed
+}, 5000); // Adjust the interval as needed
 </script>
+
 
     </div>
   </div>

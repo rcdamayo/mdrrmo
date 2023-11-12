@@ -110,7 +110,7 @@ if (!isset($_SESSION['id'])) {
     
     <a href="admin-about.php">About</a>
     <a href="admin-typhoon.php">Typhoon</a>
-    <a href="admin-email.php" class="active">Contact</a>
+    <a href="admin-contact.php" class="active">Contact</a>
     <a href="admin-flood.php">Flood</a>
     <a href="admin-home.php">Home</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
@@ -344,19 +344,30 @@ function loadMessages() {
     // Retrieve messages from the server
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            var chats = JSON.parse(xhr.responseText);
-            var chatMessage = document.getElementById('chat-message');
-            chatMessage.innerHTML = ''; // Clear existing messages
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                var chats = JSON.parse(xhr.responseText);
+                var chatMessage = document.getElementById('chat-message');
+                chatMessage.innerHTML = ''; // Clear existing messages
 
-            chats.forEach(function (msg) {
-                var newMessage = document.createElement('p');
-                newMessage.innerHTML = '<strong>' + msg.user + ':</strong> ' + msg.message;
-                chatMessage.appendChild(newMessage);
-            });
+                if (chats.length > 0) {
+                    chats.forEach(function (msg) {
+                        var newMessage = document.createElement('p');
+                        newMessage.innerHTML = '<strong>' + msg.user + ':</strong> ' + msg.message;
+                        chatMessage.appendChild(newMessage);
+                    });
+                } else {
+                    // Display a message when there are no messages
+                    var noMessages = document.createElement('p');
+                    noMessages.innerHTML = 'Welcome to the chat! Start by typing a message below:';
+                    chatMessage.appendChild(noMessages);
+                }
 
-            // Scroll to the bottom after loading messages
-            chatMessage.scrollTop = chatMessage.scrollHeight;
+                // Scroll to the bottom after loading messages
+                chatMessage.scrollTop = chatMessage.scrollHeight;
+            } else {
+                console.error('Error loading messages:', xhr.status, xhr.statusText);
+            }
         }
     };
     xhr.open('GET', 'save_message.php', true);
@@ -377,8 +388,9 @@ document.getElementById('user-input').addEventListener('keypress', function (e) 
 // Automatically load messages every 5 seconds (adjust as needed)
 setInterval(function () {
     loadMessages();
-}, 1000);
+}, 5000); // Adjust the interval as needed
 </script>
+
 
 
   <form id="emailForm" method="post" action="send_email.php">
