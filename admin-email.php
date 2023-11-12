@@ -13,7 +13,7 @@ if (!isset($_SESSION['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disaster Ready Admin: Email Alerts</title>
+    <title>Disaster Ready Admin: Contact</title>
     <link rel="stylesheet" href="css/admin.css">
     <link rel="stylesheet" href="css/admin-email.css">
     <link rel="icon" href="images/icon.png">
@@ -110,7 +110,7 @@ if (!isset($_SESSION['id'])) {
     
     <a href="admin-about.php">About</a>
     <a href="admin-typhoon.php">Typhoon</a>
-    <a href="admin-sms.php" class="active">Email</a>
+    <a href="admin-email.php" class="active">Contact</a>
     <a href="admin-flood.php">Flood</a>
     <a href="admin-home.php">Home</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
@@ -121,7 +121,7 @@ if (!isset($_SESSION['id'])) {
 <div class="main">
   <div class="division">
     <div class="list-container">
-      <h1>Registered Emails</h1>
+      <h1>Registered Contacts</h1>
 
       <?php
 include 'db_connection.php';
@@ -231,23 +231,7 @@ function updateData(event) {
 
   <div class="division">
     <div class="verify-register-box">
-      <div class="verify-container">
-        <h1>Verify Email</h1>
-        <p>To successfully confirm the validity of email addresses, enabling them to receive emails, please visit the following page and look for the Authorized Recipients.</p>
-        
-        <a href="https://app.mailgun.com/app/sending/domains/sandboxb341a6c17d2642a7aca021df8f197fa3.mailgun.org" target="_blank">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-          <img src="images/mailgun.png" style="width: 6em;">
-        </a>
-        
-      </div>
-
-
-
-      <div class="register-container">
+    <div class="register-container">
         <h1>Register Email</h1>
 
         <form id='updateContacts' onsubmit='addContacts(event)' method='post' action='add_contacts.php'>
@@ -310,7 +294,92 @@ function updateData(event) {
 
       </form>
     </div>
+
+
+
+
+      <div class="chat">
+        <h1 style="width: 87%;">Chat</h1>
+
+        <div class="chat-message" id="chat-message">
+          <p>Welcome to the chat! Start by typing a message below:</p>
+        </div>
+
+        <div class="input-container2">
+        <input type="text" id="user-input" placeholder="Type your message here">
+        <button type="submit" onclick='sendMessage()'>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#04aa6d" viewBox="0 0 256 256">
+            <path d="M232,127.89a16,16,0,0,1-8.18,14L55.91,237.9A16.14,16.14,0,0,1,48,240a16,16,0,0,1-15.05-21.34L60.3,138.71A4,4,0,0,1,64.09,136H136a8,8,0,0,0,8-8.53,8.19,8.19,0,0,0-8.26-7.47H64.16a4,4,0,0,1-3.79-2.7l-27.44-80A16,16,0,0,1,55.85,18.07l168,95.89A16,16,0,0,1,232,127.89Z"></path>
+          </svg>  
+      </button>
+      </div>
+        
+      </div>
     </div>
+
+    <script>
+function sendMessage() {
+    var userInput = document.getElementById('user-input');
+    var chatMessage = document.getElementById('chat-message');
+    var message = userInput.value;
+
+    if (message !== '') {
+        var newMessage = document.createElement('p');
+        newMessage.innerHTML = '<strong>MDRRMO:</strong> ' + message;
+        chatMessage.appendChild(newMessage);
+        userInput.value = '';
+
+        // Scroll to the bottom after sending a message
+        chatMessage.scrollTop = chatMessage.scrollHeight;
+
+        // Send message to the server
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'save_message.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send('user=MDRRMO&message=' + encodeURIComponent(message));
+    }
+}
+
+function loadMessages() {
+    // Retrieve messages from the server
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var chats = JSON.parse(xhr.responseText);
+            var chatMessage = document.getElementById('chat-message');
+            chatMessage.innerHTML = ''; // Clear existing messages
+
+            chats.forEach(function (msg) {
+                var newMessage = document.createElement('p');
+                newMessage.innerHTML = '<strong>' + msg.user + ':</strong> ' + msg.message;
+                chatMessage.appendChild(newMessage);
+            });
+
+            // Scroll to the bottom after loading messages
+            chatMessage.scrollTop = chatMessage.scrollHeight;
+        }
+    };
+    xhr.open('GET', 'save_message.php', true);
+    xhr.send();
+}
+
+// Load messages on page load
+loadMessages();
+
+// Event listener for the Enter key
+document.getElementById('user-input').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        sendMessage();
+        loadMessages(); // Reload messages after sending a new one
+    }
+});
+
+// Automatically load messages every 5 seconds (adjust as needed)
+setInterval(function () {
+    loadMessages();
+}, 1000);
+</script>
+
 
   <form id="emailForm" method="post" action="send_email.php">
     <div class="compose-container">

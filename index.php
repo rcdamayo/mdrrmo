@@ -341,7 +341,7 @@ echo '</div>';
 		  </a>
 		</li>
 		<li>
-		  <a class="google" href="" target="_blank">
+		  <a class="google" href="mailto:mdrrmobarugo@gmail.com" target="_blank">
 			<span></span>
 			<span></span>
 			<span></span>
@@ -379,111 +379,86 @@ echo '</div>';
       </div>
     </div>
 
-    <div class="registration">
-      <h1>REGISTER HERE</h1>
-        <form id="addData" action="add_contacts.php" method="POST" onsubmit="submitForm(event)">
+    <div class="chat">
+      <h1>Contact Us</h1>
+      <div class="chat-message" id="chat-message">
+        <p>Welcome to the chat! Start by typing a message below:</p>
+    </div>
         <div class="input-container">
-          <input type="text" name="firstName" placeholder="First Name" style="margin-right: 0.5em;">
-          <input type="text" name="lastName" placeholder="Last Name" style="margin-left: 0.5em;">
-        </div>
-
-        <div class="input-container">
-        <select name="barangay">
-          <option value=""></option>
-          <option value="Abango">Abango</option>
-          <option value="Amahit">Amahit</option>
-          <option value="Balire">Balire</option>
-          <option value="Balud">Balud</option>
-          <option value="Bukid">Bukid</option>
-          <option value="Bulod">Bulod</option>
-          <option value="Busay">Busay</option>
-          <option value="Cabarasan">Cabarasan</option>
-          <option value="Cabolo-an">Cabolo-an</option>
-          <option value="Calingcaguing">Calingcaguin</option>
-          <option value="Can-isak">Can-Isak</option>
-          <option value="Canomantag">Canomantag</option>
-          <option value="Cuta">Cuta</option>
-          <option value="Domogdog">Domogdog</option>
-          <option value="Duka">Duka</option>
-          <option value="Guindaohan">Guindaohan</option>
-          <option value="Hiagsam">Hiagsam</option>
-          <option value="Hilaba">Hilaba</option>
-          <option value="Hinugayan">Hinugayan</option>
-          <option value="Ibag">Ibag</option>
-          <option value="Minuhang">Minuhang</option>
-          <option value="Minuswang">Minuswang</option>
-          <option value="Pikas">Pikas</option>
-          <option value="Pitogo">Pitogo</option>
-          <option value="Poblacion Dist. I">Poblacion Dist. I</option>
-          <option value="Poblacion Dist. II">Poblacion Dist. II</option>
-          <option value="Poblacion Dist. III">Poblacion Dist. III</option>
-          <option value="Poblacion Dist. IV">Poblacion Dist. IV</option>
-          <option value="Poblacion Dist. V">Poblacion Dist. V</option>
-          <option value="Poblacion Dist. VI">Poblacion Dist. VI</option>
-          <option value="Pongso">Pongso</option>
-          <option value="Roosevelt">Roosevelt</option>
-          <option value="San Isidro">San Isidro</option>
-          <option value="San Roque">San Roque</option>
-          <option value="Santa Rosa">Santa Rosa</option>
-          <option value="Santarin">Santarin</option>
-          <option value="Tutug-an">Tutug-an</option>
-        </select>
-        </div>
-
-        <div class="input-container">
-        <input type="email" name="email" placeholder="Email Address">
-        </div>
-
-        <div class="input-container">
-        <input type="number" name="phoneNo" placeholder="Phone No.">
-        </div>
-        <button type="submit" onclick='submitForm()'>REGISTER</button>
-    <!-- <input class="early-alert-btn" type="submit" value="DONE"> -->
-
-      </form>
+        <input type="text" id="user-input" placeholder="Type your message here">
+        <button type="submit" onclick='sendMessage()'>
+      
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#04aa6d" viewBox="0 0 256 256">
+            <path d="M232,127.89a16,16,0,0,1-8.18,14L55.91,237.9A16.14,16.14,0,0,1,48,240a16,16,0,0,1-15.05-21.34L60.3,138.71A4,4,0,0,1,64.09,136H136a8,8,0,0,0,8-8.53,8.19,8.19,0,0,0-8.26-7.47H64.16a4,4,0,0,1-3.79-2.7l-27.44-80A16,16,0,0,1,55.85,18.07l168,95.89A16,16,0,0,1,232,127.89Z"></path>
+          </svg>  
+      </button>
+      </div>
       </div>
 
 
       <script>
-    function submitForm() {
-    event.preventDefault();
-    var form = document.getElementById("addData");
-    var formData = new FormData(form);
+function sendMessage() {
+    var userInput = document.getElementById('user-input');
+    var chatMessage = document.getElementById('chat-message');
+    var message = userInput.value;
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "add_contacts.php", true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                var response = xhr.responseText.trim();
-                if (response.includes('Error')) {
-                    showSnackbar("Error Registering Information");
-                } else {
-                    showSnackbar("Information Successfully Registered");
-                }
-            } else {
-                showSnackbar("Error Registering Information");
-            }
-        }
-    };
-    xhr.send(formData);
+    if (message !== '') {
+        var newMessage = document.createElement('p');
+        newMessage.innerHTML = '<strong>Resident:</strong> ' + message;
+        chatMessage.appendChild(newMessage);
+        userInput.value = '';
+
+        // Scroll to the bottom after sending a message
+        chatMessage.scrollTop = chatMessage.scrollHeight;
+
+        // Send message to the server
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'save_message.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send('user=Resident&message=' + encodeURIComponent(message));
+    }
 }
 
-    function showSnackbar(message) {
-        var snackbar = document.getElementById("snackbar");
-        snackbar.textContent = message;
-        snackbar.style.visibility = "visible";
-        setTimeout(function() {
-            snackbar.style.opacity = 1;
-        }, 1);
-        setTimeout(function() {
-            snackbar.style.opacity = 0;
-        }, 2500);
-        setTimeout(function() {
-            snackbar.style.visibility = "hidden";
-        }, 3000);
+function loadMessages() {
+    // Retrieve messages from the server
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var chats = JSON.parse(xhr.responseText);
+            var chatMessage = document.getElementById('chat-message');
+            chatMessage.innerHTML = ''; // Clear existing messages
+
+            chats.forEach(function (msg) {
+                var newMessage = document.createElement('p');
+                newMessage.innerHTML = '<strong>' + msg.user + ':</strong> ' + msg.message;
+                chatMessage.appendChild(newMessage);
+            });
+
+            // Scroll to the bottom after loading messages
+            chatMessage.scrollTop = chatMessage.scrollHeight;
+        }
+    };
+    xhr.open('GET', 'save_message.php', true);
+    xhr.send();
+}
+
+// Load messages on page load
+loadMessages();
+
+// Event listener for the Enter key
+document.getElementById('user-input').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        sendMessage();
+        loadMessages(); // Reload messages after sending a new one
     }
+});
+
+// Automatically load messages every 5 seconds (adjust as needed)
+setInterval(function () {
+    loadMessages();
+}, 1000); // Adjust the interval as needed
 </script>
+
     </div>
   </div>
 

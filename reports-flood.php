@@ -147,20 +147,11 @@ if (!isset($_SESSION['id'])) {
 
     <div class="textarea-wrapper-row">
       <div class="textarea-wrapper">
-        <div class="identifier">
-          No. of Persons
-        </div>
-          <div class="placeholder">Male</div>
-          <input type="number" name="personsM">
-
-          <div class="placeholder" style="left: 37%;">Female</div>
-          <input type="number" name="personsF">
-
-          <div class="placeholder" style="left: 70%;">LGBTQ+</div>
-          <input type="number" name="personsLgbt">
+        <div class="identifier">Pregnant Women</div>
+          <input type="number" name="pregnant">
       </div>
 
-      <div class="textarea-wrapper" style="width: 34%;">
+      <div class="textarea-wrapper">
         <div class="identifier">No. of Families</div>
         <input type="number" name="families" style="height: 40px; padding-top: 0px;">
       </div>
@@ -265,15 +256,6 @@ if (!isset($_SESSION['id'])) {
     </div>
     </div>
  
-
-  <div class="textarea-wrapper" style="width: 42%; margin-left: 0.1em; margin-top: 1.6em; padding: 0;">
-    <div class="identifier">Pregnant Women</div>
-    <div class="outer-wrapper">
-      <div class="textarea-wrapper">
-        <input type="number" name="pregnant" style="width: 50%; margin-top: 0em;margin-right: 0;">
-      </div>
-    </div>
-  </div>
   <div class="buttons-container">
   <button type="submit" value="Add Flood Report" id="done">Done</button>
   <button type="button" id="print" onclick="exportTableToExcel('table.xls')">Save as Excel</button>

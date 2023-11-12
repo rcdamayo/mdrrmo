@@ -33,26 +33,61 @@
 </div>
 
 <script>
-    // Function to send and receive messages
-    function sendMessage() {
-        var userInput = document.getElementById('user-input');
-        var chatMessage = document.getElementById('chat-message');
-        var message = userInput.value;
+function sendMessage() {
+    var userInput = document.getElementById('user-input');
+    var chatMessage = document.getElementById('chat-message');
+    var message = userInput.value;
 
-        if (message !== '') {
-            var newMessage = document.createElement('p');
-            newMessage.innerHTML = '<strong>You:</strong> ' + message;
-            chatMessage.appendChild(newMessage);
-            userInput.value = '';
-        }
+    if (message !== '') {
+        var newMessage = document.createElement('p');
+        newMessage.innerHTML = '<strong>You:</strong> ' + message;
+        chatMessage.appendChild(newMessage);
+        userInput.value = '';
+
+        // Send message to the server
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'save_message.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send('user=You&message=' + encodeURIComponent(message));
     }
+}
 
-    // Event listener for the Enter key
-    document.getElementById('user-input').addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            sendMessage();
+function loadMessages() {
+    // Retrieve messages from the server
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var chats = JSON.parse(xhr.responseText);
+            var chatMessage = document.getElementById('chat-message');
+            chatMessage.innerHTML = ''; // Clear existing messages
+
+            chats.forEach(function (msg) {
+                var newMessage = document.createElement('p');
+                newMessage.innerHTML = '<strong>' + msg.user + ':</strong> ' + msg.message;
+                chatMessage.appendChild(newMessage);
+            });
         }
-    });
+    };
+    xhr.open('GET', 'save_message.php', true);
+    xhr.send();
+}
+
+// Load messages on page load
+loadMessages();
+
+// Event listener for the Enter key
+document.getElementById('user-input').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        sendMessage();
+        loadMessages(); // Reload messages after sending a new one
+    }
+});
+
+// Automatically load messages every 5 seconds (adjust as needed)
+setInterval(function () {
+    loadMessages();
+}, 1000);
+
 </script>
 
 </body>
