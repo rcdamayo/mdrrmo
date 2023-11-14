@@ -55,9 +55,13 @@ if (!isset($_SESSION['id'])) {
                             <i class='fa fa-caret-down' style='margin-left: 1em;'></i>
                         </button>
                         <div class='dropdown-content'>
-                            <a href='logout.php' style='height: 3em;width: 14em; padding: 0; border-top: 1px solid #e5a920; font-size: 12px;'>
-                                <p>Logout</p>
-                            </a>
+                          <a href='logs.php' style='height: 3em;width: 14em; padding: 0; border-top: 1px solid #e5a920; font-size: 12px;'>
+                            <p>Logs</p>
+                          </a>
+                            
+                          <a href='logout.php' style='margin-top: 3em;height: 3em;width: 14em; padding: 0; border-top: 1px solid #e5a920; font-size: 12px;'>
+                            <p>Logout</p>
+                          </a>
                         </div>
                     </div>";
             }
@@ -77,7 +81,7 @@ if (!isset($_SESSION['id'])) {
   // JavaScript for dropdown functionality
   document.addEventListener("DOMContentLoaded", function() {
     var dropdown = document.querySelector(".dropdown");
-    dropdown.addEventListener("click", function() {
+    dropdown.addEventListener("hover", function() {
       var dropdownContent = dropdown.querySelector(".dropdown-content");
       dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
     });

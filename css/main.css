@@ -45,7 +45,7 @@ body {
     height: 100%;
     float: right;
     display: block;
-    color: #f9b314;
+    color: #800000;
     text-align: center;
     padding: 15px 12px;
     text-decoration: none;
@@ -55,13 +55,13 @@ body {
 }
 
 .topnav a:hover {
-    color: #043a87;  
+    color: #ff0000;  
     fill:#ffffff;  
 }
 
 .topnav a.active {
     font-weight: 700;
-    color: #043a87;
+    color: #ff0000;
     fill: #ffffff;
 }
 
@@ -82,10 +82,10 @@ body {
 
 .topnav a:nth-child(-n + 5) {
     width: 40px;
-    background-color: #f9b314;
-    color: #000000;
+    background-color: #800000;
+    color: #ffffff;
     text-decoration: none;
-    border-right: 1px solid #e5a920;
+    border-right: 1px solid #6c0202;
     padding: 8px 28px 5px 0px;
     margin: 0px;
     font-size: 8px;
@@ -95,6 +95,7 @@ body {
 
 .topnav a:nth-child(-n + 5) svg {
   display: inline-block;
+  fill: #ffffff;
 }
 
 .topnav a:nth-child(-n + 5) p {
@@ -102,12 +103,12 @@ body {
 }
 
 .topnav a:nth-child(-n + 5):hover {
-    background-color: #043a87;
+    background-color: #ff0000;
     color: #ffffff;
 }
 
 .topnav a:nth-child(-n + 5).active {
-    background-color: #043a87;
+    background-color: #ff0000;
     color: #ffffff;
 }
 
@@ -144,20 +145,20 @@ body {
 .p1 {
     text-decoration: underline;
     font-weight: 500;
-    color: #043a87;
+    color: #800000;
 }
 
 .p2 {
     text-decoration: none;
     font-weight: 800;
-    color: #043a87;
+    color: #800000;
 }
 
 .p3 {
     text-decoration: none;
     font-weight: 800;
     
-    color: #f9b314;
+    color: #ff0000;
 }
 
 .footer {

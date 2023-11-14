@@ -77,19 +77,18 @@
     color: #626366;
 }
 
-/* Add CSS to style the calendar */
 .calendar-table {
-    width: 100%; /* Set the table width to 100% to make columns equal */
-    table-layout: fixed; /* Use fixed table layout */
+    width: 100%;
+    table-layout: fixed; 
 }
 
 .calendar-table th,
 .calendar-table td {
-    width: 14.28%; /* Set the width for each column (100% divided by 7 days) */
-    height: 100px; /* Set the height for each cell */
-    text-align: center; /* Center-align text in cells */
-    vertical-align: middle; /* Vertically align content in cells */
-    padding: 10px; /* Add padding to cells as needed */
+    width: 14.28%; 
+    height: 100px; 
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px; 
 }
 
 .calendar table {
@@ -118,34 +117,29 @@
     /* border: 1px solid green; */
 }
 
-/* .calendar td a:hover {
-    text-decoration: none;
-    color: #ffffff;
-    font-weight: 400;
-} */
-
 .calendar td.today {
-    background-color: #043a87;
+    background-color: #800000;
     color: #ffffff;
     border-radius: 0%;
 }
 
-.calendar td.today a {
-    background-color: #043a87;
+.calendar td.today:hover {
+    background-color: #800000;
     color: #ffffff;
     border-radius: 0%;
+    cursor: default;
 }
 
 .calendar td:not(.today):hover {
-    background-color: #0354c6;
-    cursor: pointer;
+    background-color: #ff0000;
+    cursor: default;
     color: #ffffff;
     border-radius: 0%;
 }
 
 .calendar td:not(.today) a:hover {
-    background-color: #0354c6;
-    cursor: pointer;
+    background-color: #ff0000;
+    cursor: default;
     color: #ffffff;
     border-radius: 0%;
 }
@@ -154,19 +148,6 @@
     display: inline;
     float: right;
     margin-top: 15px;
-}
-
-.calendar-nav a {
-    text-decoration: none;
-    color: #9f9f9f;
-    font-weight: 900;
-    font-size: 18px;
-    margin-right: 20px;
-    transition: 0.3s;
-}
-
-.calendar-nav a:hover {
-    color: #043a87;
 }
 
 .calendar-container {
@@ -209,7 +190,7 @@
     text-align: center;
     padding: 0px;
     padding-left: 10px;
-    border-left: 3px solid #043a87;
+    border-left: 3px solid #800000;
     font-size: 26px;
     font-weight: 400;
     float: left;
@@ -240,7 +221,7 @@
     float: right;
     padding: 10px;
     font-size: 12px;
-    background-color: #043a87;
+    background-color: #800000;
     color: #ffffff;
 }
 
@@ -607,7 +588,8 @@ ul {
   .chat h1 {
     font-size: 16px;
     font-weight: 700;
-    background-color: #f9b314;
+    background-color: #800000;
+    color: #ffffff;
     margin: 0;
     padding: 0.5em;
     text-align: center;
