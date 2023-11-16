@@ -45,10 +45,11 @@
     width: 100%;
     padding: 0;
     margin: 0;
+    overflow-y: auto;
 }
 
 table {
-    /* min-height: 100vh; */
+    height: auto;
     width: 100%;
     overflow-y: auto;
     border-collapse: collapse;

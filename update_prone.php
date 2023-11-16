@@ -1,5 +1,11 @@
 <?php
+include 'admin_db_connection.php';
 include 'db_connection.php';
+
+session_start();
+
+// Retrieve the currently logged-in employee_id
+$currentEmployeeId = $_SESSION['employee_id'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Update existing records
@@ -34,6 +40,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
+        // Log the update
+        $section = "Flood";
+        $description = "Updated Barangays Prone to Flood";
+        $date_time = date('Y-m-d H:i:s');
+        $logSql = "INSERT INTO logs (section, description, date_time, employee_id) VALUES ('$section', '$description', '$date_time', '$currentEmployeeId')";
+        if ($conn->query($logSql) !== TRUE) {
+            echo "Error inserting into logs: " . $conn->error;
+        }
+
+    }
+
     // Insert new rows
     if (isset($_POST['new_barangay']) && isset($_POST['new_status'])) {
         $newBarangays = $_POST['new_barangay'];
@@ -49,12 +66,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "Error inserting new record: " . $conn->error;
                     break;
                 }
+
+                // Log the insertion
+                $section = "Flood";
+                $description = "Inserted new Barangay Prone to Flood";
+                $date_time = date('Y-m-d H:i:s');
+                $logSql = "INSERT INTO logs (section, description, date_time, employee_id) VALUES ('$section', '$description', '$date_time', '$currentEmployeeId')";
+                if ($conn->query($logSql) !== TRUE) {
+                    echo "Error inserting into logs: " . $conn->error;
+                }
             }
         }
     }
 
     echo "Records updated and inserted successfully";
-}
 }
 $conn->close();
 ?>

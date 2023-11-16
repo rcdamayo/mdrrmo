@@ -1,5 +1,8 @@
 <?php
+include 'admin_db_connection.php';
 include 'db_connection.php';
+
+session_start();
 
 // Update the data in the database
 $success = true; // Flag to track if the update was successful
@@ -24,6 +27,19 @@ if (isset($_POST['level']) && isset($_POST['latitude']) && isset($_POST['longitu
             break;
         }
     }
+
+    // Retrieve the currently logged-in employee_id
+$currentEmployeeId = $_SESSION['employee_id'];
+
+// Insert into logs table with the currently logged-in employee_id
+$section = "Flood";
+$description = "Updated Markers";
+$date_time = date('Y-m-d H:i:s');
+$logSql = "INSERT INTO logs (section, description, date_time, employee_id) VALUES ('$section', '$description', '$date_time', '$currentEmployeeId')";
+if ($conn->query($logSql) !== TRUE) {
+    echo "Error inserting into logs: " . $conn->error;
+}
+
 }
 
 if ($success) {

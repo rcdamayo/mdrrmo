@@ -1,5 +1,8 @@
 <?php
+include 'admin_db_connection.php';
 include 'db_connection.php';
+
+session_start();
 
 // Prepare and bind the data
 $stmt = $conn->prepare("INSERT INTO alerts (typhoon_alert, timestamp) VALUES (?, ?)");
@@ -12,6 +15,18 @@ if ($stmt->execute()) {
     echo "Alert added successfully";
 } else {
     echo "Cannot add Alert Message";
+}
+
+// Retrieve the currently logged-in employee_id
+$currentEmployeeId = $_SESSION['employee_id'];
+
+// Insert into logs table with the currently logged-in employee_id
+$section = "Typhoon";
+$description = "Added an Emergecny Alert";
+$date_time = date('Y-m-d H:i:s');
+$logSql = "INSERT INTO logs (section, description, date_time, employee_id) VALUES ('$section', '$description', '$date_time', '$currentEmployeeId')";
+if ($conn->query($logSql) !== TRUE) {
+    echo "Error inserting into logs: " . $conn->error;
 }
 
 $stmt->close();
