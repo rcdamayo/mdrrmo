@@ -36,11 +36,11 @@ h1 {
 
 .list-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     /* border: 1px solid lime; */
-    height: 115vh ;
+    height: 100% ;
     width: 100%;
     padding: 0;
     background-color: #ffffff;
@@ -48,6 +48,10 @@ h1 {
     border-radius: 10px;
     overflow-y:auto;
     overflow-x: hidden;
+}
+
+.list-container h1 {
+    margin-top: -53%;
 }
 
 .switch {
@@ -176,7 +180,7 @@ word-break: break-word;
     flex-wrap: wrap;
     width: 100%;
     flex: 1;
-    margin: 0em 1em;
+    margin: 0.8em 1em;
     /* border: 1px solid red; */
 }
 
@@ -291,7 +295,7 @@ word-break: break-word;
 }
 
 .compose-container textarea {
-    height: 20vh;
+    height: 30vh;
     width: auto;
     padding: 1em;
     margin: 0.5em 1em 1em 1em;
@@ -325,15 +329,16 @@ word-break: break-word;
 }
 
 table {
-    display: flex;
+    /* display: flex;
+    flex-direction: column;
     position: relative;
     flex: 1;
-    top: -10%;
+    top: 10%; */
     table-layout: fixed;
-    /* border: 1px solid lime; */
-    border-collapse: collapse;
     width: 100%;
-    min-height: 92vh;
+    /* border: 1px solid lime;
+    border-collapse: collapse;
+    min-height: 100vh; */
 }
 /* table, th, td {
     border: 0;
@@ -350,6 +355,8 @@ th {
     border-bottom: 1px solid #4e4e4e;
     padding-bottom: 1em;
     padding-top: 2em;
+    /* width: 10vw; */
+
 }
 
 tr {

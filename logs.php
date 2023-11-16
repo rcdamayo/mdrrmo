@@ -14,7 +14,7 @@ if (!isset($_SESSION['id'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Disaster Ready: Admin</title>
+  <title>Disaster Ready: Activity Logs</title>
   <link rel="stylesheet" href="css/admin.css">
   <link rel="stylesheet" href="css/admin-logs.css">
   <link rel="icon" href="images/icon.png">
@@ -50,7 +50,7 @@ if (!isset($_SESSION['id'])) {
                 $first_name = $row["first_name"][0] . ".";
                 $last_name = $row["last_name"];
                 echo "<div class='dropdown'>
-                        <button class='dropbtn' style='background-color: #ff0000; color: #ffffff;'>
+                        <button class='dropbtn' color: #ffffff;'>
                         <img src='$image' alt='User Image'>$first_name $last_name
                             <i class='fa fa-caret-down' style='margin-left: 1em;'></i>
                         </button>
@@ -130,11 +130,67 @@ if (!isset($_SESSION['id'])) {
 
 <div class="main">
     <div class="division">
-        
+        <div class="filters-container">
+          <h1>Filters</h1>
+        </div>
     </div>
 
     <div class="division">
-        <table>
-            
-        </table>
+      <div class="table-container">
+        <?php
+          include 'db_connection.php';
+
+          // Fetch hazard-prone area data from the database
+          $sql = "SELECT * FROM logs";
+          $result = $conn->query($sql);
+
+          if ($result->num_rows > 0) {
+              echo "<table>";
+              echo "<tr>
+                      <th>Employee ID</th>
+                      <th>Section</th>
+                      <th>Description</th>
+                      <th>Date</th>
+                      <th>Time</th>
+                  </tr>";
+
+              while ($row = $result->fetch_assoc()) {
+                  echo "<tr>";
+                  echo "<td>" . $row['employee_id'] . "</td>";
+                  echo "<td>" . $row['section'] . "</td>";
+                  echo "<td>" . $row['description'] . "</td>";
+                  echo "<td>" . date('Y-m-d', strtotime($row['date_time'])) . "</td>";
+                  echo "<td>" . date('H:i:s A', strtotime($row['date_time'])) . "</td>";  
+                  echo "</tr>";
+              }
+              echo "</table>";
+          } else {
+              echo "0 results";
+          }
+          $conn->close();
+        ?>
+      </div>
     </div>
+
+</div>
+
+<div class="footer">
+  <div class="foot-txt">
+  <img src="images/footer.png" style="height: 100%; width: 80%;">
+  </div>
+
+  <div class="foot-txt">
+      <font style="font-weight: 700;">REPUBLIC OF THE PHILIPPINES</font>
+      All content is in the public domain unless otherwise stated.
+  </div>
+
+  <div class="foot-txt">
+    <font style="font-weight: 700;">ABOUT GOVPH</font>
+    Learn more about the Philippine government, its structure, how government works and the people behind it.
+  </div>
+</div>
+
+
+
+</body>
+</html>

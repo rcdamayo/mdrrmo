@@ -1,4 +1,7 @@
 <?php
+
+
+// Start the session
 session_start();
 
 // Check if the user is already logged in
@@ -8,6 +11,7 @@ if (isset($_SESSION['id'])) {
 }
 
 // Database connection details
+
 $host = 'edr.topfavlists.com';
 $dbname = 'admin_db';
 $username = 'admin_usr';
@@ -49,7 +53,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Set session variables
             $_SESSION['id'] = $user['id'];
             $_SESSION['employee_id'] = $user['employee_id'];
-            $_SESSION['position'] = $user['position'];
+            $_SESSION['user_role'] = $user['user_role'];
+
+            include 'db_connection.php';
+
+            // Insert into logs table with the currently logged-in employee_id
+            $section = "Session";
+            $description = "Logged In";
+            $date_time = date('Y-m-d H:i:s');
+            $logSql = "INSERT INTO logs (section, description, date_time, employee_id) VALUES ('$section', '$description', '$date_time', '$employee_id')";
+            if ($conn->query($logSql) !== TRUE) {
+                echo "Error inserting into logs: " . $conn->error;
+            }
 
             // Successful login, redirect to the dashboard
             header('Location: admin-home.php');
@@ -64,6 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -105,16 +121,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endif; ?>
             </script>
 
-            <input type="checkbox" id="termsCheckbox" required>
-            <p style="display: inline; font-size: 10px; position: relative; top: -25px; left: 30px;">I agree to the <font color="#043a87" style="text-decoration: underline;">terms of service</font> and <font color="#043a87" style="text-decoration: underline;">privacy policy</font></p>
+            <!-- <input type="checkbox" id="termsCheckbox" required>
+            <p style="display: inline; font-size: 10px; position: relative; top: -25px; left: 30px;">I agree to the <font color="#043a87" style="text-decoration: underline;">terms of service</font> and <font color="#043a87" style="text-decoration: underline;">privacy policy</font></p> -->
 
-            <input type="submit" id="login-btn" value="Login" class="disabled">
+            <button type="submit" id="login-btn">Login</button>
         </form>
         </div>
 </div>
 </div>
 
-<script>
+<!-- <script>
     document.getElementById('termsCheckbox').addEventListener('change', function() {
         const loginButton = document.getElementById('login-btn');
         loginButton.disabled = !this.checked;
@@ -126,6 +142,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             loginButton.classList.add('disabled');
         }
     });
-</script>
+</script> -->
 </body>
 </html>

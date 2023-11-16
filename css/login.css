@@ -18,10 +18,11 @@ body {
 }
 
 #login-btn {
-    width: 95%;
+    width: 96%;
     height: 35px;
     /* margin: 10px; */
     margin-left: 0px;
+    margin-top: 3em;
     padding: 5px 20px;
     border: 0px;
     border-radius: 50px;
@@ -77,14 +78,5 @@ input[type="checkbox"] {
     width: 100%;
     margin-top: 10%;
     margin-left: 20px;
-}
-
-.arrow {
-    /* border: 1px solid red; */
-    width: 50px;
-    border-radius: 50px;
-    position: absolute;
-    left: 30%;
-    margin-top: 2%;
 }
 

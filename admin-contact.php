@@ -15,7 +15,7 @@ if (!isset($_SESSION['id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Disaster Ready Admin: Contact</title>
     <link rel="stylesheet" href="css/admin.css">
-    <link rel="stylesheet" href="css/admin-email.css">
+    <link rel="stylesheet" href="css/admin-contact.css">
     <link rel="icon" href="images/icon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -141,16 +141,15 @@ if ($result->num_rows > 0) {
         <th>Name</th>
         <th>Barangay</th>
         <th>Phone</th>
-        <th>Email</th>
         <th>Verification</th>
       </tr>";
 
     while ($row = $result->fetch_assoc()) {
         echo "<tr>
-          <td style='min-width: 12em;'>" . $row["last_name"] . "<p style='display: inline;'>, </p>" . $row["first_name"] . "</td>
+          <td>" . $row["last_name"] . "<p style='display: inline;'>, </p>" . $row["first_name"] . "</td>
           <td>" . $row["barangay"] . "</td>
           <td>0" . $row["phone_no"] . "</td>
-          <td style='min-width: 10em;'>" .  $row["email"] . "</td>
+          
           <td>
             <button class='switch' onclick='toggleDisplay(this, " . $row['id'] . ")'>" . ($row['verified'] === 'y' ? '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#0043a8" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path></svg>' : 
               '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#f9b314" viewBox="0 0 256 256"><path d="M232,128A104,104,0,1,1,128,24,104.13,104.13,0,0,1,232,128Z"></path></svg>') . "</button>
@@ -236,7 +235,7 @@ function updateData(event) {
   <div class="division">
     <div class="verify-register-box">
     <div class="register-container">
-        <h1>Register Email</h1>
+        <h1>Register Contact</h1>
 
         <form id='updateContacts' onsubmit='addContacts(event)' method='post' action='add_contacts.php'>
         <!-- <form action="add_contacts.php" method="POST"> -->
@@ -287,9 +286,6 @@ function updateData(event) {
           <option value="Tutug-an">Tutug-an</option>
         </select>
       </div>
-      <div class="input-container">
-        <input type="email" name="email" placeholder="Email Address" style="margin: 5px;">
-      </div>
 
       <div class="input-container">
         <input type="number" name="phoneNo" placeholder="Phone No." style="margin: 5px;">
@@ -297,6 +293,48 @@ function updateData(event) {
       <button type="submit">REGISTER</button>
 
       </form>
+      <div id='snackbar'></div>
+
+<script>
+function showSnackbar(message) {
+    var snackbar = document.getElementById("snackbar");
+    snackbar.textContent = message;
+    snackbar.style.visibility = "visible";
+    setTimeout(function() {
+        snackbar.style.opacity = 1;
+    }, 1);
+    setTimeout(function() {
+        snackbar.style.opacity = 0;
+    }, 2500);
+    setTimeout(function() {
+        snackbar.style.visibility = "hidden";
+    }, 3000);
+}
+
+function addContacts(event) {
+    event.preventDefault();
+    var form = document.getElementById("updateContacts");
+    var formData = new FormData(form);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "add_contacts.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                var response = xhr.responseText.trim();
+                if (response.includes('Error')) {
+                    showSnackbar("Information added successfully. Refresh to see results");
+                } else {
+                    showSnackbar("Information added successfully. Refresh to see results");
+                }
+            } else {
+                showSnackbar("Information added successfully. Refresh to see results");
+            }
+        }
+    };
+    xhr.send(formData);
+}
+</script>
     </div>
 
 
@@ -399,64 +437,19 @@ setInterval(function () {
 
   <form id="emailForm" method="post" action="send_email.php">
     <div class="compose-container">
-      <h1 style="width: 93.5%;">Compose Email</h1>
-          <button type="submit" value="Send Email">SEND</button>
+      <h1 style="width: 93.5%;">Compose Message</h1>
+          <button type="submit" value="Send Message">SEND</button>
       <div class="input-container" style="margin-top: 1em;">
-      <input type="text" id="email" name="email" placeholder="Email Addresses (Separate multiple emails with a comma or semicolon)" required>
-      </div>
-
-      <div class="input-container">
-        <input type="text" id="subject" name="subject" placeholder="Subject" required>
+      <input type="text" id="sms" name="sms" placeholder="Phone Number/s" required>
       </div>
 
           <div class="input-container">
-          <textarea id="message" name="message" rows="4" cols="50" Placeholder="Enter Message here..." required></textarea>
+          <textarea id="message" name="message" Placeholder="Enter Message here..." required></textarea>
           </div>
     </div>
     </form>
 
-    <div id='snackbar'></div>
-
-<script>
-function showSnackbar(message) {
-    var snackbar = document.getElementById("snackbar");
-    snackbar.textContent = message;
-    snackbar.style.visibility = "visible";
-    setTimeout(function() {
-        snackbar.style.opacity = 1;
-    }, 1);
-    setTimeout(function() {
-        snackbar.style.opacity = 0;
-    }, 2500);
-    setTimeout(function() {
-        snackbar.style.visibility = "hidden";
-    }, 3000);
-}
-
-function addContacts(event) {
-    event.preventDefault();
-    var form = document.getElementById("updateContacts");
-    var formData = new FormData(form);
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "add_contacts.php", true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                var response = xhr.responseText.trim();
-                if (response.includes('Error')) {
-                    showSnackbar("Information added successfully. Refresh to see results");
-                } else {
-                    showSnackbar("Information added successfully. Refresh to see results");
-                }
-            } else {
-                showSnackbar("Information added successfully. Refresh to see results");
-            }
-        }
-    };
-    xhr.send(formData);
-}
-</script>
+    
   </div>
 
 

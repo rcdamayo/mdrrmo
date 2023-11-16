@@ -1,5 +1,9 @@
 <?php
+include 'admin_db_connection.php';
 include 'db_connection2.php';
+include 'db_connection.php';
+
+session_start();
 
 // Retrieve event details from the form
 $event_date = $_POST['eventDate'];
@@ -19,10 +23,26 @@ $stmt->bind_param('ssss', $event_date, $event_time, $event_name, $event_descript
 
 $stmt->execute();
 
+// Retrieve the currently logged-in employee_id
+$currentEmployeeId = $_SESSION['employee_id'];
+
+// Insert into logs table with the currently logged-in employee_id
+$section = "Home/Events";
+$description = "Added an Event";
+$date_time = date('Y-m-d H:i:s');
+$logSql = "INSERT INTO logs (section, description, date_time, employee_id) VALUES ('$section', '$description', '$date_time', '$currentEmployeeId')";
+if ($conn->query($logSql) !== TRUE) {
+    echo "Error inserting into logs: " . $conn->error;
+}
+
 // Close the database connection
 $stmt->close();
 $mysqli->close();
+$conn->close();
 
+echo "Event added Successfully";
+
+// Redirect to admin home page
 header('Location: admin-home.php');
 exit;
 ?>
