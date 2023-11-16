@@ -135,32 +135,69 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     echo "<form id='updateForm' onsubmit='updateData(event)' method='post' action='update_email_verif.php'>";
-    // echo "<button class='update-marker' type='submit'>UPDATE</button>";
-    echo "<table>
+    echo '<table>
       <tr>
+        <th>
+          <select name="selectedBarangay" id="selectedBarangay" onchange="filterResidents()">
+            <option value="All">Barangay</option>
+            <option value="Abango">Abango</option>
+            <option value="Amahit">Amahit</option>
+            <option value="Balire">Balire</option>
+            <option value="Balud">Balud</option>
+            <option value="Bukid">Bukid</option>
+            <option value="Bulod">Bulod</option>
+            <option value="Busay">Busay</option>
+            <option value="Cabarasan">Cabarasan</option>
+            <option value="Cabolo-an">Cabolo-an</option>
+            <option value="Calingcaguing">Calingcaguin</option>
+            <option value="Can-isak">Can-Isak</option>
+            <option value="Canomantag">Canomantag</option>
+            <option value="Cuta">Cuta</option>
+            <option value="Domogdog">Domogdog</option>
+            <option value="Duka">Duka</option>
+            <option value="Guindaohan">Guindaohan</option>
+            <option value="Hiagsam">Hiagsam</option>
+            <option value="Hilaba">Hilaba</option>
+            <option value="Hinugayan">Hinugayan</option>
+            <option value="Ibag">Ibag</option>
+            <option value="Minuhang">Minuhang</option>
+            <option value="Minuswang">Minuswang</option>
+            <option value="Pikas">Pikas</option>
+            <option value="Pitogo">Pitogo</option>
+            <option value="Poblacion Dist. I">Poblacion Dist. I</option>
+            <option value="Poblacion Dist. II">Poblacion Dist. II</option>
+            <option value="Poblacion Dist. III">Poblacion Dist. III</option>
+            <option value="Poblacion Dist. IV">Poblacion Dist. IV</option>
+            <option value="Poblacion Dist. V">Poblacion Dist. V</option>
+            <option value="Poblacion Dist. VI">Poblacion Dist. VI</option>
+            <option value="Pongso">Pongso</option>
+            <option value="Roosevelt">Roosevelt</option>
+            <option value="San Isidro">San Isidro</option>
+            <option value="San Roque">San Roque</option>
+            <option value="Santa Rosa">Santa Rosa</option>
+            <option value="Santarin">Santarin</option>
+            <option value="Tutug-an">Tutug-an</option>
+            </select>
+        </th>
         <th>Name</th>
-        <th>Barangay</th>
         <th>Phone</th>
-        <th>Verification</th>
-      </tr>";
+        <th>
+          <button type="button" class="addAllButton" onclick="addAllPhoneNumbers()">Add All</button>
+        </th>
+      </tr>';
 
     while ($row = $result->fetch_assoc()) {
-        echo "<tr>
-          <td>" . $row["last_name"] . "<p style='display: inline;'>, </p>" . $row["first_name"] . "</td>
+        echo "<tr class='residentRow' data-barangay='" . $row["barangay"] . "'>
           <td>" . $row["barangay"] . "</td>
-          <td>0" . $row["phone_no"] . "</td>
-          
-          <td>
-            <button class='switch' onclick='toggleDisplay(this, " . $row['id'] . ")'>" . ($row['verified'] === 'y' ? '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#0043a8" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path></svg>' : 
-              '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#f9b314" viewBox="0 0 256 256"><path d="M232,128A104,104,0,1,1,128,24,104.13,104.13,0,0,1,232,128Z"></path></svg>') . "</button>
-            <input type='hidden' name='verified[]' value='" . $row['verified'] . "'>
-            <input type='hidden' name='id[]' value='" . $row['id'] . "'>
-          </td>
+          <td>" . $row["last_name"] . "<p style='display: inline;'>, </p>" . $row["first_name"] . "</td>
+          <td>+63" . $row["phone_no"] . "</td>
+          <td></td>
         </tr>";
     }
 
     echo "</table>";
     echo "</form>";
+
 } else {
     echo "No results found";
 }
@@ -168,9 +205,58 @@ if ($result->num_rows > 0) {
 $conn->close();
 ?>
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    function filterResidents() {
+        var selectedBarangay = $('#selectedBarangay').val();
+
+        if (selectedBarangay === 'All') {
+            $('.residentRow').show();
+        } else {
+            $('.residentRow').hide();
+            $('.residentRow[data-barangay="' + selectedBarangay + '"]').show();
+        }
+    }
+
+
+    function addAllPhoneNumbers() {
+        // Clear the existing values in the input field
+        $('#phoneNumbers').val('');
+
+        var selectedBarangay = $('#selectedBarangay').val();
+        var isFirstPhoneNumber = true;
+
+        // Iterate through all rows
+        $('.residentRow').each(function() {
+            var rowBarangay = $(this).find('td:eq(0)').text().trim(); // Assuming the barangay is in the first column (index 0)
+            var phoneNumber = $(this).find('td:eq(2)').text().trim(); // Assuming the phone number is in the third column (index 2)
+
+            // Check if the "All" option is selected or if the row's barangay matches the selected barangay
+            if (selectedBarangay === 'All' || rowBarangay === selectedBarangay) {
+                // Add a comma only if it's not the first phone number
+                if (!isFirstPhoneNumber) {
+                    $('#phoneNumbers').val($('#phoneNumbers').val() + ', ');
+                }
+                $('#phoneNumbers').val($('#phoneNumbers').val() + phoneNumber);
+                
+                // Set isFirstPhoneNumber to false after the first phone number is added
+                isFirstPhoneNumber = false;
+            }
+        });
+    }
+</script>
+
+
 </div>
 
 <div id='snackbar'></div>
+
+  <!-- <td>
+    <button class='switch' onclick='toggleDisplay(this, " . $row['id'] . ")'>" . ($row['verified'] === 'y' ? '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#0043a8" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path></svg>' : 
+      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#f9b314" viewBox="0 0 256 256"><path d="M232,128A104,104,0,1,1,128,24,104.13,104.13,0,0,1,232,128Z"></path></svg>') . "</button>
+    <input type='hidden' name='verified[]' value='" . $row['verified'] . "'>
+    <input type='hidden' name='id[]' value='" . $row['id'] . "'>
+  </td> -->
 
 <script>
 function showSnackbar(message) {
@@ -435,12 +521,12 @@ setInterval(function () {
 
 
 
-  <form id="emailForm" method="post" action="send_email.php">
+  <form method="post" action="send-message.php">
     <div class="compose-container">
       <h1 style="width: 93.5%;">Compose Message</h1>
-          <button type="submit" value="Send Message">SEND</button>
+        <button type="submit">SEND</button>
       <div class="input-container" style="margin-top: 1em;">
-      <input type="text" id="sms" name="sms" placeholder="Phone Number/s" required>
+      <input type="text" id="phoneNumbers" name="phoneNumbers" placeholder="Phone Number/s" required>
       </div>
 
           <div class="input-container">
