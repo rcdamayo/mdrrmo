@@ -1,5 +1,8 @@
 <?php
+include 'admin_db_connection.php';
 include 'db_connection.php';
+
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Update existing records

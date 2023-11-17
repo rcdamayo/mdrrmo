@@ -1,5 +1,8 @@
 <?php
+include "admin_db_connection.php";
 include "db_connection.php";
+
+session_start();
 
 // Assuming you have received the form data through POST request
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -20,6 +23,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
   }
+}
+
+// Retrieve the currently logged-in employee_id
+$currentEmployeeId = $_SESSION['employee_id'];
+
+// Insert into logs table with the currently logged-in employee_id
+$section = "Typhoon";
+$description = "Updated Typhoon Bulletin";
+$date_time = date('Y-m-d H:i:s');
+$logSql = "INSERT INTO logs (section, description, date_time, employee_id) VALUES ('$section', '$description', '$date_time', '$currentEmployeeId')";
+if ($conn->query($logSql) !== TRUE) {
+    echo "Error inserting into logs: " . $conn->error;
 }
 
 $conn->close();
