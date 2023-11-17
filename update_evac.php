@@ -54,6 +54,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+    // Retrieve the currently logged-in employee_id
+    $currentEmployeeId = $_SESSION['employee_id'];
+
+    // Insert into logs table with the currently logged-in employee_id
+    $section = "Map";
+    $description = "Updated Evacuation Centers";
+    $date_time = date('Y-m-d H:i:s');
+    $logSql = "INSERT INTO logs (section, description, date_time, employee_id) VALUES ('$section', '$description', '$date_time', '$currentEmployeeId')";
+    if ($conn->query($logSql) !== TRUE) {
+        echo "Error inserting into logs: " . $conn->error;
+    }
+
     echo "Evacuation Centers updated and inserted successfully";
 }
 }

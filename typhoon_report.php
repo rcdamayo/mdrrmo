@@ -1,5 +1,9 @@
 <?php
+include 'admin_db_connection.php';
 include 'db_connection2.php';
+include 'db_connection.php';
+
+session_start();
 
 // Retrieve event details from the form
 $sitio = $_POST['sitio'];
@@ -46,7 +50,20 @@ if ($stmt->execute()) {
     echo 'Error adding event: ' . $stmt->error;
 }
 
+// Retrieve the currently logged-in employee_id
+$currentEmployeeId = $_SESSION['employee_id'];
+
+// Insert into logs table with the currently logged-in employee_id
+$section = "Reports";
+$description = "Added Typhoon Report Data";
+$date_time = date('Y-m-d H:i:s');
+$logSql = "INSERT INTO logs (section, description, date_time, employee_id) VALUES ('$section', '$description', '$date_time', '$currentEmployeeId')";
+if ($conn->query($logSql) !== TRUE) {
+    echo "Error inserting into logs: " . $conn->error;
+}
+
 // Close the database connection
 $stmt->close();
 $mysqli->close();
+$conn->close();
 ?>

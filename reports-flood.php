@@ -426,6 +426,21 @@ if ($result->num_rows > 0) {
     var link = document.createElement('a');
     link.download = filename; // Change the filename here
     link.href = uri + base64(template);
+
+    // AJAX request to log the download action
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "log_download.php", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        // Log response from the server (if needed)
+        console.log(xhr.responseText);
+      }
+    };
+    
+    // Sending the data to the server
+    xhr.send();
+
     link.click();
   }
 

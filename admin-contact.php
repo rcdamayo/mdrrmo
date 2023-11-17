@@ -191,7 +191,7 @@ if ($result->num_rows > 0) {
           <td>" . $row["barangay"] . "</td>
           <td>" . $row["last_name"] . "<p style='display: inline;'>, </p>" . $row["first_name"] . "</td>
           <td>+63" . $row["phone_no"] . "</td>
-          <td><button type='button' class='addButton' onclick='addPhoneNumber(this)'>Select</button></td>
+          <td><button type='button' class='addButton addH' onclick='addPhoneNumber(this)'>Select</button></td>
         </tr>";
     }
 
@@ -330,6 +330,21 @@ function updateData(event) {
 
 
   <div class="division">
+
+    <form method="post" action="send-message.php">
+      <div class="compose-container">
+        <h1 style="width: 93.5%;">Compose Message</h1>
+          <button type="submit">SEND</button>
+        <div class="input-container">
+        <input type="text" id="phoneNumbers" name="phoneNumbers" placeholder="Phone Number/s" required>
+        </div>
+
+            <div class="input-container">
+            <textarea id="message" name="message" Placeholder="Enter Message here..." required></textarea>
+            </div>
+      </div>
+    </form>
+
     <div class="verify-register-box">
     <div class="register-container">
         <h1>Register Contact</h1>
@@ -438,7 +453,7 @@ function addContacts(event) {
 
 
       <div class="chat">
-        <h1 style="width: 87%;">Chat</h1>
+        <h1>Chat</h1>
 
         <div class="chat-message" id="chat-message">
           <p>Welcome to the chat! Start by typing a message below:</p>
@@ -532,92 +547,26 @@ setInterval(function () {
 
 
 
-  <form method="post" action="send-message.php">
-    <div class="compose-container">
-      <h1 style="width: 93.5%;">Compose Message</h1>
-        <button type="submit">SEND</button>
-      <div class="input-container" style="margin-top: 1em;">
-      <input type="text" id="phoneNumbers" name="phoneNumbers" placeholder="Phone Number/s" required>
-      </div>
-
-          <div class="input-container">
-          <textarea id="message" name="message" Placeholder="Enter Message here..." required></textarea>
-          </div>
-    </div>
-    </form>
+  
 
     
   </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $('#emailForm').submit(function (e) {
-            e.preventDefault();
-            var emailData = {
-                email: $('#email').val(),
-                subject: $('#subject').val(),
-                message: $('#message').val()
-            };
+<script>
 
-            $.ajax({
-                type: "POST",
-                url: "https://api.mailgun.net/v3/sandboxb341a6c17d2642a7aca021df8f197fa3.mailgun.org/messages",
-                headers: {
-                    "Authorization": "Basic " + btoa("api:bb6b42441a354b3d161f78a7e8300e37-3e508ae1-30d3ff8c"),
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                data: {
-                    from: "MDRRMO Barugo <mailgun@sandboxb341a6c17d2642a7aca021df8f197fa3.mailgun.org>",
-                    to: emailData.email,
-                    subject: emailData.subject,
-                    text: emailData.message
-                },
-                success: function () {
-                    alert('Email sent successfully!');
-                },
-                error: function () {
-                    alert('Failed to send email.');
-                }
-            });
-        });
-
-        // TOPNAV
-function myFunction() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
+          // TOPNAV
+  function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+    } else {
+      x.className = "topnav";
+    }
   }
-}
-    </script>
+</script>
 <div class="footer">
   <div class="foot-txt">
   <img src="images/footer.png" style="height: 100%; width: 80%;">

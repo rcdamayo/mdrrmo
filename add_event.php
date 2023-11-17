@@ -27,7 +27,7 @@ $stmt->execute();
 $currentEmployeeId = $_SESSION['employee_id'];
 
 // Insert into logs table with the currently logged-in employee_id
-$section = "Home/Events";
+$section = "Home";
 $description = "Added an Event";
 $date_time = date('Y-m-d H:i:s');
 $logSql = "INSERT INTO logs (section, description, date_time, employee_id) VALUES ('$section', '$description', '$date_time', '$currentEmployeeId')";

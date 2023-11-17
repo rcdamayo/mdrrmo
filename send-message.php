@@ -11,6 +11,11 @@ $twilioPhoneNumber = '+16562187651';
 // Initialize Twilio client
 $client = new Client($accountSid, $authToken);
 
+include 'admin_db_connection.php';
+include 'db_connection.php';
+
+session_start();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phoneNumbers = explode(',', $_POST['phoneNumbers']);
     $message = $_POST['message'];
@@ -30,6 +35,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "Error sending message to $phoneNumber: {$e->getMessage()}\n";
         }
     }
+
+    // Retrieve the currently logged-in employee_id
+    $currentEmployeeId = $_SESSION['employee_id'];
+
+    // Insert into logs table with the currently logged-in employee_id
+    $section = "Contact";
+    $description = "Sent a message";
+    $date_time = date('Y-m-d H:i:s');
+    $logSql = "INSERT INTO logs (section, description, date_time, employee_id) VALUES ('$section', '$description', '$date_time', '$currentEmployeeId')";
+    
+    if ($conn->query($logSql) !== TRUE) {
+        echo "Error inserting into logs: " . $conn->error;
+    }
+
+    // Close the database connection
+    $conn->close();
+    $mysqli->close();
+
+    // Redirect to admin-contact.php
+    header("Location: admin-contact.php");
+    exit;
 } else {
     echo "Invalid request method.";
 }
+?>
