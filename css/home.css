@@ -118,27 +118,27 @@
 }
 
 .calendar td.today {
-    background-color: #800000;
+    background-color: #043a87;
     color: #ffffff;
     border-radius: 0%;
 }
 
 .calendar td.today:hover {
-    background-color: #800000;
+    background-color: #043a87;
     color: #ffffff;
     border-radius: 0%;
     cursor: default;
 }
 
 .calendar td:not(.today):hover {
-    background-color: #ff0000;
+    background-color: #0b68e9;
     cursor: default;
     color: #ffffff;
     border-radius: 0%;
 }
 
 .calendar td:not(.today) a:hover {
-    background-color: #ff0000;
+    background-color: #0b68e9;
     cursor: default;
     color: #ffffff;
     border-radius: 0%;
@@ -190,7 +190,7 @@
     text-align: center;
     padding: 0px;
     padding-left: 10px;
-    border-left: 3px solid #800000;
+    border-left: 3px solid #043a87;
     font-size: 26px;
     font-weight: 400;
     float: left;
@@ -221,7 +221,7 @@
     float: right;
     padding: 10px;
     font-size: 12px;
-    background-color: #800000;
+    background-color: #043a87;
     color: #ffffff;
 }
 
@@ -588,8 +588,8 @@ ul {
   .chat h1 {
     font-size: 16px;
     font-weight: 700;
-    background-color: #800000;
-    color: #ffffff;
+    background-color: #f9b314;
+    color: #000000;
     margin: 0;
     padding: 0.5em;
     text-align: center;
