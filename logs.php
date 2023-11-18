@@ -129,50 +129,201 @@ if (!isset($_SESSION['id'])) {
 </div>
 
 <div class="main">
-    <div class="division">
-        <div class="filters-container">
-          <h1>Filters</h1>
-        </div>
-    </div>
+  <div class="division">
+    <div class="filters-container">
+      <h1>Filters</h1>
+      <?php
+      include 'db_connection.php';
 
-    <div class="division">
-      <div class="table-container">
-        <?php
-          include 'db_connection.php';
+      // Fetch hazard-prone area data from the database with pagination
+      $sql = "SELECT * FROM logs";
+      $result = $conn->query($sql);
+      ?>
 
-          // Fetch hazard-prone area data from the database
-          $sql = "SELECT * FROM logs";
-          $result = $conn->query($sql);
+      <form id="filterForm" method="get">
+        <label for="employee_id">Employee ID:</label>
+        <select name="employee_id" id="employee_id" onchange="submitForm()">
+          <option value="">All</option>
+          <?php
+            $employeeIdQuery = "SELECT DISTINCT employee_id FROM logs;";
+            $employeeIdResult = $conn->query($employeeIdQuery);
 
-          if ($result->num_rows > 0) {
-              echo "<table>";
-              echo "<tr>
-                      <th>Employee ID</th>
-                      <th>Section</th>
-                      <th>Description</th>
-                      <th>Date</th>
-                      <th>Time</th>
-                  </tr>";
+            while ($employeeIdRow = $employeeIdResult->fetch_assoc()) {
+              $selected = (isset($_GET['employee_id']) && $_GET['employee_id'] == $employeeIdRow['employee_id']) ? 'selected' : '';
+              echo "<option value='{$employeeIdRow['employee_id']}' $selected>{$employeeIdRow['employee_id']}</option>";
+            }
+          ?>
+        </select>
 
-              while ($row = $result->fetch_assoc()) {
-                  echo "<tr>";
-                  echo "<td>" . $row['employee_id'] . "</td>";
-                  echo "<td>" . $row['section'] . "</td>";
-                  echo "<td>" . $row['description'] . "</td>";
-                  echo "<td>" . date('Y-m-d', strtotime($row['date_time'])) . "</td>";
-                  echo "<td>" . date('H:i:s A', strtotime($row['date_time'])) . "</td>";  
-                  echo "</tr>";
-              }
-              echo "</table>";
-          } else {
-              echo "0 results";
+        <label for="section">Section:</label>
+        <select name="section" id="section" onchange="submitForm()">
+          <option value="">All</option>
+          <?php
+            $sectionQuery = "SELECT DISTINCT section FROM logs;";
+            $sectionResult = $conn->query($sectionQuery);
+
+            while ($sectionRow = $sectionResult->fetch_assoc()) {
+              $selected = (isset($_GET['section']) && $_GET['section'] == $sectionRow['section']) ? 'selected' : '';
+              echo "<option value='{$sectionRow['section']}' $selected>{$sectionRow['section']}</option>";
+            }
+            ?>
+        </select>
+
+        <label for="date">Date:</label>
+        <select name="date" id="date" onchange="submitForm()">
+            <option value="">All</option>
+            <?php
+            $dateQuery = "SELECT DISTINCT DATE(date_time) AS date FROM logs;";
+            $dateResult = $conn->query($dateQuery);
+
+            while ($dateRow = $dateResult->fetch_assoc()) {
+                $selected = (isset($_GET['date']) && $_GET['date'] == $dateRow['date']) ? 'selected' : '';
+                echo "<option value='{$dateRow['date']}' $selected>{$dateRow['date']}</option>";
+            }
+            ?>
+        </select>
+      </form>
+
+      <script>
+          function submitForm() {
+              document.getElementById('filterForm').submit();
           }
-          $conn->close();
-        ?>
-      </div>
+      </script>
     </div>
+  </div>
 
-</div>
+
+  <div class="division">
+    <div class="table-container">
+      <?php
+      include 'db_connection.php';
+
+      // Determine the page number
+      $page = isset($_GET['page']) ? $_GET['page'] : 1;
+      $recordsPerPage = 15;
+      $offset = ($page - 1) * $recordsPerPage;
+
+      // Construct SQL query with filters
+      $sql = "SELECT * FROM logs WHERE 1=1";
+
+      if (isset($_GET['employee_id']) && !empty($_GET['employee_id'])) {
+        $employeeIdFilter = $conn->real_escape_string($_GET['employee_id']);
+        $sql .= " AND employee_id = '$employeeIdFilter'";
+      }
+
+      if (isset($_GET['section']) && !empty($_GET['section'])) {
+        $sectionFilter = $conn->real_escape_string($_GET['section']);
+        $sql .= " AND section = '$sectionFilter'";
+      }
+
+      if (isset($_GET['date']) && !empty($_GET['date'])) {
+        $dateFilter = $conn->real_escape_string($_GET['date']);
+        $sql .= " AND DATE(date_time) = '$dateFilter'";
+      }
+
+      $sql .= " ORDER BY id DESC LIMIT $offset, $recordsPerPage;";
+      $result = $conn->query($sql);
+
+      if ($result->num_rows > 0) {
+        echo "<table>";
+        echo "<tr>
+                <th>Employee ID</th>
+                <th>Section</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Time</th>
+              </tr>";
+
+        while ($row = $result->fetch_assoc()) {
+          echo "<tr>";
+          echo "<td>" . $row['employee_id'] . "</td>";
+          echo "<td>" . $row['section'] . "</td>";
+          echo "<td>" . $row['description'] . "</td>";
+          echo "<td>" . date('Y-m-d', strtotime($row['date_time'])) . "</td>";
+          echo "<td>" . date('H:i:s A', strtotime($row['date_time'])) . "</td>";
+          echo "</tr>";
+        }
+
+        echo "</table>";
+        echo "</div>";
+
+        // Display pagination links with previous and next buttons
+        $sql = "SELECT COUNT(*) AS total FROM logs WHERE 1=1";
+
+        if (isset($_GET['employee_id']) && !empty($_GET['employee_id'])) {
+          $employeeIdFilter = $conn->real_escape_string($_GET['employee_id']);
+          $sql .= " AND employee_id = '$employeeIdFilter'";
+        }
+
+        if (isset($_GET['section']) && !empty($_GET['section'])) {
+          $sectionFilter = $conn->real_escape_string($_GET['section']);
+          $sql .= " AND section = '$sectionFilter'";
+        }
+
+        if (isset($_GET['date']) && !empty($_GET['date'])) {
+          $dateFilter = $conn->real_escape_string($_GET['date']);
+          $sql .= " AND DATE(date_time) = '$dateFilter'";
+        }
+
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+        $totalRecords = $row['total'];
+        $totalPages = ceil($totalRecords / $recordsPerPage);
+
+        echo "<div class='pagination'>";
+
+        // Previous button
+        if ($page > 1) {
+          echo "<a href='?page=1" . buildFilterQueryString() . "'>&laquo;&laquo;</a>"; // First page link
+          echo "<a href='?page=" . ($page - 1) . buildFilterQueryString() . "'>&laquo;</a>"; // Previous page link
+        }
+
+        // Page numbers
+        $startPage = max(1, $page - 2);
+        $endPage = min($totalPages, $startPage + 4);
+
+        for ($i = $startPage; $i <= $endPage; $i++) {
+          // Add the "active" class to the current page link
+          $activeClass = ($i == $page) ? "active" : "";
+          echo "<a href='?page=$i" . buildFilterQueryString() . "' class='$activeClass'>$i</a>";
+        }
+
+        // Next button
+        if ($page < $totalPages) {
+          echo "<a href='?page=" . ($page + 1) . buildFilterQueryString() . "'>&raquo;</a>"; // Next page link
+          echo "<a href='?page=$totalPages" . buildFilterQueryString() . "'>&raquo;&raquo;</a>"; // Last page link
+        }
+
+        echo "</div>";
+
+      } else {
+        echo "0 results";
+      }
+
+      $conn->close();
+
+      // Function to build filter query string
+      function buildFilterQueryString()
+      {
+        $filterQueryString = "";
+
+        if (isset($_GET['employee_id']) && !empty($_GET['employee_id'])) {
+          $filterQueryString .= "&employee_id=" . urlencode($_GET['employee_id']);
+        }
+
+        if (isset($_GET['section']) && !empty($_GET['section'])) {
+          $filterQueryString .= "&section=" . urlencode($_GET['section']);
+        }
+
+        if (isset($_GET['date']) && !empty($_GET['date'])) {
+          $filterQueryString .= "&date=" . urlencode($_GET['date']);
+        }
+
+        return $filterQueryString;
+      }
+      ?>
+    </div>
+  </div>
 
 <div class="footer">
   <div class="foot-txt">

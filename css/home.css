@@ -668,7 +668,7 @@ ul {
   margin-top: 10px;
 } */
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
   .main {
     flex-direction: column-reverse;
   }
