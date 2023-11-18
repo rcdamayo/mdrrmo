@@ -262,67 +262,6 @@ $conn->close();
 
 <div id='snackbar'></div>
 
-  <!-- <td>
-    <button class='switch' onclick='toggleDisplay(this, " . $row['id'] . ")'>" . ($row['verified'] === 'y' ? '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#0043a8" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path></svg>' : 
-      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#f9b314" viewBox="0 0 256 256"><path d="M232,128A104,104,0,1,1,128,24,104.13,104.13,0,0,1,232,128Z"></path></svg>') . "</button>
-    <input type='hidden' name='verified[]' value='" . $row['verified'] . "'>
-    <input type='hidden' name='id[]' value='" . $row['id'] . "'>
-  </td> -->
-
-<script>
-function showSnackbar(message) {
-    var snackbar = document.getElementById("snackbar");
-    snackbar.textContent = message;
-    snackbar.style.visibility = "visible";
-    setTimeout(function() {
-        snackbar.style.opacity = 1;
-    }, 1);
-    setTimeout(function() {
-        snackbar.style.opacity = 0;
-    }, 2500);
-    setTimeout(function() {
-        snackbar.style.visibility = "hidden";
-    }, 3000);
-}
-
-function toggleDisplay(button, id) {
-    var currentValue = button.nextElementSibling.value;
-
-    // Toggle the value and button text
-    if (currentValue === 'y') {
-        button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#f9b314" viewBox="0 0 256 256"><path d="M232,128A104,104,0,1,1,128,24,104.13,104.13,0,0,1,232,128Z"></path></svg>';
-        button.nextElementSibling.value = 'n';
-    } else {
-        button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#0043a8" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path></svg>';
-        button.nextElementSibling.value = 'y';
-    }
-}
-
-function updateData(event) {
-    event.preventDefault();
-    var form = document.getElementById("updateForm");
-    var formData = new FormData(form);
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "update_email_verif.php", true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                var response = xhr.responseText.trim();
-                if (response.includes('Error')) {
-                    showSnackbar("Error marking email");
-                } else {
-                    showSnackbar("Email verification marked successfully");
-                }
-            } else {
-                showSnackbar("Error marking email");
-            }
-        }
-    };
-    xhr.send(formData);
-}
-</script>
-
 </div>
 
 
@@ -331,7 +270,7 @@ function updateData(event) {
 
   <div class="division">
 
-    <form method="post" action="send-message.php">
+  <form id="messageForm" method="post" action="send-message.php" onsubmit="sendMessage(event)">
       <div class="compose-container">
         <h1 style="width: 93.5%;">Compose Message</h1>
           <button type="submit">SEND</button>
@@ -344,6 +283,58 @@ function updateData(event) {
             </div>
       </div>
     </form>
+
+    <div id='snackbar'></div>
+    <script>
+function showSnackbar(message) {
+    var snackbar = document.getElementById("snackbar");
+    snackbar.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#0864e6" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-8,56a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm8,104a12,12,0,1,1,12-12A12,12,0,0,1,128,184Z"></path></svg><div>' 
+      + message + 
+      '</div><button id="closeSnackbar">OK</button>';
+    snackbar.style.visibility = "visible";
+    snackbar.style.opacity = 1;
+
+    var closeBtn = document.getElementById("closeSnackbar");
+    closeBtn.addEventListener("click", function() {
+        hideSnackbar(snackbar);
+    });
+}
+
+function hideSnackbar(snackbar) {
+    snackbar.style.opacity = 0;
+    setTimeout(function() {
+        snackbar.style.visibility = "hidden";
+        // Reload the page when the snackbar is closed
+        location.reload();
+    }, 300);
+}
+
+function sendMessage(event) {
+    event.preventDefault();
+    var form = document.getElementById("messageForm");
+    var formData = new FormData(form);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "send-message.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                var response = xhr.responseText.trim();
+                if (response.includes('Error')) {
+                    showSnackbar("SMS sent successfully");
+                } else {
+                    showSnackbar("SMS sent successfully");
+                }
+            } else {
+                showSnackbar("Error sending SMS");
+            }
+        }
+    };
+    xhr.send(formData);
+}
+</script>
+
+
 
     <div class="verify-register-box">
     <div class="register-container">
@@ -410,17 +401,25 @@ function updateData(event) {
 <script>
 function showSnackbar(message) {
     var snackbar = document.getElementById("snackbar");
-    snackbar.textContent = message;
+    snackbar.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#0864e6" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-8,56a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm8,104a12,12,0,1,1,12-12A12,12,0,0,1,128,184Z"></path></svg><div>' 
+      + message + 
+      '</div><button id="closeSnackbar">OK</button>';
     snackbar.style.visibility = "visible";
-    setTimeout(function() {
-        snackbar.style.opacity = 1;
-    }, 1);
-    setTimeout(function() {
-        snackbar.style.opacity = 0;
-    }, 2500);
+    snackbar.style.opacity = 1;
+
+    var closeBtn = document.getElementById("closeSnackbar");
+    closeBtn.addEventListener("click", function() {
+        hideSnackbar(snackbar);
+    });
+}
+
+function hideSnackbar(snackbar) {
+    snackbar.style.opacity = 0;
     setTimeout(function() {
         snackbar.style.visibility = "hidden";
-    }, 3000);
+        // Reload the page when the snackbar is closed
+        location.reload();
+    }, 300);
 }
 
 function addContacts(event) {
@@ -435,12 +434,12 @@ function addContacts(event) {
             if (xhr.status === 200) {
                 var response = xhr.responseText.trim();
                 if (response.includes('Error')) {
-                    showSnackbar("Information added successfully. Refresh to see results");
+                    showSnackbar("Information added successfully");
                 } else {
-                    showSnackbar("Information added successfully. Refresh to see results");
+                    showSnackbar("Information added successfully");
                 }
             } else {
-                showSnackbar("Information added successfully. Refresh to see results");
+                showSnackbar("Information added successfully");
             }
         }
     };

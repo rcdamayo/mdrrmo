@@ -309,19 +309,43 @@ body {
 
 /* CSS for the snackbar */
 #snackbar {
-    visibility: hidden;
-    min-width: 250px;
-    margin-left: -125px;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    border-radius: 2px;
-    padding: 16px;
-    position: fixed;
-    z-index: 10;
-    left: 50%;
-    bottom: 30px;
-    transition: all 0.5s ease-in-out;
+  display: flex;
+  flex: 1;
+  justify-content: left;
+  align-items: center;
+  visibility: hidden;
+  min-width: 26vw;
+  height: 4vh;
+  background-color: #333333ec;
+  color: #fff;
+  border-radius: 5px;
+  padding: 16px;
+  position: fixed;
+  z-index: 10;
+  top: 4em;
+  right: 0.5em;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.5s ease-in-out;
+}
+
+#snackbar svg {
+  margin-right: 1em;
+  padding: 0;
+}
+
+#closeSnackbar {
+  height: 2em;
+  width: 5em;
+  padding: 0.3em;
+  background-color: transparent;
+  color: #f9b314;
+  position: absolute;
+  right: 0;
+  border: 0;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 /* For Webkit browsers */

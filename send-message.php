@@ -51,7 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Close the database connection
     $conn->close();
-    $mysqli->close();
 
     // Redirect to admin-contact.php
     header("Location: admin-contact.php");

@@ -189,6 +189,7 @@ if (!isset($_SESSION['id'])) {
   });
   </script>
 </div>
+
 </div>
 
 
@@ -459,18 +460,27 @@ echo '</table>';
 
     function showSnackbar(message) {
     var snackbar = document.getElementById("snackbar");
-    snackbar.textContent = message;
+    snackbar.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#0864e6" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-8,56a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm8,104a12,12,0,1,1,12-12A12,12,0,0,1,128,184Z"></path></svg><div>' 
+      + message + 
+      '</div><button id="closeSnackbar">OK</button>';
     snackbar.style.visibility = "visible";
-    setTimeout(function() {
-        snackbar.style.opacity = 1;
-    }, 1);
-    setTimeout(function() {
-        snackbar.style.opacity = 0;
-    }, 2500);
+    snackbar.style.opacity = 1;
+
+    var closeBtn = document.getElementById("closeSnackbar");
+    closeBtn.addEventListener("click", function() {
+        hideSnackbar(snackbar);
+    });
+}
+
+function hideSnackbar(snackbar) {
+    snackbar.style.opacity = 0;
     setTimeout(function() {
         snackbar.style.visibility = "hidden";
-    }, 3000);
+        // Reload the page when the snackbar is closed
+        location.reload();
+    }, 300);
 }
+
 
 function removeEvent() {
   event.preventDefault();
@@ -483,12 +493,12 @@ function removeEvent() {
         xhr.open('POST', 'remove_event.php', true);
         xhr.onload = function () {
             if (xhr.status === 200) {
-                if (xhr.responseText.trim() === 'Event deleted successfully.') {
+                if (xhr.responseText.trim() === 'Event deleted successfully') {
                     activeEvent.remove();
                     showSnackbar('Error deleting event.');
                 } else {
-                    showSnackbar('Event deleted successfully. Refresh to see results');
-                    console.error('Event deleted successfully. Refresh to see results');
+                    showSnackbar('Event deleted successfully');
+                    console.error('Event deleted successfully');
                 }
             } else {
                 showSnackbar('Error deleting event.');
@@ -510,11 +520,11 @@ function addEvent() {
     xhr.open('POST', 'add_event.php', true);
     xhr.onload = function () {
         if (xhr.status === 200) {
-            if (xhr.responseText.trim() === 'Event added successfully.') {
+            if (xhr.responseText.trim() === 'Event added successfully') {
                 showSnackbar('Error adding event');
             } else {
-                showSnackbar('Event added successfully. Refresh to see results');
-                console.error('Event added successfully. Refresh to see results');
+                showSnackbar('Event added successfully');
+                console.error('Event added successfully');
             }
             eventForm.reset();
         }
