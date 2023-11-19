@@ -197,7 +197,7 @@ input {
     display: block;
     border: 1px solid gray;
     width: 90%;
-    /* padding: 40px; */
+    margin-bottom: 4em;
     max-height: 500px;
     overflow: auto;
     box-shadow: 10px 10px 20px #b9b9b9;

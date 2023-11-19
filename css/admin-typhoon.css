@@ -138,24 +138,38 @@ body {
     display: flex;
     justify-content: left;
     align-items: center;
-    color: #ffffff;
+    color: #ababab;
     text-decoration: none;
     font-size: 14px;
     font-weight: 700;
     /* border: 1px solid red; */
     opacity: 1;
+    transition: 0.2s;
+  }
+
+  .container a:hover {
+    color: #ffffff;
   }
 
   .container a img {
     margin: 0.5em 1.5em;
-    /* margin-right: 2em; */
     width: 24px;
     height: 24px;
     background-color: #ffffff;
+    border-radius: 100%;
   }
 
-  .container a:nth-child(2) img {
-    border-radius: 50%;
+  .container a svg {
+    position: absolute;
+    right: 1em;
+    width: 22px;
+    height: 22px;
+    fill: #ababab;
+    transition: 0.2s;
+  }
+
+  .container a:hover svg {
+    fill: #ffffff;
   }
 
   .bulletin {
@@ -249,3 +263,10 @@ body {
     color: #ffffff;
     text-align: right;
   }
+
+  /* For Chrome, Safari, and newer versions of Edge */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

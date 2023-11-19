@@ -310,19 +310,27 @@ $conn->close();
 
 <script>
     function showSnackbar(message) {
-        var snackbar = document.getElementById("snackbar");
-        snackbar.textContent = message;
-        snackbar.style.visibility = "visible";
-        setTimeout(function() {
-            snackbar.style.opacity = 1;
-        }, 1);
-        setTimeout(function() {
-            snackbar.style.opacity = 0;
-        }, 2500);
-        setTimeout(function() {
-            snackbar.style.visibility = "hidden";
-        }, 3000);
-    }
+    var snackbar = document.getElementById("snackbar");
+    snackbar.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#0864e6" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-8,56a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm8,104a12,12,0,1,1,12-12A12,12,0,0,1,128,184Z"></path></svg><div>' 
+      + message + 
+      '</div><button id="closeSnackbar">OK</button>';
+    snackbar.style.visibility = "visible";
+    snackbar.style.opacity = 1;
+
+    var closeBtn = document.getElementById("closeSnackbar");
+    closeBtn.addEventListener("click", function() {
+        hideSnackbar(snackbar);
+    });
+}
+
+function hideSnackbar(snackbar) {
+    snackbar.style.opacity = 0;
+    setTimeout(function() {
+        snackbar.style.visibility = "hidden";
+        // Reload the page when the snackbar is closed
+        location.reload();
+    }, 300);
+}
 
     function updateOrg() {
         var form = document.getElementById("editForm");

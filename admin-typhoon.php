@@ -153,27 +153,47 @@ if (!isset($_SESSION['id'])) {
         }
     
         function showSnackbar(message) {
-            var snackbar = document.getElementById("snackbar");
-            snackbar.textContent = message;
-            snackbar.style.visibility = "visible";
-            setTimeout(function() {
-                snackbar.style.opacity = 1;
-            }, 1);
-            setTimeout(function() {
-                snackbar.style.opacity = 0;
-            }, 2500);
-            setTimeout(function() {
-                snackbar.style.visibility = "hidden";
-            }, 3000);
-        }
+    var snackbar = document.getElementById("snackbar");
+    snackbar.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#0864e6" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-8,56a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm8,104a12,12,0,1,1,12-12A12,12,0,0,1,128,184Z"></path></svg><div>' 
+      + message + 
+      '</div><button id="closeSnackbar">OK</button>';
+    snackbar.style.visibility = "visible";
+    snackbar.style.opacity = 1;
+
+    var closeBtn = document.getElementById("closeSnackbar");
+    closeBtn.addEventListener("click", function() {
+        hideSnackbar(snackbar);
+    });
+}
+
+function hideSnackbar(snackbar) {
+    snackbar.style.opacity = 0;
+    setTimeout(function() {
+        snackbar.style.visibility = "hidden";
+        // Reload the page when the snackbar is closed
+        location.reload();
+    }, 300);
+}
     </script>
     <div id="snackbar"></div>
         </div>
 </div>
 
 <div class="container">
-<a href="https://www.pagasa.dost.gov.ph/index.php" target="_blank"><img src="images/pagasa.png">PAGASA</a>
-<a href="https://zoom.earth/maps/satellite/#view=11.91,123.46,5z" target="_blank"><img src="images/zoom_earth.png">ZOOM EARTH</a>
+  <a href="https://www.pagasa.dost.gov.ph/index.php" target="_blank">
+    <img src="images/pagasa.png">
+      PAGASA 
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+      <path d="M192,136v72a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V80A16,16,0,0,1,48,64h72a8,8,0,0,1,0,16H48V208H176V136a8,8,0,0,1,16,0Zm32-96a8,8,0,0,0-8-8H152a8,8,0,0,0-5.66,13.66L172.69,72l-42.35,42.34a8,8,0,0,0,11.32,11.32L184,83.31l26.34,26.35A8,8,0,0,0,224,104Z"></path>
+    </svg>
+  </a>
+  <a href="https://zoom.earth/maps/satellite/#view=11.91,123.46,5z" target="_blank">
+    <img src="images/zoom_earth.png">
+    ZOOM EARTH
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+      <path d="M192,136v72a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V80A16,16,0,0,1,48,64h72a8,8,0,0,1,0,16H48V208H176V136a8,8,0,0,1,16,0Zm32-96a8,8,0,0,0-8-8H152a8,8,0,0,0-5.66,13.66L172.69,72l-42.35,42.34a8,8,0,0,0,11.32,11.32L184,83.31l26.34,26.35A8,8,0,0,0,224,104Z"></path>
+    </svg>
+  </a>
 </div>
 
 
@@ -227,17 +247,17 @@ $conn->close();
 
       <tr>
         <td>Location:</td>
-        <td><input type="text" name="location" id="location" placeholder="<?php echo $location; ?> km/h"></td>
+        <td><input type="text" name="location" id="location" placeholder="<?php echo $location; ?>"></td>
       </tr>
 
       <tr>
         <td>Wind Speed:</td>
-        <td><input type="text" name="wind_speed" id="wind_speed" placeholder="<?php echo $wind_speed; ?> km/h"></td>
+        <td><input type="number" name="wind_speed" id="wind_speed" placeholder="<?php echo $wind_speed; ?> km/h"></td>
       </tr>
 
       <tr>
         <td>Gustiness:</td>
-        <td><input type="text" name="gust" id="gust" placeholder="<?php echo $gust; ?> km/h"></td>
+        <td><input type="number" name="gust" id="gust" placeholder="<?php echo $gust; ?> km/h"></td>
       </tr>
 
       <tr>
@@ -277,19 +297,27 @@ $conn->close();
         }
     
         function showSnackbar(message) {
-            var snackbar = document.getElementById("snackbar");
-            snackbar.textContent = message;
-            snackbar.style.visibility = "visible";
-            setTimeout(function() {
-                snackbar.style.opacity = 1;
-            }, 1);
-            setTimeout(function() {
-                snackbar.style.opacity = 0;
-            }, 2500);
-            setTimeout(function() {
-                snackbar.style.visibility = "hidden";
-            }, 3000);
-        }
+    var snackbar = document.getElementById("snackbar");
+    snackbar.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#0864e6" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-8,56a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm8,104a12,12,0,1,1,12-12A12,12,0,0,1,128,184Z"></path></svg><div>' 
+      + message + 
+      '</div><button id="closeSnackbar">OK</button>';
+    snackbar.style.visibility = "visible";
+    snackbar.style.opacity = 1;
+
+    var closeBtn = document.getElementById("closeSnackbar");
+    closeBtn.addEventListener("click", function() {
+        hideSnackbar(snackbar);
+    });
+}
+
+function hideSnackbar(snackbar) {
+    snackbar.style.opacity = 0;
+    setTimeout(function() {
+        snackbar.style.visibility = "hidden";
+        // Reload the page when the snackbar is closed
+        location.reload();
+    }, 300);
+}
 
         // TOPNAV
 function myFunction() {

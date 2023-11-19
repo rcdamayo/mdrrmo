@@ -252,8 +252,28 @@ function hideSnackbar(snackbar) {
     <form action="store_flood_alert.php" method="post" onsubmit="submitForm(event)">
     <input class="early-alert-btn" type="submit" value="DONE">
     
-    <div class="early-alert">
-    <h3>EMERGENCY ALERT & WARNING</h3>
+    <div class="early-alert" id="alertContainer">
+    <h3>
+
+        <div class="radio-container">
+            <label class="container">
+                <input type="radio" name="alert_level" value="yellow" checked onclick="changeAlertClass('alert-yellow')">
+                <span class="checkmark1"></span>
+            </label>
+            
+            <label class="container">
+                <input type="radio" name="alert_level" value="orange" onclick="changeAlertClass('alert-orange')">
+                <span class="checkmark2"></span>
+            </label>
+            
+            <label class="container">
+                <input type="radio" name="alert_level" value="red" onclick="changeAlertClass('alert-red')">
+                <span class="checkmark3"></span>
+            </label>
+        </div>
+
+        EMERGENCY ALERT & WARNING
+    </h3>
     <div class="alert-message">
         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#f9b314" viewBox="0 0 256 256" style="position: absolute; top: 45%; left: 5%;">
             <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path>
@@ -300,6 +320,31 @@ function hideSnackbar(snackbar) {
         // Reload the page when the snackbar is closed
         location.reload();
     }, 300);
+}
+
+function changeAlertClass(newClass) {
+    var alertContainer = document.getElementById('alertContainer');
+    alertContainer.className = 'early-alert ' + newClass;
+
+    // Update the SVG fill color
+    var svg = document.querySelector('.early-alert svg');
+    var fillColor;
+
+    switch (newClass) {
+        case 'alert-yellow':
+            fillColor = '#ffcc00';
+            break;
+        case 'alert-orange':
+            fillColor = '#ff6600';
+            break;
+        case 'alert-red':
+            fillColor = '#cc0000';
+            break;
+        default:
+            fillColor = '#ffff00'; // Default fill color
+    }
+
+    svg.setAttribute('fill', fillColor);
 }
 </script>
     </div>
