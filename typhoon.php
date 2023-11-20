@@ -66,13 +66,7 @@
 
 <iframe src="https://earth.nullschool.net/#current/wind/surface/level/orthographic=123.55,11.87,1751/loc=124.750,11.305" width="100%" height="590px" frameborder="0"></iframe>
 
-  <div class="early-alert">
-    <h3>EMERGENCY ALERT & WARNING</h3>
-    <div class="alert-message">
-        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#f9b314" viewBox="0 0 256 256" style="position: absolute; top: 40%; left: 5%;">
-            <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path>
-        </svg>
-        <?php
+  <?php
 include 'db_connection.php';
 
 // Retrieve the data from the database (latest row within 1 hour)
@@ -82,23 +76,86 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // Output data of the latest row within 1 hour
     while ($row = $result->fetch_assoc()) {
-        $alertMessage = $row["typhoon_alert"];
-        if (!empty(trim($alertMessage))) {
-            echo "<p>" . nl2br($alertMessage) . "</p>";
+        $alertLevel = $row["alert_level"];
+        $alertColor = getAlertColor($alertLevel);
+        $fontColor = getFontColor($alertLevel);
+    }
+} else {
+    // Default values if no data found
+    $alertLevel = 'yellow';
+    $alertColor = getAlertColor($alertLevel);
+    $fontColor = getFontColor($alertLevel);
+}
+
+// Function to determine the background color based on alert_level
+function getAlertColor($alertLevel) {
+    switch ($alertLevel) {
+        case 'yellow':
+            return '#ffea00'; // Yellow
+        case 'orange':
+            return '#ff6600'; // Orange
+        case 'red':
+            return '#cc0000'; // Red
+        default:
+            return '#f9b314'; // Default color
+    }
+}
+
+// Function to determine the font color based on alert_level
+function getFontColor($alertLevel) {
+    switch ($alertLevel) {
+        case 'yellow':
+            return '#000000'; // Black
+        case 'orange':
+        case 'red':
+            return '#ffffff'; // White for both Orange and Red
+        default:
+            return '#000000'; // Default font color (black)
+    }
+}
+?>
+
+  <div class="early-alert" style="background-color: <?php echo $alertColor; ?>">
+    <h3 style="color: <?php echo $fontColor; ?>">EMERGENCY ALERT & WARNING</h3>
+    <div class="alert-message">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="<?php echo $alertColor; ?>" viewBox="0 0 256 256" style="position: absolute; top: 40%; left: 5%;">
+            <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path>
+        </svg>
+        <?php
+        $sql = "SELECT * FROM alerts WHERE timestamp >= NOW() - INTERVAL 12 HOUR ORDER BY timestamp DESC LIMIT 1";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            // Output data of the latest row within 1 hour
+            while ($row = $result->fetch_assoc()) {
+                if (!empty(trim($row["alert_message"]))) {
+                    echo "<p>" . nl2br($row["alert_message"]) . "</p>";
+                } else {
+                    echo "<p>No active Emergency Alert and Warning Message as of present time.</p>";
+                }
+            }
         } else {
             echo "<p>No active Emergency Alert and Warning Message as of present time.</p>";
         }
-    }
-} else {
-    echo "<p>No active Emergency Alert and Warning Message as of present time.</p>";
-}
-?>
+        ?>
   </div>
 </div>
 
-<div class="container">
-  <a href="https://www.pagasa.dost.gov.ph/index.php" target="_blank"><img src="images/pagasa.png">PAGASA</a>
-  <a href="https://zoom.earth/maps/satellite/#view=11.91,123.46,5z" target="_blank"><img src="images/zoom_earth.png">ZOOM EARTH</a>
+<div class="container2">
+<a href="https://www.pagasa.dost.gov.ph/index.php" target="_blank">
+    <img src="images/pagasa.png">
+      PAGASA 
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+      <path d="M192,136v72a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V80A16,16,0,0,1,48,64h72a8,8,0,0,1,0,16H48V208H176V136a8,8,0,0,1,16,0Zm32-96a8,8,0,0,0-8-8H152a8,8,0,0,0-5.66,13.66L172.69,72l-42.35,42.34a8,8,0,0,0,11.32,11.32L184,83.31l26.34,26.35A8,8,0,0,0,224,104Z"></path>
+    </svg>
+  </a>
+  <a href="https://zoom.earth/maps/satellite/#view=11.91,123.46,5z" target="_blank">
+    <img src="images/zoom_earth.png">
+    ZOOM EARTH
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+      <path d="M192,136v72a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V80A16,16,0,0,1,48,64h72a8,8,0,0,1,0,16H48V208H176V136a8,8,0,0,1,16,0Zm32-96a8,8,0,0,0-8-8H152a8,8,0,0,0-5.66,13.66L172.69,72l-42.35,42.34a8,8,0,0,0,11.32,11.32L184,83.31l26.34,26.35A8,8,0,0,0,224,104Z"></path>
+    </svg>
+  </a>
 </div>
 
 <?php

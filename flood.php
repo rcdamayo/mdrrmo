@@ -183,8 +183,8 @@ function getFontColor($alertLevel) {
         if ($result->num_rows > 0) {
             // Output data of the latest row within 1 hour
             while ($row = $result->fetch_assoc()) {
-                if (!empty(trim($row["flood_alert"]))) {
-                    echo "<p>" . nl2br($row["flood_alert"]) . "</p>";
+                if (!empty(trim($row["alert_message"]))) {
+                    echo "<p>" . nl2br($row["alert_message"]) . "</p>";
                 } else {
                     echo "<p>No active Emergency Alert and Warning Message as of present time.</p>";
                 }

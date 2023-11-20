@@ -124,35 +124,53 @@ if (!isset($_SESSION['id'])) {
 
 <iframe src="https://earth.nullschool.net/#current/wind/surface/level/orthographic=123.55,11.87,1751/loc=124.750,11.305" width="100%" height="590px" frameborder="0"></iframe>
 
-  <form action="store_typhoon_alert.php" method="post" onsubmit="submitForm(event)">
-  <div class="early-alert">
+  <form action="store_alert.php" method="post" onsubmit="submitForm(event)">
+  <div class="early-alert" id="alertContainer">
+
+    <div class="radio-container">
+        <label class="container">
+            <input type="radio" name="alert_level" value="yellow" checked onclick="changeAlertClass('alert-yellow')">
+            <span class="checkmark1"></span>
+        </label>
+        
+        <label class="container">
+            <input type="radio" name="alert_level" value="orange" onclick="changeAlertClass('alert-orange')">
+            <span class="checkmark2"></span>
+        </label>
+        
+        <label class="container">
+            <input type="radio" name="alert_level" value="red" onclick="changeAlertClass('alert-red')">
+            <span class="checkmark3"></span>
+        </label>
+    </div>
+
     <h3>EMERGENCY ALERT & WARNING</h3>
-    <button class="early-alert-btn" type="submit" value="Done">Done</button>
+    <input class="early-alert-btn" type="submit" value="DONE">
     <div class="alert-message">
         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#f9b314" viewBox="0 0 256 256" style="position: absolute; top: 40%; left: 5%;">
             <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path>
         </svg>
-        <p><textarea id="typhoon_alert" name="typhoon_alert" placeholder="Enter Emergency Flood Alert/Warning Message here." onkeydown="if(event.keyCode === 13){if(!event.shiftKey){this.value += '\n'; event.preventDefault();}}"></textarea></p>
+        <p><textarea id="alert_message" name="alert_message" placeholder="Enter Emergency Alert/Warning Message here." onkeydown="if(event.keyCode === 13){if(!event.shiftKey){this.value += '\n'; event.preventDefault();}}"></textarea></p>
             
             </form>
             <script>
-        function submitForm(event) {
-            event.preventDefault();
-            var form = event.target;
-            var formData = new FormData(form);
-    
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", form.action, true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    var response = xhr.responseText.trim();
-                    showSnackbar(response);
-                }
-            };
-            xhr.send(formData);
-        }
-    
-        function showSnackbar(message) {
+    function submitForm(event) {
+        event.preventDefault();
+        var form = event.target;
+        var formData = new FormData(form);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", form.action, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = xhr.responseText.trim();
+                showSnackbar(response);
+            }
+        };
+        xhr.send(formData);
+    }
+
+    function showSnackbar(message) {
     var snackbar = document.getElementById("snackbar");
     snackbar.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#0864e6" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-8,56a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm8,104a12,12,0,1,1,12-12A12,12,0,0,1,128,184Z"></path></svg><div>' 
       + message + 
@@ -174,12 +192,37 @@ function hideSnackbar(snackbar) {
         location.reload();
     }, 300);
 }
-    </script>
+
+function changeAlertClass(newClass) {
+    var alertContainer = document.getElementById('alertContainer');
+    alertContainer.className = 'early-alert ' + newClass;
+
+    // Update the SVG fill color
+    var svg = document.querySelector('.early-alert svg');
+    var fillColor;
+
+    switch (newClass) {
+        case 'alert-yellow':
+            fillColor = '#ffcc00';
+            break;
+        case 'alert-orange':
+            fillColor = '#ff6600';
+            break;
+        case 'alert-red':
+            fillColor = '#cc0000';
+            break;
+        default:
+            fillColor = '#ffff00'; // Default fill color
+    }
+
+    svg.setAttribute('fill', fillColor);
+}
+</script>
     <div id="snackbar"></div>
         </div>
 </div>
 
-<div class="container">
+<div class="container2">
   <a href="https://www.pagasa.dost.gov.ph/index.php" target="_blank">
     <img src="images/pagasa.png">
       PAGASA 
