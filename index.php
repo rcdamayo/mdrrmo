@@ -681,15 +681,15 @@ setInterval(function () {
 </div>
 
 <script>
- // JavaScript to toggle the dropdown on small screens
  document.addEventListener("DOMContentLoaded", function () {
-      var dropdownButton = document.querySelector(".dropbtn");
+  var dropdownButton = document.querySelector(".dropbtn");
 
-      dropdownButton.addEventListener("click", function () {
-        var dropdownContent = document.querySelector(".dropdown-content");
-        dropdownContent.style.display = (dropdownContent.style.display === "block") ? "none" : "block";
-      });
-    });
+  dropdownButton.addEventListener("click", function () {
+    var dropdownContent = document.querySelector(".dropdown-content");
+    dropdownContent.style.height = (dropdownContent.style.height === "65vh") ? "0" : "65vh";
+  });
+});
+
 
 // Early warning and alert
  // Fetch data from OpenWeatherMap API
