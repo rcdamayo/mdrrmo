@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,22 +77,24 @@
 <?php
 include 'db_connection.php';
 
-// Retrieve the data from the database (latest row within 1 hour)
+// Retrieve the data from the database (latest row within 12 hours)
 $sql = "SELECT * FROM alerts WHERE timestamp >= NOW() - INTERVAL 12 HOUR ORDER BY timestamp DESC LIMIT 1";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    // Output data of the latest row within 1 hour
+    // If there is data, fetch the details
     while ($row = $result->fetch_assoc()) {
         $alertLevel = $row["alert_level"];
         $alertColor = getAlertColor($alertLevel);
         $fontColor = getFontColor($alertLevel);
+        $alertMessage = !empty(trim($row["alert_message"])) ? nl2br($row["alert_message"]) : "No active Emergency Alert and Warning Message as of present time.";
     }
 } else {
-    // Default values if no data found
+    // If there is no data, set default values
     $alertLevel = 'yellow';
     $alertColor = getAlertColor($alertLevel);
     $fontColor = getFontColor($alertLevel);
+    $alertMessage = "No active Emergency Alert and Warning Message as of present time.";
 }
 
 // Function to determine the background color based on alert_level
@@ -121,58 +126,48 @@ function getFontColor($alertLevel) {
 ?>
 
 <!-- Modal Container -->
-<div id="modal" class="modal">
-    <div class="early-alert" style="background-color: <?php echo $alertColor; ?>">
-    <!-- Close button -->
-  <span class="close-btn" onclick="closeModal()">&times;</span>
-        <div class="alert-header" style="color: <?php echo $fontColor; ?>">
-            <h3>EMERGENCY ALERT & WARNING</h3>
+<?php if ($result->num_rows > 0): ?>
+    <div id="modal" class="modal">
+        <div class="early-alert" style="background-color: <?php echo $alertColor; ?>">
+            <!-- Close button -->
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="alert-header" style="color: <?php echo $fontColor; ?>">
+                <h3>EMERGENCY ALERT & WARNING</h3>
+            </div>
+            <div class="alert-message">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="<?php echo $alertColor; ?>" viewBox="0 0 256 256" style="position: absolute; top: 40%; left: 5%;">
+                    <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path>
+                </svg>
+                <?php echo "<p>$alertMessage</p>"; ?>
+            </div>
+            
         </div>
-
-        <div class="alert-message">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="<?php echo $alertColor; ?>" viewBox="0 0 256 256" style="position: absolute; top: 40%; left: 5%;">
-                <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path>
-            </svg>
-
-            <?php
-            $sql = "SELECT * FROM alerts WHERE timestamp >= NOW() - INTERVAL 12 HOUR ORDER BY timestamp DESC LIMIT 1";
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                // Output data of the latest row within 1 hour
-                while ($row = $result->fetch_assoc()) {
-                    if (!empty(trim($row["alert_message"]))) {
-                        echo "<p>" . nl2br($row["alert_message"]) . "</p>";
-                    } else {
-                        echo "<p>No active Emergency Alert and Warning Message as of present time.</p>";
-                    }
-                }
-            } else {
-                echo "<p>No active Emergency Alert and Warning Message as of present time.</p>";
-            }
-            ?>
-        </div>
+        <button class="confirm-btn" onclick="closeModal()">CONFIRM</button>
     </div>
-
-    <button class="confirm-btn" onclick="closeModal()">CONFIRM</button>
-</div>
+<?php endif; ?>
 
 <!-- Modal Trigger Script -->
 <script>
     window.addEventListener('DOMContentLoaded', (event) => {
         // Show the modal when the page loads
-        document.getElementById('modal').style.opacity = 1;
+        const modal = document.getElementById('modal');
+        if (modal) {
+            modal.style.opacity = 1;
+        }
     });
 
     // Close modal function with transition
     function closeModal() {
         const modal = document.getElementById('modal');
-        modal.style.opacity = 0;
-        setTimeout(() => {
-            modal.style.display = 'none';
-        }, 500); // Adjust the time based on your transition duration
+        if (modal) {
+            modal.style.opacity = 0;
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 500); // Adjust the time based on your transition duration
+        }
     }
 </script>
+
 
 
   <div class="division">
@@ -348,7 +343,7 @@ echo '</div>';
 
   </div>
 
-  <div class="division">
+  <div class="division" style="padding: 40px 0px; flex: 4;">
 
   <div class="warning-system">
     <table>
@@ -466,24 +461,130 @@ echo '</div>';
       </div>
     </div>
 
+    <?php
+      include "db_connection.php";
+    
+
+
+// Check if the user is logged in
+if (isset($_SESSION['user_id'])) {
+    // User is logged in, display the chat section
+    echo '
     <div class="chat">
-      <h1>Contact Us</h1>
-      <div class="chat-message" id="chat-message">
-        <p>Welcome to the chat! Start by typing a message below:</p>
-      </div>
+        <h1>
+          Contact Us
+
+          <form action="logout-residents.php" method="post">
+            <button type="submit">Logout</button>
+          </form>
+        </h1>
+          
+        <div class="chat-message" id="chat-message">
+            <p>Welcome to the chat! Start by typing a message below:</p>
+        </div>
         <div class="input-container">
-        <input type="text" id="user-input" placeholder="Type your message here">
-        <button type="submit" onclick='sendMessage()'>
-      
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#04aa6d" viewBox="0 0 256 256">
-            <path d="M232,127.89a16,16,0,0,1-8.18,14L55.91,237.9A16.14,16.14,0,0,1,48,240a16,16,0,0,1-15.05-21.34L60.3,138.71A4,4,0,0,1,64.09,136H136a8,8,0,0,0,8-8.53,8.19,8.19,0,0,0-8.26-7.47H64.16a4,4,0,0,1-3.79-2.7l-27.44-80A16,16,0,0,1,55.85,18.07l168,95.89A16,16,0,0,1,232,127.89Z"></path>
-          </svg>  
-      </button>
-      </div>
-      </div>
+            <input type="text" id="user-input" placeholder="Type your message here">
+            <button type="submit" onclick="sendMessage()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#04aa6d" viewBox="0 0 256 256">
+                    <path d="M232,127.89a16,16,0,0,1-8.18,14L55.91,237.9A16.14,16.14,0,0,1,48,240a16,16,0,0,1-15.05-21.34L60.3,138.71A4,4,0,0,1,64.09,136H136a8,8,0,0,0,8-8.53,8.19,8.19,0,0,0-8.26-7.47H64.16a4,4,0,0,1-3.79-2.7l-27.44-80A16,16,0,0,1,55.85,18.07l168,95.89A16,16,0,0,1,232,127.89Z"></path>
+                </svg>
+            </button>
+        </div>
+    </div>';
+} else {
+    // User is not logged in, display the flip card with login/register forms
+    echo '
+
+    <div class="flip-card mx-auto" id="flipCard">
+      <div class="flip-card-inner">
+          <div class="flip-card-front">
+              <div class="card-switch">
+                <h2>LOGIN</h2>
+                <button class="flip-btn-front" onclick="flipCard()">REGISTER</button>
+              </div>
+              
+              <form id="loginForm" action="login_residents.php" method="post">
+                  <label for="username">Username</label>
+                  <input type="text" id="username" name="username" required>
+
+                  <label for="password">Password</label>
+                  <input type="password" id="password" name="password" required>
+
+                  <button type="submit" class="login-btn">LOGIN</button>
+              </form>
+              
+          </div>
+        <div class="flip-card-back">
+            <div class="card-switch">
+              <button class="flip-btn-front" onclick="flipCard()">LOGIN</button>
+              <h2>REGISTER</h2>
+                
+            </div>
+            <form id="registerForm" action="register_residents.php" method="post">
+              
+              <input type="text" id="username" name="username" placeholder="Username" required>
+              <input type="password" id="password" name="password" placeholder="Password" required>
+              <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+              <input type="number" id="phone_no" name="phone_no" placeholder="Phone Number" required>
+                <select name="barangay" placeholder="Barangay" >
+                  <option value="">Barangay</option>
+                  <option value="Abango">Abango</option>
+                  <option value="Amahit">Amahit</option>
+                  <option value="Balire">Balire</option>
+                  <option value="Balud">Balud</option>
+                  <option value="Bukid">Bukid</option>
+                  <option value="Bulod">Bulod</option>
+                  <option value="Busay">Busay</option>
+                  <option value="Cabarasan">Cabarasan</option>
+                  <option value="Cabolo-an">Cabolo-an</option>
+                  <option value="Calingcaguing">Calingcaguin</option>
+                  <option value="Can-isak">Can-Isak</option>
+                  <option value="Canomantag">Canomantag</option>
+                  <option value="Cuta">Cuta</option>
+                  <option value="Domogdog">Domogdog</option>
+                  <option value="Duka">Duka</option>
+                  <option value="Guindaohan">Guindaohan</option>
+                  <option value="Hiagsam">Hiagsam</option>
+                  <option value="Hilaba">Hilaba</option>
+                  <option value="Hinugayan">Hinugayan</option>
+                  <option value="Ibag">Ibag</option>
+                  <option value="Minuhang">Minuhang</option>
+                  <option value="Minuswang">Minuswang</option>
+                  <option value="Pikas">Pikas</option>
+                  <option value="Pitogo">Pitogo</option>
+                  <option value="Poblacion Dist. I">Poblacion Dist. I</option>
+                  <option value="Poblacion Dist. II">Poblacion Dist. II</option>
+                  <option value="Poblacion Dist. III">Poblacion Dist. III</option>
+                  <option value="Poblacion Dist. IV">Poblacion Dist. IV</option>
+                  <option value="Poblacion Dist. V">Poblacion Dist. V</option>
+                  <option value="Poblacion Dist. VI">Poblacion Dist. VI</option>
+                  <option value="Pongso">Pongso</option>
+                  <option value="Roosevelt">Roosevelt</option>
+                  <option value="San Isidro">San Isidro</option>
+                  <option value="San Roque">San Roque</option>
+                  <option value="Santa Rosa">Santa Rosa</option>
+                  <option value="Santarin">Santarin</option>
+                  <option value="Tutug-an">Tutug-an</option>
+                </select>
+
+                <button type="submit" class="register-btn">REGISTER</button>
+            </form>
+        </div>
+    </div>
+</div>';
+
+}
+?>
+
 
 
       <script>
+
+function flipCard() {
+    var card = document.getElementById('flipCard');
+    card.classList.toggle('flip');
+}
+
 function sendMessage() {
     var userInput = document.getElementById('user-input');
     var chatMessage = document.getElementById('chat-message');

@@ -14,7 +14,7 @@
 
 .division:nth-child(2) {
     flex: 3;
-    padding: 40px 20px;
+    /* padding: 40px 20px; */
 }
 
 .division:last-child {
@@ -248,97 +248,81 @@
 }
 
 .warning-system {
-    height: 47em;
-    /* border: 1px solid lime; */
-    overflow-y: auto;
-    overflow-x: hidden;
+  height: 120vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* padding: 1em; Add padding to prevent content from sticking to the edges */
 }
 
 .warning-system img {
-    margin-top: 7em;
-    height: 20em;
-    width: 31em;
+  margin-top: 3em;
+  height: 20em;
+  width: 31em;
 }
 
 .warning-system table {
-    border-collapse: collapse;
-    color: #ffffff;
+  width: 100%;
+  border-collapse: collapse;
+  color: #ffffff;
 }
 
-.warning-system tr :not(th){
-    text-align: center;
-    height: 8em;
-    padding: 1em;
+.warning-system th, .warning-system td {
+  text-align: center;
+  padding: 1em;
 }
 
 .warning-system th {
-    width: 20em;
-    font-size: 9px;
-    font-weight: 800;
-    padding: 0.7em;
-    background-color: #043a87;
-    color: #ffffff;
-    border-bottom: 0.4em solid #ffffff;
+  font-size: 9px;
+  font-weight: 800;
+  background-color: #043a87;
+  color: #ffffff;
+  border-bottom: 0.4em solid #ffffff;
 }
 
-
 .warning-system tr td {
-    font-size: 16px;
-    /* height: 12em; */
+  font-size: 16px;
 }
 
 .warning-system tr td:nth-child(2) {
-    display: flex;
-    flex-direction: column;
-    width: 15em;
-    /* justify-content: center; */
-    height: 12.5em;
-    padding: 0px;
-    margin: 0;
-    
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Adjust width to take up the entire available space */
+  height: 12.5em;
+  padding: 0px;
+  margin: 0;
 }
 
 .warning-system tr td:nth-child(2) h1 {
-    margin: 0;
-    margin-top: 1em;
-    padding: 0;
-    height: auto;
-    width: 100%;
-    font-size: 14px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 800;
-    /* border: 1px solid lime; */
+  margin: 0;
+  margin-top: 1em;
+  padding: 0;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
 }
 
 .warning-system tr td:nth-child(2) p {
-    padding: 0.8em;
-    height: auto;
-    font-size: 12px;
-    margin: 0;
-    /* border: 1px solid lime; */
+  padding: 0.8em;
+  font-size: 12px;
+  margin: 0;
 }
 
 .warning-system tr td:last-child p {
-    padding: 0em;
-    height: auto;
-    font-size: 12px;
-    margin: 0;
-    /* border: 1px solid lime; */
+  padding: 0em;
+  font-size: 12px;
+  margin: 0;
 }
 
 .warning-system tr td:nth-child(2) p:last-child {
-    /* width: 100%; */
-    margin-top: auto;
+  margin-top: auto;
 }
 
 .warning-system td img {
-    position: relative;
-    /* margin-left: 4em; */
-    /* margin-top: -5em; */
-    margin: -2em 0em -1em 4em;
-    width: 5em;
-    height: 5em;
+  margin: -2em 0em -1em 4em;
+  width: 5em;
+  height: 5em;
 }
+
 
 .socials {
     /* border: 1px solid lime; */
@@ -791,9 +775,227 @@ ul {
     overflow-x: hidden;
   }
 
+  .flip-card {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: 52vh;
+    margin: 1em;
+    margin-top: 6em;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    perspective: 800px;
+}
+
+.flip-card-inner {
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.flip-card.flip .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-inner .flip-card-front,
+.flip-card-inner .flip-card-back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+}
+
+.flip-card-front {
+    background-color: #ffffff;
+    color: #333333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 5px 5px 7px #cccccc;
+}
+
+.card-switch {
+  /* border: 1px solid lime; */
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  height: 3em;
+  position: absolute;
+  top: 0;
+  padding: 0;
+
+}
+
+.flip-card-front h2,
+.flip-card-back h2 {
+  font-size: 18px;
+  flex: 1;
+  text-align: center;
+  margin-top: 0.5em;
+  font-weight: 700;
+}
+
+.flip-card-back {
+    background-color: #ffffff;
+    color: #333333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: rotateY(180deg);
+    box-shadow: 5px 5px 7px #cccccc;
+}
+
+.flip-card .flip-btn-front,
+.flip-card .flip-btn-back {
+    /* padding: 8px; */
+    background-color: #f9b314;
+    color: #000000;
+    cursor: pointer; 
+    font-size: 16px;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.flip-card .flip-btn-front:hover,
+.flip-card .flip-btn-back:hover {
+  background-color: #f9d714;
+  box-shadow: 0px 0px 5px #f9d714;
+}
+
+.flip-btn-front {
+  flex: 1;
+  height: 100%;
+  border: 0;
+}
+
+.flip-btn-back {
+  flex: 1;
+  height: 100%;
+  border: 0;
+}
+
+#loginForm,
+#registerForm {
+  position: relative;
+  height: 100%;
+  top: 0;
+  margin: 0em 1em;
+  margin-top: 5em;
+  /* border: 1px solid red; */
+}
+
+#registerForm {
+  margin-top: 3.2em;
+}
+
+#loginForm input {
+  background-color: #e8f0fe;
+  height: 3em;
+  width: 90%;
+  border: 0;
+  outline: 0;
+  margin: 1em 0em;
+  padding: 0px 10px;
+}
+
+#registerForm input, select {
+  background-color: #e8f0fe;
+  height: 2.5em;
+  width: 90%;
+  border: 0;
+  outline: 0;
+  margin: 0.5em 0em;
+  padding: 0px 10px;
+}
+
+#registerForm select {
+  width: 98%;
+  margin-bottom: 0.5em;
+}
+
+#loginForm label,
+#registerForm label {
+  display: flex;
+  position: absolute;
+  font-size: 12px;
+  margin-top: -0.5em;
+}
+
+.login-btn,
+.register-btn {
+  margin-top: 1em;
+  width: 50%;
+  height: 2.5em;
+  background-color: #043a87;
+  color: #ffffff;
+  font-weight: 700;
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.register-btn {
+  margin-top: 0.3em;
+}
+
+.login-btn:hover,
+.register-btn:hover {
+  background-color: #0866d1;
+  box-shadow: 0px 0px 5px #0866d1;
+}
+
+input:focus {
+  background-color: #cccccc;
+  border: 0;
+  outline: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media screen and (max-width: 800px) {
   .main {
     flex-direction: column-reverse;
+    justify-content: center;
   }
   .calendar {
     display: none;
@@ -835,9 +1037,11 @@ ul {
   }
 
   .warning-system {
-    max-width: 92vw;
+    
+    width: 100vw;
+    margin: 1em;
     height: auto;
-    margin: 0;
+    /* margin: 0; */
     /* border: 1px solid lime; */
   }
 
