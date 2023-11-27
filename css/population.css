@@ -62,6 +62,7 @@ td {
     border: 0px;
     border-bottom: 1px solid #bdbdbd;
     padding: 20px;
+    vertical-align: bottom;
 }
 
 td, th {

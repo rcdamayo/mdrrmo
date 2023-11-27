@@ -219,14 +219,14 @@ $conn->close();
     }
 
     function addPhoneNumber(button) {
-    // Clear the existing values in the input field
-    $('#phoneNumbers').val('');
+    // Get the existing values in the input field
+    var existingNumbers = $('#phoneNumbers').val();
 
     var row = $(button).closest('tr');
     var phoneNumber = row.find('td:eq(2)').text().trim(); // Assuming the phone number is in the third column (index 2)
 
-    // Append the phone number to the input field
-    $('#phoneNumbers').val(phoneNumber);
+    // Append the phone number to the existing values in the input field
+    $('#phoneNumbers').val(existingNumbers + phoneNumber + ', ');
 }
 
 
@@ -310,7 +310,6 @@ function hideSnackbar(snackbar) {
 }
 
 function sendMessage(event) {
-    event.preventDefault();
     var form = document.getElementById("messageForm");
     var formData = new FormData(form);
 
@@ -322,8 +321,20 @@ function sendMessage(event) {
                 var response = xhr.responseText.trim();
                 if (response.includes('Error')) {
                     showSnackbar("SMS sent successfully");
+
+                    // If the update was successful, inform the user
+                    alert("Year data added successfully.");
+
+                    // Reload the page
+                    location.reload();
                 } else {
                     showSnackbar("SMS sent successfully");
+
+                    // If the update was successful, inform the user
+                    alert("Year data added successfully.");
+
+                    // Reload the page
+                    location.reload();
                 }
             } else {
                 showSnackbar("Error sending SMS");

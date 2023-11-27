@@ -79,42 +79,56 @@
         <?php
 include 'db_connection.php';
 
-echo "<div class='table-container'>";
-echo "<table>";
-echo "<tr><th>Barangay</th><th>Population (2015)</th><th>Population (2020)</th><th>Population Change (2015-2020)</th><th>Annual Population Growth Rate (2015-2020)</th></tr>";
-
+// Fetch hazard-prone area data from the database
 $sql = "SELECT * FROM population_data";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
+    echo "<div class='table-container'>";
+    echo "<table>";
+
+    // Output the header row with the years
+    echo "<tr><th>Barangay</th>"; // Empty cell for the corner
     while ($row = $result->fetch_assoc()) {
-        $populationChange = $row['population_change'];
-        $rate = $row['rate'];
-
-        // Determine the font color and arrow icon based on the sign of the values
-        $populationChangeColor = $populationChange >= 0 ? 'green' : 'red';
-        $populationChangeArrow = $populationChange >= 0 ? '&#9650;' : '&#9660;';
-        $rateColor = $rate >= 0 ? 'green' : 'red';
-        $rateArrow = $rate >= 0 ? '&#9650;' : '&#9660;';
-
-        echo "<tr>
-                <td>{$row['barangay']}</td>
-                <td>{$row['population_2015']}</td>
-                <td>{$row['population_2020']}</td>
-                <td style='color: $populationChangeColor'>$populationChangeArrow {$row['population_change']} %</td>
-                <td style='color: $rateColor'>$rateArrow {$row['rate']} %</td>
-              </tr>";
+        echo "<th>" . $row['year'] . "</th>";
     }
+    echo "</tr>";
+
+    // Reset the result set pointer
+    $result->data_seek(0);
+
+    // Get the list of column names excluding 'id' and 'year'
+    $columns = [];
+    while ($row = $result->fetch_assoc()) {
+        foreach ($row as $key => $value) {
+            if ($key !== 'id' && $key !== 'year' && !in_array($key, $columns)) {
+                $columns[] = $key;
+            }
+        }
+    }
+
+    // Output the data rows
+    foreach ($columns as $columnName) {
+        echo "<tr>";
+        echo "<td>" . $columnName . "</td>";
+
+        $result->data_seek(0); // Resetting the result set pointer for years
+        // Output the year-wise data for the current column
+        while ($rowYear = $result->fetch_assoc()) {
+            echo "<td>" . $rowYear[$columnName] . "</td>";
+        }
+
+        echo "</tr>";
+    }
+
+    echo "</table>";
+    echo "</div>";
 } else {
-    echo "<tr><td colspan='5'>No data available</td></tr>";
+    echo "0 results";
 }
-
-echo "</table>";
-echo "</div>";
-
-// Close the database connection
 $conn->close();
 ?>
+
 
 
 
@@ -257,7 +271,6 @@ $conn->close();
   </div>
 </div>
 <script>
-// GRAPH
 document.addEventListener('DOMContentLoaded', function() {
   var ctx = document.getElementById('populationGraph').getContext('2d');
   var chart;
@@ -268,8 +281,15 @@ document.addEventListener('DOMContentLoaded', function() {
       .then(response => response.json())
       .then(data => {
         var selectedData = data;
+
+        // Assuming the first entry in the data array has the columns
+        var columns = Object.keys(selectedData[0]);
+
+        // Filter out the 'barangay' column
+        var validColumns = columns.filter(column => column !== 'barangay');
+
         var barangays = selectedData.map(entry => entry.barangay);
-        var populations = selectedData.map(entry => selectedYear === '2015' ? entry.population_2015 : entry.population_2020);
+        var populations = selectedData.map(entry => entry[selectedYear]);
 
         if (chart) {
           chart.data.labels = barangays;
@@ -294,8 +314,8 @@ document.addEventListener('DOMContentLoaded', function() {
                   position: 'bottom',
                   ticks: {
                     autoSkip: false,
-                    maxRotation: 90, // Adjust the angle as needed
-                    minRotation: 30, // You can also set this to 45 if desired
+                    maxRotation: 90,
+                    minRotation: 30,
                     color: 'black',
                     font: {
                       size: 8
@@ -324,8 +344,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 datasets: {
                   bar: {
-                    barPercentage: 0.8, // Adjust the width of the bars (0.8 means 80% of available space)
-                    categoryPercentage: 1 // Adjust the space between the bars
+                    barPercentage: 0.8,
+                    categoryPercentage: 1
                   }
                 }
               }
@@ -338,6 +358,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   }
 
+  // Assume '2015' as the initial selected year
   updateChart('2015');
 
   var yearSelect = document.getElementById('yearSelect');
@@ -346,6 +367,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateChart(selectedYear);
   });
 });
+
 
 // TOPNAV
 function myFunction() {

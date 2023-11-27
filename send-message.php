@@ -20,6 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phoneNumbers = explode(',', $_POST['phoneNumbers']);
     $message = $_POST['message'];
 
+    // Preserve line breaks and spacing in the message
+    $message = nl2br($message);
+
     foreach ($phoneNumbers as $phoneNumber) {
         try {
             // Send message
@@ -30,10 +33,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'body' => $message,
                 ]
             );
-            echo "Message sent to $phoneNumber successfully.\n";
+            $success = true;
         } catch (Exception $e) {
+            $success = false;
             echo "Error sending message to $phoneNumber: {$e->getMessage()}\n";
         }
+    }
+
+    // Display an alert message based on success
+    if ($success) {
+        echo '<script>alert("Message sent successfully!");</script>';
+    } else {
+        echo '<script>alert("Error sending message. Please try again.");</script>';
     }
 
     // Retrieve the currently logged-in employee_id

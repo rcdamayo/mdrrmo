@@ -340,7 +340,7 @@ $conn->close();
     });
 
    // Initialize Leaflet map
-var map = L.map('map').setView([11.2900, 124.8000], 12); // Coordinates for Barugo, Leyte
+var map = L.map('map').setView([11.2800, 124.7700], 12); // Coordinates for Barugo, Leyte
 
 // Add tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

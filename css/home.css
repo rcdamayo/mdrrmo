@@ -1003,7 +1003,6 @@ input[type="number"]::-webkit-outer-spin-button {
 
   .division {
     flex-direction: column;
-    width: 100vw;
   }
 
   .socials {
@@ -1016,7 +1015,6 @@ input[type="number"]::-webkit-outer-spin-button {
     display: block;
     position: relative;
     margin-top: 10vh;
-    right: 5vw;
   }
 
   .hotlines-container {

@@ -1,29 +1,45 @@
 <?php
 include 'db_connection.php';
 
-// Update the data in the database
+// Check if the database connection is successful
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 $success = true; // Flag to track if the update was successful
 
-if (isset($_POST['population_2015']) && isset($_POST['population_2020']) && isset($_POST['population_change']) && isset($_POST['rate'])) {
-    $pop2015 = $_POST['population_2015'];
-    $pop2020 = $_POST['population_2020'];
-    $pop_change = $_POST['population_change'];
-    $rates = $_POST['rate'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Assuming you have sanitized your input data properly to prevent SQL injection
+    $postData = $_POST;
 
-    for ($i = 0; $i < count($pop2015); $i++) {
-        $population_2015 = $conn->real_escape_string($pop2015[$i]);
-        $population_2020 = $conn->real_escape_string($pop2020[$i]);
-        $population_change = $conn->real_escape_string($pop_change[$i]);
-        $rate = $conn->real_escape_string($rates[$i]);
-        $id = $i + 1; // Assuming the id starts from 1 and increments by 1 for each row
+    // Loop through the posted data to update the database
+    foreach ($postData['id'] as $index => $id) {
+        $originalYear = $postData['original_years'][$index];
+        $year = $postData['years'][$index];
 
-        $sql = "UPDATE population_data SET population_2015='$population_2015', population_2020='$population_2020', population_change='$population_change', rate='$rate' WHERE id='$id'";
+        // Add more columns as needed
+        $Abango = $conn->real_escape_string($postData['Abango'][$index]);
+        $Amahit = $conn->real_escape_string($postData['Amahit'][$index]);
+        $Balire = $conn->real_escape_string($postData['Balire'][$index]);
 
-        if ($conn->query($sql) !== true) {
+        // Update the corresponding row in the database
+        $updateSql = "UPDATE population_data SET 
+            year='$year', 
+            Abango='$Abango', 
+            Amahit='$Amahit', 
+            Balire='$Balire'
+            WHERE id=$id AND year='$originalYear'";
+
+        if (!$conn->query($updateSql)) {
             $success = false;
+            echo "Error updating record: " . $conn->error;
             break;
         }
     }
+
+} else {
+    $success = false;
+    echo "Invalid request method";
 }
 
 if ($success) {

@@ -136,52 +136,81 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     echo "<form id='editPopulation' onsubmit='submitForm(event)' method='post'>";
     echo "<h2 class='population-header'>POPULATION DATA</h2>";
+    echo "<button type='button' class='update-year' onclick='addYearData()'>ADD YEAR</button>";
     echo "<button type='submit' class='update-population'>UPDATE</button>";
     echo "<div class='population-container'>";
     echo "<table class='population-table'>";
-    echo "<tr>
-            <th style='border-top-left-radius: 10px;'>Barangay</th>
-            <th>Population (2015)</th>
-            <th>Population (2020)</th>
-            <th>Population Change</th>
-            <th style='border-top-right-radius: 10px;'>Annual Population Growth Rate</th>
-        </tr>";
-
+    // Output the header row with the years
+    echo "<tr><th>Barangay</th>"; // Empty cell for the corner
     while ($row = $result->fetch_assoc()) {
+        echo "<th><input type='text' name='years[]' value='" . $row['year'] . "'></th>";
+        echo "<input type='hidden' name='original_years[]' value='" . $row['year'] . "'>";
+        // echo "<th>" . $row['year'] . "</th>";
+    }
+    echo "</tr>";
+
+    // Reset the result set pointer
+    $result->data_seek(0);
+
+    // Get the list of column names excluding 'id' and 'year'
+    $columns = [];
+    while ($row = $result->fetch_assoc()) {
+        foreach ($row as $key => $value) {
+            if ($key !== 'id' && $key !== 'year' && !in_array($key, $columns)) {
+                $columns[] = $key;
+            }
+        }
+    }
+
+    // Output the data rows
+    foreach ($columns as $columnName) {
         echo "<tr>";
-        echo "<td>" . $row['barangay'] . "</td>";
-        echo "<td><input type='text' name='population_2015[]' value='" . $row['population_2015'] . "'></td>";
-        echo "<td><input type='text' name='population_2020[]' value='" . $row['population_2020'] . "'></td>";
-        echo "<td><input type='text' style='width: 3.5em;' name='population_change[]' value='" . $row['population_change'] . "'> %</td>";
-        echo "<td><input type='text' style='width: 3.5em;' name='rate[]' value='" . $row['rate'] . "'> %</td>";
+        echo "<td>" . $columnName . "</td>";
+
+        $result->data_seek(0); // Resetting the result set pointer for years
+        // Output the year-wise data for the current column
+        while ($rowYear = $result->fetch_assoc()) {
+            echo "<td><input type='text' name='{$columnName}[]' value='{$rowYear[$columnName]}'></td>";
+        }
+
         echo "</tr>";
     }
+
     echo "</table>";
-    echo "</form>";
+    echo "</div>";
 } else {
     echo "0 results";
 }
 $conn->close();
 ?>
-  </div>
+</div>
 
   <div id="snackbar"></div>
 
   <script>
     function showSnackbar(message) {
     var snackbar = document.getElementById("snackbar");
-    snackbar.textContent = message;
+    snackbar.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#0864e6" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-8,56a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm8,104a12,12,0,1,1,12-12A12,12,0,0,1,128,184Z"></path></svg><div>' 
+      + message + 
+      '</div><button id="closeSnackbar">OK</button>';
     snackbar.style.visibility = "visible";
-    setTimeout(function() {
-        snackbar.style.opacity = 1;
-    }, 1);
-    setTimeout(function() {
-        snackbar.style.opacity = 0;
-    }, 2500);
+    snackbar.style.opacity = 1;
+
+    var closeBtn = document.getElementById("closeSnackbar");
+    closeBtn.addEventListener("click", function() {
+        hideSnackbar(snackbar);
+    });
+}
+
+function hideSnackbar(snackbar) {
+    snackbar.style.opacity = 0;
     setTimeout(function() {
         snackbar.style.visibility = "hidden";
-    }, 3000);
+        // Reload the page when the snackbar is closed
+        location.reload();
+    }, 300);
 }
+
 
     function submitForm(event) {
         event.preventDefault();
@@ -206,6 +235,49 @@ $conn->close();
         };
         xhr.send(formData);
     }
+
+    function addYearData() {
+    // Prompt the user for the year value
+    var yearValue = prompt("Enter the year value:");
+
+    if (yearValue !== null && yearValue !== "") {
+        // Assume you have an API endpoint to update the database
+        var apiUrl = 'add_year.php';
+
+        // Create a FormData object and append the yearValue
+        var formData = new FormData();
+        formData.append('yearValue', yearValue);
+
+        // Send a POST request to the server to update the database
+        fetch(apiUrl, {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Check the response from the server
+            if (data.success) {
+                // If the update was successful, inform the user
+                alert("Year data added successfully.");
+
+                // Reload the page
+                location.reload();
+            } else {
+                // If there was an error, inform the user
+                alert("Error adding year data. Please try again.");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("An error occurred. Please try again later.");
+        });
+    }
+}
+
+
+
+
+
     </script>
 
 </div>
@@ -213,7 +285,7 @@ $conn->close();
   <div class="division">
 
 <!-- HOUSEHOLD DATA -->
-
+    <div class="div-cont">
         <?php
     include 'db_connection.php';
 
@@ -260,18 +332,27 @@ $conn->close();
 <script>
 function showSnackbar(message) {
     var snackbar = document.getElementById("snackbar");
-    snackbar.textContent = message;
+    snackbar.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#0864e6" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-8,56a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm8,104a12,12,0,1,1,12-12A12,12,0,0,1,128,184Z"></path></svg><div>' 
+      + message + 
+      '</div><button id="closeSnackbar">OK</button>';
     snackbar.style.visibility = "visible";
-    setTimeout(function() {
-        snackbar.style.opacity = 1;
-    }, 1);
-    setTimeout(function() {
-        snackbar.style.opacity = 0;
-    }, 2500);
+    snackbar.style.opacity = 1;
+
+    var closeBtn = document.getElementById("closeSnackbar");
+    closeBtn.addEventListener("click", function() {
+        hideSnackbar(snackbar);
+    });
+}
+
+function hideSnackbar(snackbar) {
+    snackbar.style.opacity = 0;
     setTimeout(function() {
         snackbar.style.visibility = "hidden";
-    }, 3000);
+        // Reload the page when the snackbar is closed
+        location.reload();
+    }, 300);
 }
+
 
     function updateHousehold() {
     var form = document.getElementById("editHousehold");
@@ -362,19 +443,28 @@ $conn->close();
 
 <script>
     function showSnackbar(message) {
-        var snackbar = document.getElementById("snackbar");
-        snackbar.textContent = message;
-        snackbar.style.visibility = "visible";
-        setTimeout(function() {
-            snackbar.style.opacity = 1;
-        }, 1);
-        setTimeout(function() {
-            snackbar.style.opacity = 0;
-        }, 2500);
-        setTimeout(function() {
-            snackbar.style.visibility = "hidden";
-        }, 3000);
-    }
+    var snackbar = document.getElementById("snackbar");
+    snackbar.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#0864e6" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-8,56a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm8,104a12,12,0,1,1,12-12A12,12,0,0,1,128,184Z"></path></svg><div>' 
+      + message + 
+      '</div><button id="closeSnackbar">OK</button>';
+    snackbar.style.visibility = "visible";
+    snackbar.style.opacity = 1;
+
+    var closeBtn = document.getElementById("closeSnackbar");
+    closeBtn.addEventListener("click", function() {
+        hideSnackbar(snackbar);
+    });
+}
+
+function hideSnackbar(snackbar) {
+    snackbar.style.opacity = 0;
+    setTimeout(function() {
+        snackbar.style.visibility = "hidden";
+        // Reload the page when the snackbar is closed
+        location.reload();
+    }, 300);
+}
+
 
     function updateAgeGroup(event) {
         event.preventDefault();

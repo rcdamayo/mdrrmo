@@ -1,6 +1,9 @@
+.main {
+  flex-direction: column;
+}
 .division {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex: 0;
   /* border: 1px solid green; */
   padding: 40px;
@@ -13,26 +16,29 @@
 
 .division:last-child {
   flex: 1;
-  padding-left: 0px;
+  /* padding-left: 0px; */
   flex-direction: column;
   /* padding-top: 5.6em; */
 }
 
 .population-container {
-  height: 80em;
-  width: 100%;
+  height: 60vh;
+  width: 93vw;
   background-color: #ffffff;
   /* padding: 2em; */
   border-radius: 10px;
   box-shadow: 5px 5px 10px #707070;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: auto;
 }
 
 .population-table {
   justify-content: center;
   /* border: 1px solid red; */
   width: 100%;
+}
+
+.population-table th, .population-table td {
+  min-width: 5em;
 }
 
 .household-container {
@@ -94,12 +100,41 @@ th {
   font-size: 12px;
 }
 
+th input {
+  background-color: #043a87;
+  border: 0;
+  outline: 0;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+th input:hover {
+  border: 1px solid #ffffffd3;
+  outline: 1px solid #ffffffd3;
+}
+
+.population-table td:first-child {
+  height: 3em;
+  font-weight: 700;
+
+}
+
+.population-table th p {
+  position: relative;
+}
+
+.population-table input {
+  width: 50%;
+  height: 2em;
+  text-align: center;
+}
+
 h2 {
   margin-bottom: -1.5em;
   font-size: 18px;
 }
 
-.update-population, .submit-prone, .submit-ageGroup {
+.update-population, .submit-prone, .update-year,  .submit-ageGroup {
   display: flex;
   float: right;
   justify-content: center;
@@ -121,6 +156,23 @@ h2 {
 
 .update-population:hover, .submit-prone:hover, .submit-ageGroup:hover {
   background-color: #01d789;
+  box-shadow: 0px 0px 5px #01d789;
+}
+
+.submit-prone {
+  display: block;
+  position: relative;
+  float: right;
+}
+
+.update-year {
+  margin-left: 1em;
+  background-color: #043a87;
+}
+
+.update-year:hover {
+  background-color: #0866d1;
+  box-shadow: 0px 0px 5px #0866d1;
 }
 
 .add-row {
