@@ -126,6 +126,11 @@ if (!isset($_SESSION['id'])) {
 
 <!-- POPULATION DATA -->
   <div class="division">
+
+  <div class="modal-cont">
+    <button onclick='openModal()'>IMPORT CSV</button>
+  </div>
+
   <?php
 include 'db_connection.php';
 
@@ -185,7 +190,22 @@ $conn->close();
 ?>
 </div>
 
-  <div id="snackbar"></div>
+<div id="snackbar"></div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <form action="upload_csv.php" method="post" enctype="multipart/form-data">
+        <label for="csvFile">Choose a CSV file:</label><br>
+        <input type="file" name="csvFile" id="csvFile" accept=".csv">
+        <button type="submit" name="submit">Upload</button>
+    </form>
+</div>
+
+<!-- The overlay background -->
+<div id="overlay" class="overlay"></div>
+
+  
 
   <script>
     function showSnackbar(message) {
@@ -274,7 +294,17 @@ function hideSnackbar(snackbar) {
     }
 }
 
+// Function to open the modal
+function openModal() {
+        document.getElementById("myModal").style.display = "block";
+        document.getElementById("overlay").style.display = "block";
+    }
 
+    // Function to close the modal
+    function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+    }
 
 
 

@@ -14,9 +14,9 @@ if (!isset($_SESSION['id'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Disaster Ready: Typhoon Reports</title>
+  <title>Disaster Ready: Flood Reports</title>
   <link rel="stylesheet" href="css/admin.css">
-  <link rel="stylesheet" href="css/reports-typhoon.css">
+  <link rel="stylesheet" href="css/reports-flood.css">
   <link rel="icon" href="images/icon.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="js/script.js"></script>
@@ -88,7 +88,7 @@ if (!isset($_SESSION['id'])) {
 </script>
 </div>
 
-    <a href="admin-reports.php" class="active">
+    <a href="reports-flood.php" class="active">
       <div class="navcont">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256">
           <path d="M88,112a8,8,0,0,1,8-8h80a8,8,0,0,1,0,16H96A8,8,0,0,1,88,112Zm8,40h80a8,8,0,0,0,0-16H96a8,8,0,0,0,0,16ZM232,64V184a24,24,0,0,1-24,24H32A24,24,0,0,1,8,184.11V88a8,8,0,0,1,16,0v96a8,8,0,0,0,16,0V64A16,16,0,0,1,56,48H216A16,16,0,0,1,232,64Zm-16,0H56V184a23.84,23.84,0,0,1-1.37,8H208a8,8,0,0,0,8-8Z"></path>
@@ -151,23 +151,21 @@ if (!isset($_SESSION['id'])) {
 
     <div class="textarea-wrapper-row">
       <div class="textarea-wrapper">
-        <div class="identifier">
-          No. of Persons
-        </div>
-          <div class="placeholder">Male</div>
-          <input type="number" name="personsM">
-
-          <div class="placeholder" style="left: 37%;">Female</div>
-          <input type="number" name="personsF">
-
-          <div class="placeholder" style="left: 70%;">LGBTQ+</div>
-          <input type="number" name="personsLgbt">
-      </div>
-
-      <div class="textarea-wrapper" style="width: 34%;">
         <div class="identifier">No. of Families</div>
         <input type="number" name="families" style="height: 40px; padding-top: 0px;">
       </div>
+
+      <div class="textarea-wrapper">
+        <div class="identifier">No. of LGBTQ+</div>
+          <input type="number" name="personsLgbt">
+        </div>
+
+      <div class="textarea-wrapper">
+        <div class="identifier">Pregnant Women</div>
+          <input type="number" name="pregnant">
+        </div>
+
+      
     </div>
     
     <div class="textarea-wrapper-row">
@@ -269,17 +267,8 @@ if (!isset($_SESSION['id'])) {
     </div>
     </div>
  
-
-  <div class="textarea-wrapper" style="width: 42%; margin-left: 0.1em; margin-top: 1.6em; padding: 0;">
-    <div class="identifier">Pregnant Women</div>
-    <div class="outer-wrapper">
-      <div class="textarea-wrapper">
-        <input type="number" name="pregnant" style="width: 50%; margin-top: 0em;margin-right: 0;">
-      </div>
-    </div>
-  </div>
   <div class="buttons-container">
-  <button type="submit" value="Add Typhoon Report" id="done">Done</button>
+  <button type="submit" value="Add Flood Report" id="done">Done</button>
   <button type="button" id="print" onclick="exportTableToExcel('table.xls')">Save as Excel</button>
   </div>
   </div> 
@@ -319,15 +308,15 @@ if ($result->num_rows > 0) {
     // Display the table
     echo '<div class="table-container">';
     echo "<table style='border-collapse: collapse; table-layout:auto; border: 1px solid black;'>";
-            echo "<tr style='font-size: 14px;background-color:#043a87; height: 100px;'>
-                <th rowspan='3' style='color: #ffffff; font-weight: 700; text-align: center;padding: 8px;border: 1px solid black; min-width: 10em;'>Sitio / Purok / Zone / Block / Street</th>
-                <th rowspan='3' style='color: #ffffff; font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;'>No. of Families</th>
-                <th rowspan='2' style='color: #ffffff; font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;' colspan='3'>No. of Persons</th>
-                <th colspan='10' style='color: #ffffff; font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;'>Children (Age 17 and Below)</th>
-                <th colspan='4' style='color: #ffffff; font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;'>Adult</th>
-                <th rowspan='2' style='color: #ffffff; font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;' colspan='2'>Persons with Disabilities</th>
-                <th rowspan='2' style='color: #ffffff; font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;' colspan='2'>Persons with Diseases (All Ages)</th>
-                <th rowspan='3' style='color: #ffffff; font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;'>Pregnant Women</th>
+            echo "<tr style='font-size: 14px;background-color:#043a87; color: #ffffff; height: 100px;'>
+                <th rowspan='3' style='font-weight: 700; text-align: center;padding: 8px;border: 1px solid black; min-width: 10em;'>Sitio / Purok / Zone / Block / Street</th>
+                <th rowspan='3' style='font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;'>No. of Families</th>
+                <th rowspan='2' style='font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;' colspan='3'>No. of Persons</th>
+                <th colspan='10' style='font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;'>Children (Age 17 and Below)</th>
+                <th colspan='4' style='font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;'>Adult</th>
+                <th rowspan='2' style='font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;' colspan='2'>Persons with Disabilities</th>
+                <th rowspan='2' style='font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;' colspan='2'>Persons with Diseases (All Ages)</th>
+                <th rowspan='3' style='font-weight: 700; text-align: center;padding: 8px;border: 1px solid black;'>Pregnant Women</th>
                 
             </tr>
             <tr style='font-size: 14px;'>
@@ -366,30 +355,30 @@ if ($result->num_rows > 0) {
 
             foreach ($totals as $totalRow) {
               echo "<tr>
-                <td style='text-align: center;'>".$totalRow['sitio']."</td>
-                <td style='text-align: center;'>".$totalRow['families']."</td>
-                <td style='text-align: center;'>".$totalRow['persons_m']."</td>
-                <td style='text-align: center;'>".$totalRow['persons_f']."</td>
-                <td style='text-align: center;'>".$totalRow['persons_lgbt']."</td>
-                <td style='text-align: center;'>".$totalRow['children1_m']."</td>
-                <td style='text-align: center;'>".$totalRow['children1_f']."</td>
-                <td style='text-align: center;'>".$totalRow['children2_m']."</td>
-                <td style='text-align: center;'>".$totalRow['children2_f']."</td>
-                <td style='text-align: center;'>".$totalRow['children3_m']."</td>
-                <td style='text-align: center;'>".$totalRow['children3_f']."</td>
-                <td style='text-align: center;'>".$totalRow['children4_m']."</td>
-                <td style='text-align: center;'>".$totalRow['children4_f']."</td>
-                <td style='text-align: center;'>".$totalRow['children5_m']."</td>
-                <td style='text-align: center;'>".$totalRow['children5_f']."</td>
-                <td style='text-align: center;'>".$totalRow['adult1_m']."</td>
-                <td style='text-align: center;'>".$totalRow['adult1_f']."</td>
-                <td style='text-align: center;'>".$totalRow['adult2_m']."</td>
-                <td style='text-align: center;'>".$totalRow['adult2_f']."</td>
-                <td style='text-align: center;'>".$totalRow['disabilities_m']."</td>
-                <td style='text-align: center;'>".$totalRow['disabilities_f']."</td>
-                <td style='text-align: center;'>".$totalRow['diseases_m']."</td>
-                <td style='text-align: center;'>".$totalRow['diseases_f']."</td>
-                <td style='text-align: center;'>".$totalRow['pregnant']."</td>
+                  <td style='text-align: center;'>".$totalRow['sitio']."</td>
+                  <td style='text-align: center;'>".$totalRow['families']."</td>
+                  <td style='text-align: center;'>".$totalRow['persons_m']."</td>
+                  <td style='text-align: center;'>".$totalRow['persons_f']."</td>
+                  <td style='text-align: center;'>".$totalRow['persons_lgbt']."</td>
+                  <td style='text-align: center;'>".$totalRow['children1_m']."</td>
+                  <td style='text-align: center;'>".$totalRow['children1_f']."</td>
+                  <td style='text-align: center;'>".$totalRow['children2_m']."</td>
+                  <td style='text-align: center;'>".$totalRow['children2_f']."</td>
+                  <td style='text-align: center;'>".$totalRow['children3_m']."</td>
+                  <td style='text-align: center;'>".$totalRow['children3_f']."</td>
+                  <td style='text-align: center;'>".$totalRow['children4_m']."</td>
+                  <td style='text-align: center;'>".$totalRow['children4_f']."</td>
+                  <td style='text-align: center;'>".$totalRow['children5_m']."</td>
+                  <td style='text-align: center;'>".$totalRow['children5_f']."</td>
+                  <td style='text-align: center;'>".$totalRow['adult1_m']."</td>
+                  <td style='text-align: center;'>".$totalRow['adult1_f']."</td>
+                  <td style='text-align: center;'>".$totalRow['adult2_m']."</td>
+                  <td style='text-align: center;'>".$totalRow['adult2_f']."</td>
+                  <td style='text-align: center;'>".$totalRow['disabilities_m']."</td>
+                  <td style='text-align: center;'>".$totalRow['disabilities_f']."</td>
+                  <td style='text-align: center;'>".$totalRow['diseases_m']."</td>
+                  <td style='text-align: center;'>".$totalRow['diseases_f']."</td>
+                  <td style='text-align: center;'>".$totalRow['pregnant']."</td>
               </tr>";
           }
       
@@ -437,8 +426,24 @@ if ($result->num_rows > 0) {
     var link = document.createElement('a');
     link.download = filename; // Change the filename here
     link.href = uri + base64(template);
+
+    // AJAX request to log the download action
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "log_download.php", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        // Log response from the server (if needed)
+        console.log(xhr.responseText);
+      }
+    };
+    
+    // Sending the data to the server
+    xhr.send();
+
     link.click();
   }
+
 
   // TOPNAV
 function myFunction() {
@@ -451,7 +456,7 @@ function myFunction() {
 }
 </script>
 
-<div class="footer" style="margin-top: 4em;">
+<div class="footer">
   <div class="foot-txt">
   <img src="images/footer.png" style="height: 100%; width: 80%;">
   </div>

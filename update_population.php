@@ -13,22 +13,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $postData = $_POST;
 
     // Loop through the posted data to update the database
-    foreach ($postData['id'] as $index => $id) {
+    foreach ($postData['years'] as $index => $year) {
         $originalYear = $postData['original_years'][$index];
-        $year = $postData['years'][$index];
-
-        // Add more columns as needed
-        $Abango = $conn->real_escape_string($postData['Abango'][$index]);
-        $Amahit = $conn->real_escape_string($postData['Amahit'][$index]);
-        $Balire = $conn->real_escape_string($postData['Balire'][$index]);
 
         // Update the corresponding row in the database
         $updateSql = "UPDATE population_data SET 
             year='$year', 
-            Abango='$Abango', 
-            Amahit='$Amahit', 
-            Balire='$Balire'
-            WHERE id=$id AND year='$originalYear'";
+            Abango='{$postData['Abango'][$index]}', 
+            Amahit='{$postData['Amahit'][$index]}', 
+            Balire='{$postData['Balire'][$index]}',
+            Balud='{$postData['Balud'][$index]}',
+            Bukid='{$postData['Bukid'][$index]}',
+            Bulod='{$postData['Bulod'][$index]}',
+            Busay='{$postData['Busay'][$index]}',
+            Cabarasan='{$postData['Cabarasan'][$index]}',
+            `Cabolo-an`='{$postData['Cabolo-an'][$index]}',
+            Calingcaguing='{$postData['Calingcaguing'][$index]}',
+            `Can-Isak`='{$postData['Can-Isak'][$index]}',
+            Canomantag='{$postData['Canomantag'][$index]}',
+            Cuta='{$postData['Cuta'][$index]}',
+            Domogdog='{$postData['Domogdog'][$index]}',
+            Duka='{$postData['Duka'][$index]}',
+            Guindaohan='{$postData['Guindaohan'][$index]}',
+            Hiagsam='{$postData['Hiagsam'][$index]}',
+            Hilaba='{$postData['Hilaba'][$index]}',
+            Hinugayan='{$postData['Hinugayan'][$index]}',
+            Ibag='{$postData['Ibag'][$index]}',
+            Minuhang='{$postData['Minuhang'][$index]}',
+            Minuswang='{$postData['Minuswang'][$index]}',
+            Pikas='{$postData['Pikas'][$index]}',
+            Pitogo='{$postData['Pitogo'][$index]}',
+            `Poblacion Dist I`='{$postData['Poblacion_Dist_I'][$index]}',
+            `Poblacion Dist II`='{$postData['Poblacion_Dist_II'][$index]}',
+            `Poblacion Dist III`='{$postData['Poblacion_Dist_III'][$index]}',
+            `Poblacion Dist IV`='{$postData['Poblacion_Dist_IV'][$index]}',
+            `Poblacion Dist V`='{$postData['Poblacion_Dist_V'][$index]}',
+            `Poblacion Dist VI`='{$postData['Poblacion_Dist_VI'][$index]}',
+            Pongso='{$postData['Pongso'][$index]}',
+            Roosevelt='{$postData['Roosevelt'][$index]}',
+            `San Isidro`='{$postData['San_Isidro'][$index]}',
+            `San Roque`='{$postData['San_Roque'][$index]}',
+            `Santa Rosa`='{$postData['Santa_Rosa'][$index]}',
+            Santarin='{$postData['Santarin'][$index]}',
+            `Tutug-an`='{$postData['Tutug-an'][$index]}'
+            WHERE year='$originalYear'";
 
         if (!$conn->query($updateSql)) {
             $success = false;
@@ -36,7 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             break;
         }
     }
-
 } else {
     $success = false;
     echo "Invalid request method";

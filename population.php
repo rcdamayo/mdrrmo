@@ -241,7 +241,7 @@ $conn->close();
     </div>
 </div>
 
-    <div class="division" style="padding: 30px;">
+    <!-- <div class="division" style="padding: 30px;">
 
     <div class="population">
       <div class="graph-container">
@@ -253,7 +253,7 @@ $conn->close();
       </div>
     </div>
 
-    </div>
+    </div> -->
 
     <div class="footer">
   <div class="foot-txt">
@@ -275,9 +275,15 @@ document.addEventListener('DOMContentLoaded', function() {
   var ctx = document.getElementById('populationGraph').getContext('2d');
   var chart;
 
+  // Add an event listener for the year select dropdown
+  document.getElementById('yearSelect').addEventListener('change', function() {
+    var selectedYear = this.value;
+    updateChart(selectedYear);
+  });
+
   function updateChart(selectedYear) {
     // Use fetch to get data from the PHP script
-    fetch('fetch_population_data.php')
+    fetch('fetch_population_data.php?year=' + selectedYear)
       .then(response => response.json())
       .then(data => {
         var selectedData = data;
@@ -285,10 +291,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // Assuming the first entry in the data array has the columns
         var columns = Object.keys(selectedData[0]);
 
-        // Filter out the 'barangay' column
-        var validColumns = columns.filter(column => column !== 'barangay');
+        // Filter out the 'id', 'year', and other unnecessary columns
+        var validColumns = columns.filter(column => column !== 'id' && column !== 'year');
 
-        var barangays = selectedData.map(entry => entry.barangay);
+        // Filter out the 'barangay' column
+        var barangays = validColumns.filter(column => column !== 'barangay');
+
+        // Extract populations for the selected year
         var populations = selectedData.map(entry => entry[selectedYear]);
 
         if (chart) {
@@ -360,13 +369,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Assume '2015' as the initial selected year
   updateChart('2015');
-
-  var yearSelect = document.getElementById('yearSelect');
-  yearSelect.addEventListener('change', function() {
-    var selectedYear = yearSelect.value;
-    updateChart(selectedYear);
-  });
 });
+
 
 
 // TOPNAV
