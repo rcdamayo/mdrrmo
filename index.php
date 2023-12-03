@@ -343,7 +343,7 @@ echo '</div>';
 
   </div>
 
-  <div class="division" style="padding: 40px 0px; flex: 4;">
+  <div class="division" style="padding: 40px 0px; flex: 3;">
 
   <div class="warning-system">
     <table>
@@ -392,6 +392,12 @@ echo '</div>';
       </td>
     </tr>
     </table>
+
+    <img src="images/wind_signal_guide.png">
+
+    <img src="images/Tropical-Cyclone-Warning.jpg" style="height: 50vh;">
+
+    <img src="images/PAGASA-FLOOD.jpg">
 
     <img src="images/calamity.png">
 

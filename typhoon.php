@@ -196,18 +196,13 @@ $conn->close();
   <div class="bulletin-info">
     <table>
       <tr>
-        <td>International Name:</td>
+        <td>Int'l Name:</td>
         <td><input type="text" name="int_name" id="int_name" value="<?php echo $int_name; ?>" disabled></td>
       </tr>
 
       <tr>
         <td>Local Name:</td>
         <td><input type="text" name="local_name" id="local_name" value="<?php echo $local_name; ?>" disabled></td>
-      </tr>
-
-      <tr>
-        <td>Location:</td>
-        <td><input type="text" name="location" id="location" value="<?php echo $location; ?>" disabled></td>
       </tr>
 
       <tr>
@@ -221,16 +216,6 @@ $conn->close();
       </tr>
 
       <tr>
-        <td>Movement:</td>
-        <td><input type="text" name="movement" id="movement" value="<?php echo $movement; ?>" disabled></td>
-      </tr>
-
-      <tr>
-        <td>Direction:</td>
-        <td><input type="text" name="direction" id="direction" value="<?php echo $direction; ?>" disabled></td>
-      </tr>
-
-      <tr>
         <td>Update On:</td>
         <td><input type="text" name="updated_on" id="direction" value="<?php echo $updated_on; ?>" disabled></td>
       </tr>
@@ -238,16 +223,54 @@ $conn->close();
   </div>
 </div>
 
+<div class="img-container">
+  <?php
+  include "db_connection.php";
+    $sql = "SELECT * FROM alerts WHERE timestamp >= NOW() - INTERVAL 12 HOUR ORDER BY timestamp DESC LIMIT 1";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Output data of the latest row within 1 hour
+        while ($row = $result->fetch_assoc()) {
+            if (!empty($row["image_path"])) {
+                echo '<img src="' . $row["image_path"] . '" onclick="openModal()">';
+            }
+        }
+    }
+
+  $conn->close();
+  ?>
+</div>
+
+<!-- Modal container -->
+<div class="modal-img" id="modal-img">
+  <?php
+  include "db_connection.php";
+  $sql = "SELECT * FROM alerts WHERE timestamp >= NOW() - INTERVAL 12 HOUR ORDER BY timestamp DESC LIMIT 1";
+  $result = $conn->query($sql);
+
+    // Display the image inside the modal
+    if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+        if (!empty($row["image_path"])) {
+          echo '<img src="' . $row["image_path"] . '" onclick="closeModal()">';
+        }
+      }
+    }
+
+    $conn->close();
+  ?>
+</div>
+
 <script>
-  // TOPNAV
-function myFunction() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
-  }
+function openModal() {
+  document.querySelector('.modal-img').classList.add('active');
 }
+
+function closeModal() {
+  document.querySelector('.modal-img').classList.remove('active');
+}
+
 </script>
 </body>
 </html>

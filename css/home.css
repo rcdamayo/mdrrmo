@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     width: 400px;
-    flex: 1;
+    flex: 2;
     /* border: 1px solid red; */
     padding: 40px;
 }
@@ -255,9 +255,9 @@
 }
 
 .warning-system img {
-  margin-top: 3em;
-  height: 20em;
-  width: 31em;
+  margin-top: 5em;
+  height: auto;
+  width: 100%;
 }
 
 .warning-system table {
@@ -318,7 +318,7 @@
 }
 
 .warning-system td img {
-  margin: -2em 0em -1em 4em;
+  margin: -1em 0em 0em 6em;
   width: 5em;
   height: 5em;
 }
@@ -733,7 +733,7 @@ ul {
     color: #272727;
     padding: 0;
     /* padding: 5px 10px 5px 15px; */
-    width: auto;
+    width: 97%;
     height: 100%;
     border-radius: 5px;
     margin: 5px;
