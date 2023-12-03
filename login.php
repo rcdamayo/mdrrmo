@@ -15,7 +15,7 @@ if (isset($_SESSION['id'])) {
 $host = 'edr.topfavlists.com';
 $dbname = 'admin_db';
 $username = 'admin_usr';
-$password = '6Lb4Prraot';
+$password = 'xH83nfDRNV';
 
 // Establish a database connection
 try {

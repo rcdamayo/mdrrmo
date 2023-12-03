@@ -1,7 +1,7 @@
 <?php
     $servername = "edr.topfavlists.com";
     $username = "admin_usr";
-    $password = "6Lb4Prraot";
+    $password = "xH83nfDRNV";
     $dbname = "admin_db";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
