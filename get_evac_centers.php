@@ -2,7 +2,7 @@
 include "db_connection.php";
 
 // Fetch data from the "evac_centers" table
-$sql = "SELECT name, latitude, longitude FROM evac_centers";
+$sql = "SELECT * FROM evac_centers";
 $result = $conn->query($sql);
 
 $evac_centers = [];
@@ -11,6 +11,7 @@ if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $evac_centers[] = [
             'name' => $row['name'],
+            'cap' => $row['capacity'],
             'lat' => floatval($row['latitude']),
             'lng' => floatval($row['longitude']),
         ];

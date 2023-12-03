@@ -595,7 +595,7 @@ function calculateAndAddRouting(userLat, userLng, data) {
 }
 
 // Fetch data from the PHP script
-fetch('get_evac_centers.php') // Replace with the correct path to your PHP script
+fetch('get_evac_centers.php')
     .then(response => response.json())
     .then(data => {
         // Add markers for evacuation centers
@@ -603,7 +603,7 @@ fetch('get_evac_centers.php') // Replace with the correct path to your PHP scrip
             const marker = L.marker([center.lat, center.lng], {
                 icon: svgIcon,
                 draggable: false,
-            }).addTo(pinsLayer).bindPopup(center.name);
+            }).addTo(pinsLayer).bindPopup(`<strong>${center.name}</strong><br>Capacity: ${String(center.cap)}`);
         });
 
         // Automatically calculate and add routing once data is fetched
