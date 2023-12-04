@@ -6,7 +6,15 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit22286cd8d356580eea421dff483f5ce3
 {
+    public static $files = array (
+        'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
+        'p' => 
+        array (
+            'phpseclib\\' => 10,
+        ),
         'T' => 
         array (
             'Twilio\\' => 7,
@@ -18,6 +26,10 @@ class ComposerStaticInit22286cd8d356580eea421dff483f5ce3
     );
 
     public static $prefixDirsPsr4 = array (
+        'phpseclib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
+        ),
         'Twilio\\' => 
         array (
             0 => __DIR__ . '/..' . '/twilio/sdk/src/Twilio',

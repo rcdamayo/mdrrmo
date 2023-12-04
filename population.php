@@ -241,7 +241,7 @@ $conn->close();
     </div>
 </div>
 
-    <!-- <div class="division" style="padding: 30px;">
+    <div class="division" style="padding: 30px;">
 
     <div class="population">
       <div class="graph-container">
@@ -253,7 +253,7 @@ $conn->close();
       </div>
     </div>
 
-    </div> -->
+    </div>
 
     <div class="footer">
   <div class="foot-txt">
@@ -282,93 +282,92 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   function updateChart(selectedYear) {
-    // Use fetch to get data from the PHP script
-    fetch('fetch_population_data.php?year=' + selectedYear)
-      .then(response => response.json())
-      .then(data => {
-        var selectedData = data;
+  // Use fetch to get data from the PHP script
+  fetch('fetch_population_data.php?year=' + selectedYear)
+    .then(response => response.json())
+    .then(data => {
+      // Assuming the first entry in the data array has the columns
+      var columns = Object.keys(data[0]);
 
-        // Assuming the first entry in the data array has the columns
-        var columns = Object.keys(selectedData[0]);
+      // Filter out the 'id' and 'year' columns
+      var validColumns = columns.filter(column => column !== 'id' && column !== 'year');
 
-        // Filter out the 'id', 'year', and other unnecessary columns
-        var validColumns = columns.filter(column => column !== 'id' && column !== 'year');
+      // Filter out the 'barangay' column if it's present
+      var barangays = validColumns.filter(column => column !== 'barangay');
 
-        // Filter out the 'barangay' column
-        var barangays = validColumns.filter(column => column !== 'barangay');
+      // Extract populations for the selected year
+      var populations = data.map(entry => entry[selectedYear]);
 
-        // Extract populations for the selected year
-        var populations = selectedData.map(entry => entry[selectedYear]);
-
-        if (chart) {
-          chart.data.labels = barangays;
-          chart.data.datasets[0].data = populations;
-          chart.update();
-        } else {
-          chart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-              labels: barangays,
-              datasets: [{
-                label: 'Population',
-                data: populations,
-                backgroundColor: '#043a87',
-                borderWidth: 1,
-              }]
-            },
-            options: {
-              responsive: true,
-              scales: {
-                x: {
-                  position: 'bottom',
-                  ticks: {
-                    autoSkip: false,
-                    maxRotation: 90,
-                    minRotation: 30,
-                    color: 'black',
-                    font: {
-                      size: 8
-                    }
-                  }
-                },
-                y: {
-                  ticks: {
-                    color: 'black',
-                    font: {
-                      size: 10
-                    }
+      if (chart) {
+        chart.data.labels = barangays;
+        chart.data.datasets[0].data = populations;
+        chart.update();
+      } else {
+        chart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: barangays,
+            datasets: [{
+              label: 'Population',
+              data: populations,
+              backgroundColor: '#043a87',
+              borderWidth: 1,
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                position: 'bottom',
+                ticks: {
+                  autoSkip: false,
+                  maxRotation: 90,
+                  minRotation: 30,
+                  color: 'black',
+                  font: {
+                    size: 8
                   }
                 }
               },
-              plugins: {
-                legend: {
-                  display: false
-                },
-                tooltip: {
-                  callbacks: {
-                    label: function(context) {
-                      return 'Population: ' + context.parsed.y;
-                    }
-                  }
-                },
-                datasets: {
-                  bar: {
-                    barPercentage: 0.8,
-                    categoryPercentage: 1
+              y: {
+                ticks: {
+                  color: 'black',
+                  font: {
+                    size: 10
                   }
                 }
               }
+            },
+            plugins: {
+              legend: {
+                display: false
+              },
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    return 'Population: ' + context.parsed.y;
+                  }
+                }
+              },
+              datasets: {
+                bar: {
+                  barPercentage: 0.8,
+                  categoryPercentage: 1
+                }
+              }
             }
-          });
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  }
+          }
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+}
 
-  // Assume '2015' as the initial selected year
-  updateChart('2015');
+// Assume '2015' as the initial selected year
+updateChart('2015');
+
 });
 
 

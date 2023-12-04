@@ -1,58 +1,62 @@
 <?php
-include 'admin_db_connection.php';
-include 'db_connection.php';
+require 'vendor/autoload.php';
 
-session_start();
+use phpseclib\Net\SFTP;
 
-// Check if the form is submitted and the required fields are set
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["alert_message"]) && isset($_POST["alert_level"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get form data
+    $alertLevel = $_POST["alert_level"];
+    $alertMessage = $_POST["alert_message"];
 
-    // Handle file upload
-    $uploadDir = "uploads/"; // Change this to the directory where you want to store uploaded images
-    $uploadFile = $uploadDir . basename($_FILES['alert_image']['name']);
-
-    if (move_uploaded_file($_FILES['alert_image']['tmp_name'], $uploadFile)) {
-        echo "Image successfully uploaded.";
-    } else {
-        echo "Error uploading image.";
-    }
-
-    // Prepare and bind the data
-    $stmt = $conn->prepare("INSERT INTO alerts (alert_message, alert_level, image_path, timestamp) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $flood_alert, $alert_level, $image_path, $timestamp);
-
-    // Set parameters
-    $flood_alert = $_POST["alert_message"];
-    $alert_level = $_POST["alert_level"];
-    $image_path = $uploadFile; // Store the path to the uploaded image
-    $timestamp = date('Y-m-d H:i:s');
-
-    // Execute the query
-    if ($stmt->execute()) {
-        echo "Alert added successfully";
-    } else {
-        echo "Cannot add Alert Message";
-    }
-
-    // Retrieve the currently logged-in employee_id
-    $currentEmployeeId = $_SESSION['employee_id'];
-
-    // Insert into logs table with the currently logged-in employee_id
-    $section = "Alerts";
-    $description = "Added an Emergency Alert";
-    $date_time = date('Y-m-d H:i:s');
-    $logSql = "INSERT INTO logs (section, description, date_time, employee_id) VALUES ('$section', '$description', '$date_time', '$currentEmployeeId')";
+    // Create an instance of Net_SFTP
+    $sftp = new SFTP('edr.topfavlists.com');
     
-    if ($conn->query($logSql) !== TRUE) {
-        echo "Error inserting into logs: " . $conn->error;
+    // Replace 'your_username' and 'your_password' with your actual SFTP credentials
+    if (!$sftp->login('edr', '3fQoT8cgRu')) {
+        die('Login Failed');
     }
 
-    // Close the prepared statement
-    $stmt->close();
+    // Set the remote directory on the SFTP server
+    $remoteDir = '/home/edr/web/edr.topfavlists.com/public_html/uploads/';
+    $remoteFile = $remoteDir . basename($_FILES["alert_image"]["name"]);
+    $localFile = $_FILES["alert_image"]["tmp_name"];
+
+    // Upload the file to the SFTP server
+    if ($sftp->put($remoteFile, $localFile, SFTP::SOURCE_LOCAL_FILE)) {
+        // File uploaded successfully, continue processing the form data
+
+        // Additional processing example:
+        saveToDatabase($alertLevel, $alertMessage, $remoteFile);
+
+        // Output success message
+        echo "Alert submitted successfully!";
+    } else {
+        echo "Error uploading the file.";
+    }
 } else {
-    echo "Invalid request";
+    echo "Invalid request.";
 }
 
-// Close the database connection
-$conn->close();
+// Function to save data to a database
+function saveToDatabase($alertLevel, $alertMessage, $uploadedFilePath) {
+    // Connect to your database (replace with your database connection code)
+    $mysqli = new mysqli('edr.topfavlists.com', 'edr_usr', 'OufHEDkLws', 'edr_db');
+
+    // Check connection
+    if ($mysqli->connect_error) {
+        die("Connection failed: " . $mysqli->connect_error);
+    }
+
+    // Escape variables to prevent SQL injection
+    $alertLevel = $mysqli->real_escape_string($alertLevel);
+    $alertMessage = $mysqli->real_escape_string($alertMessage);
+    $uploadedFilePath = $mysqli->real_escape_string($uploadedFilePath);
+
+    // Insert data into the database (replace with your database insert code)
+    $query = "INSERT INTO alerts (alert_level, alert_message, image_path, timestamp) VALUES ('$alertLevel', '$alertMessage', '$uploadedFilePath', NOW())";
+    $result = $mysqli->query($query);
+
+    // Close the database connection
+    $mysqli->close();
+}
 ?>

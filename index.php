@@ -73,11 +73,6 @@ session_start();
     </div>
 
 <div class="main">
-
-
-
-
-
   <div class="division">
   <?php
 // Get the current year and month
@@ -301,11 +296,11 @@ echo '</div>';
     </tr>
     </table>
 
-    <img src="images/wind_signal_guide.png">
+    <img src="images/PAGASA-FLOOD.jpg">
 
     <img src="images/Tropical-Cyclone-Warning.jpg" style="height: 50vh;">
 
-    <img src="images/PAGASA-FLOOD.jpg">
+    <img src="images/wind_signal_guide.png">
 
     <img src="images/calamity.png">
 
@@ -367,10 +362,23 @@ echo '</div>';
       <div class="outer-hotlines">
         <div class="hotlines">
           <h2>MDRRMO</h2>
+          <p>0917-121-1212</p>
+          <p>0912-232-2222</p>
+          <p>0934-333-1212</p>
         </div>
 
         <div class="hotlines">
-          <h2>...</h2>
+          <h2 style="color: #ff0000;">...</h2>
+          <p>
+            BARUGO FIRE STATION
+            <br>
+            0987-565-4444
+          </p>
+          <p>
+            BARUGO POLICE STATION
+            <br>
+            0967-547-4444
+          </p>
         </div>
       </div>
     </div>

@@ -1,15 +1,15 @@
 .division {
     display: flex;
     flex-direction: column;
-    width: 400px;
-    flex: 2;
+    width: 300px;
+    flex: 0;
     /* border: 1px solid red; */
     padding: 40px;
 }
 
 .division:first-child {
     flex: 2;
-    padding-right: 20px;
+    /* padding-right: 20px; */
 }
 
 .division:nth-child(2) {
@@ -248,7 +248,7 @@
 }
 
 .warning-system {
-  height: 120vh;
+  height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
   /* padding: 1em; Add padding to prevent content from sticking to the edges */
@@ -502,10 +502,10 @@ ul {
     flex: 1;
     border: 1px solid #ff0000;
     margin: 0em 0.5em;
-    min-height: 10em;
+    min-height: 7em;
     background-color: #ffffff;
     box-shadow: 5px 5px 7px #cccccc;
-    
+    text-align: center;
   }
 
   .hotlines h2 {
@@ -517,6 +517,18 @@ ul {
     margin: 0;
   }
 
+  .hotlines:first-child p {
+    margin: 10px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .hotlines:last-child p {
+    margin: 10px;
+    font-size: 8.5px;
+    font-weight: 700;
+  }
+
   .chat {
     display:flex;
     flex-direction: column;
@@ -525,7 +537,7 @@ ul {
     height: 12em;
     flex: 1;
     margin-left: 2em;
-    margin-top: 6em;
+    margin-top: 3em;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 5px 5px 7px #cccccc;
@@ -781,7 +793,7 @@ ul {
     width: auto;
     height: 52vh;
     margin: 1em;
-    margin-top: 6em;
+    margin-top: 3em;
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
     perspective: 800px;
