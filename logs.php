@@ -49,13 +49,13 @@ if (!isset($_SESSION['id'])) {
                 $image = $row["image"];
                 $first_name = $row["first_name"][0] . ".";
                 $last_name = $row["last_name"];
-                echo "<div class='dropdown'>
-                        <button class='dropbtn' color: #ffffff;'>
+                echo "<div class='dropdown' style='background-color: #043a87; color: #ffffff;'>
+                        <button class='dropbtn' style='color: #ffffff;'>
                         <img src='$image' alt='User Image'>$first_name $last_name
                             <i class='fa fa-caret-down' style='margin-left: 1em;'></i>
                         </button>
                         <div class='dropdown-content'>
-                          <a href='logs.php' style='height: 3em;width: 14em; padding: 0; border-top: 1px solid #e5a920; font-size: 12px;'>
+                          <a href='logs.php' style='height: 3em;width: 14em; padding: 0; border-top: 1px solid #e5a920; font-size: 12px; background-color: #043a87; color: #ffffff;'>
                             <p>Logs</p>
                           </a>
                             
@@ -76,17 +76,6 @@ if (!isset($_SESSION['id'])) {
     }
 ?>
 
-
-<script>
-  // JavaScript for dropdown functionality
-  document.addEventListener("DOMContentLoaded", function() {
-    var dropdown = document.querySelector(".dropdown");
-    dropdown.addEventListener("hover", function() {
-      var dropdownContent = dropdown.querySelector(".dropdown-content");
-      dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
-    });
-  });
-</script>
 </div>
 
 
@@ -119,14 +108,47 @@ if (!isset($_SESSION['id'])) {
 
     
     <a href="admin-about.php">About</a>
-    <a href="admin-typhoon.php">Typhoon</a>
     <a href="admin-contact.php">Contact</a>
-    <a href="admin-flood.php">Flood</a>
+    
+    <div class="dropdown2">
+      <button class="dropbtn2">Typhoon<i class='fa fa-caret-down' style='margin-left: 1em;'></i></button>
+        <div class="dropdown-content2">
+          <a href="admin-typhoon.php">Typhoon Data</a>
+          <a href="admin-typhoon-adv.php" style='margin-top: 3em;'>Typhoon Advisories</a>
+        </div>
+    </div>
+    
+    <div class="dropdown2">
+      <button class="dropbtn2">Flood<i class='fa fa-caret-down' style='margin-left: 1em;'></i></button>
+        <div class="dropdown-content2">
+          <a href="admin-flood.php">Flood Data</a>
+          <a href="admin-flood-adv.php" style='margin-top: 3em;'>Flood Advisories</a>
+        </div>
+    </div>
+
     <a href="admin-home.php">Home</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
       <i class="fa fa-bars"></i>
     </a>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // First Dropdown
+    var dropdown1 = document.querySelector(".dropdown");
+    dropdown1.addEventListener("hover", function() {
+      var dropdownContent = dropdown1.querySelector(".dropdown-content");
+      dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
+    });
+
+    // Second Dropdown
+    var dropdown2 = document.querySelector(".dropdown2");
+    dropdown2.addEventListener("hover", function() {
+      var dropdownContent = dropdown2.querySelector(".dropdown-content2");
+      dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
+    });
+  });
+</script>
 
 <div class="main">
   <div class="division">

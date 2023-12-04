@@ -292,21 +292,20 @@ document.addEventListener('DOMContentLoaded', function() {
       // Filter out the 'id' and 'year' columns
       var validColumns = columns.filter(column => column !== 'id' && column !== 'year');
 
-      // Filter out the 'barangay' column if it's present
-      var barangays = validColumns.filter(column => column !== 'barangay');
-
       // Extract populations for the selected year
-      var populations = data.map(entry => entry[selectedYear]);
+      var populations = validColumns.map(column => {
+        return data[0][column];
+      });
 
       if (chart) {
-        chart.data.labels = barangays;
+        chart.data.labels = validColumns;
         chart.data.datasets[0].data = populations;
         chart.update();
       } else {
         chart = new Chart(ctx, {
           type: 'bar',
           data: {
-            labels: barangays,
+            labels: validColumns,
             datasets: [{
               label: 'Population',
               data: populations,
@@ -367,6 +366,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Assume '2015' as the initial selected year
 updateChart('2015');
+
 
 });
 

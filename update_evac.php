@@ -11,15 +11,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $names = $_POST['name'];
         $latitudes = $_POST['latitude'];
         $longitudes = $_POST['longitude'];
+        $capacities = $_POST['capacity'];
 
         for ($i = 0; $i < count($ids); $i++) {
             $id = $ids[$i];
             $name = $conn->real_escape_string($names[$i]);
             $latitude = $conn->real_escape_string($latitudes[$i]);
             $longitude = $conn->real_escape_string($longitudes[$i]);
+            $capacity = $conn->real_escape_string($capacities[$i]);
 
             if (!empty($name) && !empty($latitude) && !empty($longitude)) {
-                $sql = "UPDATE evac_centers SET name='$name', latitude='$latitude', longitude='$longitude' WHERE id='$id'";
+                $sql = "UPDATE evac_centers SET name='$name', latitude='$latitude', longitude='$longitude', capacity='$capacity' WHERE id='$id'";
                 if ($conn->query($sql) !== TRUE) {
                     echo "Error deleting record: " . $conn->error;
                     break;
@@ -38,14 +40,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $newNames = $_POST['new_name'];
         $newLatitudes = $_POST['new_latitude'];
         $newLongitudes = $_POST['new_longitude'];
+        $newCapacities = $_POST['new_capacity'];
 
         for ($i = 0; $i < count($newNames); $i++) {
             $newName = $conn->real_escape_string($newNames[$i]);
             $newLatitude = $conn->real_escape_string($newLatitudes[$i]);
             $newLongitude = $conn->real_escape_string($newLongitudes[$i]);
+            $newCapacity = $conn->real_escape_string($newCapacities[$i]);
 
             if (!empty($newNames) && !empty($newLatitudes) && !empty($newLongitudes)) {
-                $sql = "INSERT INTO evac_centers (name, latitude, longitude) VALUES ('$newName', '$newLatitude', '$newLongitude')";
+                $sql = "INSERT INTO evac_centers (name, latitude, longitude, capacity) VALUES ('$newName', '$newLatitude', '$newLongitude', '$newCapacity')";
                 if ($conn->query($sql) !== TRUE) {
                     echo "Error inserting new record: " . $conn->error;
                     break;

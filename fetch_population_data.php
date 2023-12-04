@@ -5,15 +5,27 @@ include "db_connection.php"; // Assuming this file contains your database connec
 // Check if a specific year is requested
 $selectedYear = isset($_GET['year']) ? $_GET['year'] : null;
 
-// Query to retrieve data from the database, filter by the selected year if provided
-$sql = "SELECT * FROM population_data" . ($selectedYear ? " WHERE year = '$selectedYear'" : '');
+// Prepare the SQL query
+$sql = "SELECT * FROM population_data" . ($selectedYear ? " WHERE year = ?" : '');
 
-$result = $conn->query($sql);
+// Use a prepared statement to avoid SQL injection
+$stmt = $conn->prepare($sql);
+
+if ($selectedYear) {
+    // Bind the parameter for the selected year
+    $stmt->bind_param('s', $selectedYear);
+}
+
+// Execute the statement
+$result = $stmt->execute();
 
 if ($result) {
     $data = array();
 
-    while ($row = $result->fetch_assoc()) {
+    // Get the result set
+    $resultSet = $stmt->get_result();
+
+    while ($row = $resultSet->fetch_assoc()) {
         // Add each row to the $data array
         $data[] = $row;
     }
@@ -22,9 +34,10 @@ if ($result) {
     header('Content-Type: application/json');
     echo json_encode($data);
 } else {
-    echo "Error executing query: " . $conn->error;
+    echo "Error executing query: " . $stmt->error;
 }
 
-// Close the database connection
+// Close the statement and database connection
+$stmt->close();
 $conn->close();
 ?>

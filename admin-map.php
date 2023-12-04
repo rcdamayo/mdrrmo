@@ -76,17 +76,6 @@ if (!isset($_SESSION['id'])) {
     }
 ?>
 
-
-<script>
-  // JavaScript for dropdown functionality
-  document.addEventListener("DOMContentLoaded", function() {
-    var dropdown = document.querySelector(".dropdown");
-    dropdown.addEventListener("hover", function() {
-      var dropdownContent = dropdown.querySelector(".dropdown-content");
-      dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
-    });
-  });
-</script>
 </div>
 
     <a href="reports-flood.php">
@@ -118,14 +107,47 @@ if (!isset($_SESSION['id'])) {
 
     
     <a href="admin-about.php">About</a>
-    <a href="admin-typhoon.php">Typhoon</a>
     <a href="admin-contact.php">Contact</a>
-    <a href="admin-flood.php">Flood</a>
+    
+    <div class="dropdown2">
+      <button class="dropbtn2">Typhoon<i class='fa fa-caret-down' style='margin-left: 1em;'></i></button>
+        <div class="dropdown-content2">
+          <a href="admin-typhoon.php">Typhoon Data</a>
+          <a href="admin-typhoon-adv.php" style='margin-top: 3em;'>Typhoon Advisories</a>
+        </div>
+    </div>
+    
+    <div class="dropdown2">
+      <button class="dropbtn2">Flood<i class='fa fa-caret-down' style='margin-left: 1em;'></i></button>
+        <div class="dropdown-content2">
+          <a href="admin-flood.php">Flood Data</a>
+          <a href="admin-flood-adv.php" style='margin-top: 3em;'>Flood Advisories</a>
+        </div>
+    </div>
+
     <a href="admin-home.php">Home</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
       <i class="fa fa-bars"></i>
     </a>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // First Dropdown
+    var dropdown1 = document.querySelector(".dropdown");
+    dropdown1.addEventListener("hover", function() {
+      var dropdownContent = dropdown1.querySelector(".dropdown-content");
+      dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
+    });
+
+    // Second Dropdown
+    var dropdown2 = document.querySelector(".dropdown2");
+    dropdown2.addEventListener("hover", function() {
+      var dropdownContent = dropdown2.querySelector(".dropdown-content2");
+      dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
+    });
+  });
+</script>
 
 
 <div class="main">
@@ -150,9 +172,10 @@ if (!isset($_SESSION['id'])) {
     if ($result->num_rows > 0) {
         echo "<table class='table-data'>
                 <tr>
-                    <th>Name</th>
+                    <th style='min-width: 8em;'>Name</th>
                     <th>Latitude</th>
                     <th>Longitude</th>
+                    <th style='width: 3em;'>Capacity</th>
                 </tr>";
 
         while ($row = $result->fetch_assoc()) {
@@ -160,6 +183,7 @@ if (!isset($_SESSION['id'])) {
                 <td><input type='text' name='name[]' value='" . $row["name"] . "'></td>
                 <td><input type='text' name='latitude[]' value='" . $row["latitude"] . "'></td>
                 <td><input type='text' name='longitude[]' value='" . $row["longitude"] . "'></td>
+                <td><input type='text' name='capacity[]' value='" . $row["capacity"] . "'></td>
                 <input type='hidden' name='id[]' value='" . $row["id"] . "'>
             </tr>";
         }
@@ -237,10 +261,12 @@ function addRow() {
     var cell1 = newRow.insertCell(0);
     var cell2 = newRow.insertCell(1);
     var cell3 = newRow.insertCell(2);
+    var cell4 = newRow.insertCell(3);
 
     cell1.innerHTML = "<input type='text' name='new_name[]' value=''>";
     cell2.innerHTML = "<input type='text' name='new_latitude[]' value=''>";
     cell3.innerHTML = "<input type='text' name='new_longitude[]' value=''>";
+    cell4.innerHTML = "<input type='text' name='new_capacity[]' value=''>";
 }
 
 </script>
@@ -309,7 +335,7 @@ fetch('get_evac_centers.php') // Replace with the correct path to your PHP scrip
             const marker = L.marker([center.lat, center.lng], {
                 icon: svgIcon,
                 draggable: false,
-            }).addTo(pinsLayer).bindPopup(center.name);
+              }).addTo(pinsLayer).bindPopup(`<strong>${center.name}</strong><br>Capacity: ${String(center.cap)}`);
         });
 
         // Automatically calculate and add routing once data is fetched

@@ -343,7 +343,7 @@ body {
     opacity: 1;
   }
 
-  button:hover {
+  .bulletin button:hover {
     background-color: #01c87f;
   }
 
