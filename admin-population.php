@@ -353,10 +353,10 @@ function openModal() {
         echo "<div class='household-container'>";
         echo "<table class='household-table'>
                 <tr>
-                    <th style='border-top-left-radius: 10px;'>Year</th>
+                    <th>Year</th>
                     <th>Household Population</th>
                     <th>No. of Households</th>
-                    <th style='border-top-right-radius: 10px;'>Average Household Size</th>
+                    <th>Average Household Size</th>
                 </tr>";
 
         while ($row = $result->fetch_assoc()) {
@@ -370,7 +370,7 @@ function openModal() {
         }
 
         echo "</table>";
-        echo '<button type="button" class="add-row" onclick="addRow()">+</button>';
+        echo '<button type="button" class="add-row" onclick="addRow()">ADD ROW</button>';
         echo "</form>";
     } else {
         echo "No results found";
@@ -469,9 +469,9 @@ if ($result->num_rows > 0) {
     echo "<div class='ageGroup-container'>";
     echo "<table class='ageGroup-table'>";
     echo "<tr>
-            <th style='border-top-left-radius: 10px;'>Age Group</th>
+            <th>Age Group</th>
             <th>Population (2015)</th>
-            <th style='border-top-right-radius: 10px;'>Age Group Percentage</th>
+            <th>Age Group Percentage</th>
         </tr>";
 
     while ($row = $result->fetch_assoc()) {

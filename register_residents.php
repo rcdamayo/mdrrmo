@@ -27,6 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         if ($conn->query($updateSql) === TRUE) {
             echo "User data updated!";
+            header("Location: index.php"); // Redirect to index.php
+            exit();
         } else {
             echo "Error updating user data: " . $conn->error;
         }
@@ -35,7 +37,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $insertSql = "INSERT INTO residents (username, password, phone_no, barangay) VALUES ('$username', '$hashedPassword', '$phone_no', '$barangay')";
         
         if ($conn->query($insertSql) === TRUE) {
-            echo "Registration successful!";
+            echo "Registration successful! Redirecting...";
+            header("Location: index.php"); // Redirect to index.php
+            exit();
         } else {
             echo "Error: " . $insertSql . "<br>" . $conn->error;
         }

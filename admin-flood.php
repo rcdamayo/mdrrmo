@@ -353,16 +353,16 @@ function changeAlertClass(newClass) {
 
     switch (newClass) {
         case 'alert-yellow':
-            fillColor = '#ffcc00';
+            fillColor = '#ffbb00';
             break;
         case 'alert-orange':
-            fillColor = '#ff6600';
+            fillColor = '#ff8000';
             break;
         case 'alert-red':
             fillColor = '#cc0000';
             break;
         default:
-            fillColor = '#ffff00'; // Default fill color
+            fillColor = '#ffbb00'; // Default fill color
     }
 
     svg.setAttribute('fill', fillColor);

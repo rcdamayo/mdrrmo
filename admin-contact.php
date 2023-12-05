@@ -247,9 +247,16 @@ $conn->close();
     var row = $(button).closest('tr');
     var phoneNumber = row.find('td:eq(2)').text().trim(); // Assuming the phone number is in the third column (index 2)
 
-    // Append the phone number to the existing values in the input field
-    $('#phoneNumbers').val(existingNumbers + phoneNumber + ', ');
+    // Check if there are existing numbers
+    if (existingNumbers.length > 0) {
+        // Append the phone number with a comma and space to the existing values in the input field
+        $('#phoneNumbers').val(existingNumbers + ', ' + phoneNumber);
+    } else {
+        // If there are no existing numbers, just set the phone number without a comma
+        $('#phoneNumbers').val(phoneNumber);
+    }
 }
+
 
 
     function addAllPhoneNumbers() {
@@ -337,34 +344,33 @@ function sendMessage(event) {
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "send-message.php", true);
-    xhr.onreadystatechange = function() {
+
+    xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 var response = xhr.responseText.trim();
-                if (response.includes('Error')) {
-                    showSnackbar("SMS sent successfully");
+                
+                if (response.toLowerCase() === 'success') {
+                    // If the update was successful, inform the user with an alert
+                    alert("SMS sent successfully");
 
-                    // If the update was successful, inform the user
-                    alert("Year data added successfully.");
-
-                    // Reload the page
+                    // Reload the page if needed
                     location.reload();
                 } else {
-                    showSnackbar("SMS sent successfully");
-
-                    // If the update was successful, inform the user
-                    alert("Year data added successfully.");
-
-                    // Reload the page
-                    location.reload();
+                    // If there was an error, show a snackbar or handle the error condition as needed
+                    alert("Error sending SMS: " + response);
                 }
             } else {
-                showSnackbar("Error sending SMS");
+                // Handle the error condition if needed
+                alert("Error sending SMS");
             }
         }
     };
+
     xhr.send(formData);
 }
+
+
 </script>
 
 

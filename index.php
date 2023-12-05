@@ -15,6 +15,8 @@ session_start();
   integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
   crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="js/script.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 </head>
 <body>
 <div class="topnav" id="myTopnav">
@@ -442,7 +444,7 @@ if (isset($_SESSION['user_id'])) {
               <h2>REGISTER</h2>
                 
             </div>
-            <form id="registerForm" action="register_residents.php" method="post">
+            <form id="registerForm" action="register_residents.php" method="post" onsubmit="submitForm(event)">
               
               <input type="text" id="username" name="username" placeholder="Username" required>
               <input type="password" id="password" name="password" placeholder="Password" required>
@@ -578,6 +580,34 @@ document.getElementById('user-input').addEventListener('keypress', function (e) 
 setInterval(function () {
     loadMessages();
 }, 5000); // Adjust the interval as needed
+
+
+function submitForm(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Perform an asynchronous form submission using AJAX
+        $.ajax({
+            url: $('#registerForm').attr('action'),
+            type: 'post',
+            data: $('#registerForm').serialize(),
+            success: function(response) {
+                // Handle the response from the server
+                console.log(response);
+
+                // Show an alert after registering
+                alert('Registration successful!');
+
+                // You can update the UI or perform other actions here
+
+                // If you want to redirect after a successful submission
+                window.location.href = 'index.php';
+            },
+            error: function(error) {
+                // Handle the error
+                console.error(error);
+            }
+        });
+    }
 </script>
 
 

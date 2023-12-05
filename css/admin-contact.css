@@ -28,11 +28,11 @@ h1 {
     padding: 10px;
     padding-left: 20px;
     margin: 0;
-    background-color: #f9b314;
-    color: #ffffff;
-    text-shadow: 1px 1px 3px #000000;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
+    background-color: #dbdbdb;
+    color: #626366;
+    /* text-shadow: 1px 1px 3px #000000; */
+    /* border-top-right-radius: 10px; */
+    /* border-top-left-radius: 10px; */
 }
 
 .switch {
@@ -67,8 +67,8 @@ h1 {
     margin: 0;
     margin-left: 0.5em;
     background-color: #ffffff;
-    box-shadow: 5px 5px 15px #707070;
-    border-radius: 10px;
+    box-shadow: 3px 3px 10px #bbbbbb;
+    /* border-radius: 10px; */
 }
 
 .chat h1 {
@@ -157,8 +157,8 @@ word-break: break-word;
     padding: 0;
     margin-right: 0.5em;
     background-color: #ffffff;
-    box-shadow: 5px 5px 15px #707070;
-    border-radius: 10px;
+    box-shadow: 3px 3px 10px #bbbbbb;
+    /* border-radius: 10px; */
 }
 
 .input-container {
@@ -245,8 +245,8 @@ word-break: break-word;
     padding: 0;
     /* padding-right: 100%; */
     background-color: #ffffff;
-    box-shadow: 5px 5px 15px #707070;
-    border-radius: 10px;
+    box-shadow: 3px 3px 10px #bbbbbb;
+    /* border-radius: 10px; */
     justify-content: left;
     align-items: flex-start;
 }
@@ -329,8 +329,8 @@ word-break: break-word;
     padding: 0;
     margin: 0;
     background-color: #ffffff;
-    box-shadow: 5px 5px 15px #707070;
-    border-radius: 10px;
+    box-shadow: 3px 3px 10px #bbbbbb;
+    /* border-radius: 10px; */
     overflow-y:auto;
     overflow-x: hidden;
 }

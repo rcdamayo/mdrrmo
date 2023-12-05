@@ -42,9 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Display an alert message based on success
     if ($success) {
-        echo '<script>alert("Message sent successfully!");</script>';
+        header("Location: admin-contact.php");
+        exit;
     } else {
-        echo '<script>alert("Error sending message. Please try again.");</script>';
+        header("Location: admin-contact.php");
+        exit;
     }
 
     // Retrieve the currently logged-in employee_id

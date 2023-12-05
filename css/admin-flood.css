@@ -259,11 +259,11 @@
 }
 
 .alert-yellow {
-  background-color: #ffea00;
+  background-color: #ffbb00;
 }
 
 .alert-orange {
-  background-color: #ff6600;
+  background-color: #ff8000;
   color: #ffffff;
 }
 
@@ -307,15 +307,15 @@
 }
 
 .checkmark1 {
-  background-color: #e6e600;
+  background-color: #ffbb00;
 }
 
 .checkmark2 {
-  background-color: #ff6600;
+  background-color: #ff8000;
 }
 
 .checkmark3 {
-  background-color: #e60000;
+  background-color: #ff0000;
 }
 
 /* On mouse-over, add a grey background color */

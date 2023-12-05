@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         echo "</table>";
-        echo '<button type="button" class="add-row" onclick="addRow()">+</button>';
+        echo '<button type="button" class="add-row" onclick="addRow()">ADD ROW</button>';
         echo "</form>";
     } else {
         echo "No results found";
