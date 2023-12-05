@@ -102,22 +102,24 @@ if (!isset($_SESSION['id'])) {
     
     <a href="admin-about.php">About</a>
     <a href="admin-contact.php">Contact</a>
+    <a href="admin-typhoon.php">Typhoon</a>
+    <a href="admin-flood.php" class="active">Flood</a>
     
-    <div class="dropdown2">
+    <!-- <div class="dropdown2">
       <button class="dropbtn2">Typhoon<i class='fa fa-caret-down' style='margin-left: 1em;'></i></button>
-        <div class="dropdown-content2" style="background-color: #ffffff;">
+        <div class="dropdown-content2">
           <a href="admin-typhoon.php">Typhoon Data</a>
-          <a href="admin-typhoon-adv.php" style='margin-top: 3em; border-top: 1px solid #cccccc;'>Typhoon Advisories</a>
+          <a href="admin-typhoon-adv.php" style='margin-top: 3em;'>Typhoon Advisories</a>
         </div>
     </div>
     
     <div class="dropdown2">
-      <button class="dropbtn2" style="color: #043a87;">Flood<i class='fa fa-caret-down' style='margin-left: 1em;'></i></button>
+      <button class="dropbtn2">Flood<i class='fa fa-caret-down' style='margin-left: 1em;'></i></button>
         <div class="dropdown-content2">
           <a href="admin-flood.php">Flood Data</a>
-          <a href="admin-flood-adv.php" style='margin-top: 3em; border-top: 1px solid #cccccc;'>Flood Advisories</a>
+          <a href="admin-flood-adv.php" style='margin-top: 3em;'>Flood Advisories</a>
         </div>
-    </div>
+    </div> -->
 
     <a href="admin-home.php">Home</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
