@@ -91,11 +91,11 @@ if ($result->num_rows > 0) {
 function getAlertColor($alertLevel) {
     switch ($alertLevel) {
         case 'yellow':
-            return '#ffea00'; // Yellow
+            return '#ffbb00'; // Yellow
         case 'orange':
-            return '#ff6600'; // Orange
+            return '#ff8000'; // Orange
         case 'red':
-            return '#cc0000'; // Red
+            return '#ff0000'; // Red
         default:
             return '#f9b314'; // Default color
     }
@@ -223,7 +223,7 @@ $conn->close();
   </div>
 </div>
 
-<div class="img-container">
+<!-- <div class="img-container"> -->
 <?php
 require 'vendor/autoload.php';
 
@@ -253,6 +253,47 @@ $conn->close();
 
 </div>
 
+    <menu class="menu" style="--timeOut: none">
+      <button class="menu__item active" style="--bgColorItem: #04aa6d">
+      <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+        <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM222.93,203.8a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,144V104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,180Z"></path>
+    </svg>
+      </button>
+
+      <button class="menu__item" style="--bgColorItem: #043a87">
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+          <path d="M228.92,49.69a8,8,0,0,0-6.86-1.45L160.93,63.52,99.58,32.84a8,8,0,0,0-5.52-.6l-64,16A8,8,0,0,0,24,56V200a8,8,0,0,0,9.94,7.76l61.13-15.28,61.35,30.68A8.15,8.15,0,0,0,160,224a8,8,0,0,0,1.94-.24l64-16A8,8,0,0,0,232,200V56A8,8,0,0,0,228.92,49.69ZM104,52.94l48,24V203.06l-48-24ZM40,62.25l48-12v127.5l-48,12Zm176,131.5-48,12V78.25l48-12Z"></path>
+        </svg>
+      </button>
+
+      <button class="menu__item" style="--bgColorItem: #ffbb00">
+      <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+        <path d="M80,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H88A8,8,0,0,1,80,64Zm136,56H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,64H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM44,52A12,12,0,1,0,56,64,12,12,0,0,0,44,52Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,116Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,180Z"></path>
+    </svg>
+      </button>
+
+      <div
+        class="menu__border"
+        style="transform: translate3d(0px, 0px, 0px)"
+      ></div>
+    </menu>
+
+    <div class="svg-container">
+      <svg viewBox="0 0 202.9 45.5">
+        <clipPath
+          id="menu"
+          clipPathUnits="objectBoundingBox"
+          transform="scale(0.0049285362247413 0.021978021978022)"
+        >
+          <path
+            d="M6.7,45.5c5.7,0.1,14.1-0.4,23.3-4c5.7-2.3,9.9-5,18.1-10.5c10.7-7.1,11.8-9.2,20.6-14.3c5-2.9,9.2-5.2,15.2-7
+          c7.1-2.1,13.3-2.3,17.6-2.1c4.2-0.2,10.5,0.1,17.6,2.1c6.1,1.8,10.2,4.1,15.2,7c8.8,5,9.9,7.1,20.6,14.3c8.3,5.5,12.4,8.2,18.1,10.5
+          c9.2,3.6,17.6,4.2,23.3,4H6.7z"
+          ></path>
+        </clipPath>
+      </svg>
+    </div>
+
 <!-- Modal container -->
 <div class="modal-img" id="modal-img">
   <?php
@@ -281,6 +322,64 @@ function openModal() {
 function closeModal() {
   document.querySelector('.modal-img').classList.remove('active');
 }
+
+"use strict"; 
+
+const body = document.body;
+const bgColorsBody = ["#04aa6d", "#043a87", "#ffcc00", "#ff6600", "#ff0000"];
+const menu = body.querySelector(".menu");
+const menuItems = menu.querySelectorAll(".menu__item");
+const menuBorder = menu.querySelector(".menu__border");
+let activeItem = menu.querySelector(".active");
+
+function clickItem(item, index) {
+
+    menu.style.removeProperty("--timeOut");
+    
+    if (activeItem == item) return;
+    
+    if (activeItem) {
+        activeItem.classList.remove("active");
+    }
+
+    
+    item.classList.add("active");
+    body.style.backgroundColor = bgColorsBody[index];
+    activeItem = item;
+    offsetMenuBorder(activeItem, menuBorder);
+    
+    
+}
+
+function offsetMenuBorder(element, menuBorder) {
+
+    const offsetActiveItem = element.getBoundingClientRect();
+    const left = Math.floor(offsetActiveItem.left - menu.offsetLeft - (menuBorder.offsetWidth  - offsetActiveItem.width) / 2) +  "px";
+    menuBorder.style.transform = `translate3d(${left}, 0 , 0)`;
+
+}
+
+offsetMenuBorder(activeItem, menuBorder);
+
+menuItems.forEach((item, index) => {
+
+    item.addEventListener("click", () => clickItem(item, index));
+    
+})
+
+window.addEventListener("resize", () => {
+    offsetMenuBorder(activeItem, menuBorder);
+    menu.style.setProperty("--timeOut", "none");
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  var dropdownButton = document.querySelector(".dropbtn");
+
+  dropdownButton.addEventListener("click", function () {
+    var dropdownContent = document.querySelector(".dropdown-content");
+    dropdownContent.style.height = (dropdownContent.style.height === "65vh") ? "0" : "65vh";
+  });
+});
 
 </script>
 </body>

@@ -233,7 +233,7 @@
   flex-wrap: wrap;
   position: relative;
   border: 0px;
-  border: 1px solid #ffea00;
+  /* border: 1px solid #ffea00; */
   background-color: #ffea00;
   border-radius: 5px;
   width: 100%;

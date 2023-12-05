@@ -1,0 +1,238 @@
+.main {
+    flex-direction: column;
+    justify-content: center;
+}
+
+.division {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100vw;
+    flex: 1;
+    border: 1px solid lime;
+    padding: 40px;
+}
+
+.division:nth-child(2) {
+    flex: 3;
+}
+
+.early-alert {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    transform: translateX(70%);
+    position: relative;
+    border: 0px;
+    border: 1px solid #ffea00;
+    background-color: #ffea00;
+    border-radius: 5px;
+    width: 40vw;
+    padding-bottom: 5%;
+    align-self: center;
+    font-size: 12px;
+    padding: 0;
+    padding-top: 1em;
+    text-align: center;
+    z-index: 6;
+    transition: 0.3s;
+  }
+  
+  .early-alert svg {
+    transition: 0.2s;
+  }
+  
+  .radio-container {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    left: 1.5em;
+  }
+  
+  .alert-yellow {
+    background-color: #ffea00;
+  }
+  
+  .alert-orange {
+    background-color: #ff6600;
+    color: #ffffff;
+  }
+  
+  .alert-red {
+    background-color: #cc0000;
+    color: #ffffff;
+  }
+  
+  .container {
+    display: block;
+    position: relative;
+    padding: 0;
+    padding-right: 1em;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Hide the browser's default radio button */
+  .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  /* Create a custom radio button */
+  .checkmark1,
+  .checkmark2,
+  .checkmark3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0.5em;
+    width: 0.5em;
+    border-radius: 50%;
+    transition: 0.2s;
+  }
+  
+  .checkmark1 {
+    background-color: #e6e600;
+  }
+  
+  .checkmark2 {
+    background-color: #ff6600;
+  }
+  
+  .checkmark3 {
+    background-color: #e60000;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .container:hover input ~ .checkmark1 {
+    box-shadow: 0px 0px 5px #ffff00;
+    background-color: #ffff00;
+    height: 0.6em;
+    width: 0.6em;
+  }
+  
+  .container:hover input ~ .checkmark2 {
+    box-shadow: 0px 0px 5px #f9b314;
+    background-color: #f9b314;
+    height: 0.6em;
+    width: 0.6em;
+  }
+  
+  .container:hover input ~ .checkmark3 {
+    box-shadow: 0px 0px 5px #ff0000;
+    background-color: #ff0000;
+    height: 0.6em;
+    width: 0.6em;
+  }
+  
+  /* When the radio button is checked, add a blue background */
+  .container input:checked ~ .checkmark1 {
+    box-shadow: 0px 0px 5px #ffff00;
+    background-color: #ffff00;
+    /* border: 0.5px solid #333333; */
+    height: 0.6em;
+    width: 0.6em;
+  }
+  
+  .container input:checked ~ .checkmark2 {
+    box-shadow: 0px 0px 5px #f9b314;
+    background-color: #f9b314;
+    /* border: 0.5px solid #333333; */
+    height: 0.6em;
+    width: 0.6em;
+  }
+  
+  .container input:checked ~ .checkmark3 {
+    box-shadow: 0px 0px 5px #ff0000;
+    background-color: #ff0000;
+    /* border: 0.5px solid #333333; */
+    height: 0.6em;
+    width: 0.6em;
+  }
+  
+  /* Create the indicator (the dot/circle - hidden when not checked) */
+  .checkmark1:after,
+  .checkmark2:after,
+  .checkmark3:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  .early-alert h3 {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    height: 1.5em;
+    /* border: 1px solid red; */
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0px;
+    /* padding-bottom: 1em; */
+    /* margin-left: 1em; */
+  }
+  
+  .alert-message {
+    display: flex;
+    /* flex-wrap: wrap; */
+    align-items: center;
+    text-align: center;
+    background-color: #ffffff;
+    padding: 5px 10px 5px 15px;
+    width: auto;
+    height: 7em;
+    border-radius: 5px;
+    margin: 5px;
+  }
+  
+  .alert-message textarea {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    width: 28.5em;
+    height: 6em;
+    margin: 0px;
+    margin-left: 6em;
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    resize: none;
+    border: 0px;
+    outline: 0px;
+  }
+  
+  .early-alert-btn {
+    display: flex;
+    position: relative;
+    height: 2.2em;
+    width: 20%;
+    margin: -0.7em 0em -1.8em 33.7em;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 700;
+    background-color: #04aa6d;
+    color: #ffffff;
+    border: 0px;
+    border-radius: 3px;
+    /* box-shadow: 2px 2px 4px #242424; */
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 7;
+  }
+  
+  .early-alert-btn:hover {
+    background-color: #01c87f;
+  }
+
+  #flood_alert::placeholder{
+    position: relative;
+    top: 35%;
+  }

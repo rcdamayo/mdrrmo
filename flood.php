@@ -84,12 +84,12 @@
       </button>
 
       <button class="hazard-level-button" data-level="Low">
-        <div class="hazard-level-color" style="background-color: #ffff00"></div>
+        <div class="hazard-level-color" style="background-color: #ffbb00"></div>
         <p>Low</p>
       </button>
 
       <button class="hazard-level-button" data-level="Medium">
-        <div class="hazard-level-color" style="background-color: #ffa500"></div>
+        <div class="hazard-level-color" style="background-color: #ff8000"></div>
         <p>Medium</p>
       </button>
 
@@ -149,9 +149,9 @@ if ($result->num_rows > 0) {
 function getAlertColor($alertLevel) {
     switch ($alertLevel) {
         case 'yellow':
-            return '#ffea00'; // Yellow
+            return '#ffbb00'; // Yellow
         case 'orange':
-            return '#ff6600'; // Orange
+            return '#ff8000'; // Orange
         case 'red':
             return '#cc0000'; // Red
         default:
@@ -252,14 +252,14 @@ $conn->close();
         <p>Normal</p>
       </button>
 
-      <button class="menu__item" style="--bgColorItem: #ffcc00" data-level="Low">
+      <button class="menu__item" style="--bgColorItem: #ffbb00" data-level="Low">
         <svg class="icon second" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
             <path d="M128,16a88.1,88.1,0,0,0-88,88c0,75.3,80,132.17,83.41,134.55a8,8,0,0,0,9.18,0C136,236.17,216,179.3,216,104A88.1,88.1,0,0,0,128,16Zm0,56a32,32,0,1,1-32,32A32,32,0,0,1,128,72Z"></path>
         </svg>
         <p>Low</p>
       </button>
 
-      <button class="menu__item" style="--bgColorItem: #ff6600" data-level="Medium">
+      <button class="menu__item" style="--bgColorItem: #ff8000" data-level="Medium">
         <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
             <path d="M128,16a88.1,88.1,0,0,0-88,88c0,75.3,80,132.17,83.41,134.55a8,8,0,0,0,9.18,0C136,236.17,216,179.3,216,104A88.1,88.1,0,0,0,128,16Zm0,56a32,32,0,1,1-32,32A32,32,0,0,1,128,72Z"></path>
         </svg>
@@ -323,13 +323,13 @@ $conn->close();
 
     var floodLowIcon = L.divIcon({
         className: 'custom-icon',
-        html: '<div class="svg-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#ffff00" viewBox="0 0 256 256"><path d="M128,16a88.1,88.1,0,0,0-88,88c0,75.3,80,132.17,83.41,134.55a8,8,0,0,0,9.18,0C136,236.17,216,179.3,216,104A88.1,88.1,0,0,0,128,16Zm0,56a32,32,0,1,1-32,32A32,32,0,0,1,128,72Z"></path></svg></div>', // Replace with your SVG code
+        html: '<div class="svg-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#ffbb00" viewBox="0 0 256 256"><path d="M128,16a88.1,88.1,0,0,0-88,88c0,75.3,80,132.17,83.41,134.55a8,8,0,0,0,9.18,0C136,236.17,216,179.3,216,104A88.1,88.1,0,0,0,128,16Zm0,56a32,32,0,1,1-32,32A32,32,0,0,1,128,72Z"></path></svg></div>', // Replace with your SVG code
         iconSize: [32, 32],
     });
 
     var floodMediumIcon = L.divIcon({
         className: 'custom-icon',
-        html: '<div class="svg-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#ffa500" viewBox="0 0 256 256"><path d="M128,16a88.1,88.1,0,0,0-88,88c0,75.3,80,132.17,83.41,134.55a8,8,0,0,0,9.18,0C136,236.17,216,179.3,216,104A88.1,88.1,0,0,0,128,16Zm0,56a32,32,0,1,1-32,32A32,32,0,0,1,128,72Z"></path></svg></div>', // Replace with your SVG code
+        html: '<div class="svg-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#ff8000" viewBox="0 0 256 256"><path d="M128,16a88.1,88.1,0,0,0-88,88c0,75.3,80,132.17,83.41,134.55a8,8,0,0,0,9.18,0C136,236.17,216,179.3,216,104A88.1,88.1,0,0,0,128,16Zm0,56a32,32,0,1,1-32,32A32,32,0,0,1,128,72Z"></path></svg></div>', // Replace with your SVG code
         iconSize: [32, 32],
     });
 

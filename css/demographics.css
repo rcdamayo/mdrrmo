@@ -11,12 +11,13 @@
 .division:first-child {
     flex: 1;
     padding: 0px 40px;
-    padding-left: 50px;
+    padding-left: 100px;
 }
 
 .division:last-child {
     flex: 2;
-    padding-right: 0;
+    padding-right: 70px;
+    width: 35vw;
 }
 
 h4 {
@@ -41,7 +42,7 @@ table {
 .table-container {
     align-self: center;
     /* border: 1px solid red; */
-    max-height: 90em;
+    max-height: 80.5em;
     width: 100%;
     overflow-y: auto;
     margin: 20px 0px;
@@ -63,6 +64,7 @@ td {
     border: 0px;
     border-bottom: 1px solid #bdbdbd;
     padding: 20px;
+    text-align: center;
 }
 
 td, th {
@@ -112,6 +114,7 @@ button {
     max-width: 25%;
     justify-content: center;
     padding: 10px;
+    font-size: 12px;
     margin: 10px 20px;
     background-color: #f9b314;
     color: #ffffff;

@@ -71,7 +71,7 @@
 
 <div class="main">
   <div class="division">
-    <div class="header2">
+    <div class="header2" style=>
       Today
     </div>
 

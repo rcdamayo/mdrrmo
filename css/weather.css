@@ -22,8 +22,8 @@
   display: flex;
   justify-content: center;
   font-size: 18px;
-  color: #000000;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #0c0c0c;
+  font-family: 'Poppins', sans-serif;
 }
   
 .weather-today {
@@ -203,10 +203,11 @@
   }
   
   .detail-value {
-    font-family: 'Poppins', sans-serif;
     color: #000000;
+    font-family: "Yu Gothic UI", YuGothic, Verdana, sans-serif;
     position: relative;
     top: 20%;
+    font-weight: 400;
     margin-left: 20px;
     font-size: 18px;
   }

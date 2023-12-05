@@ -19,7 +19,7 @@ body {
   background-color: #000000;
   color: #ffffff;
   border-radius: 5px;
-  width: 30vw;
+  width: 25vw;
   /* height: 80px; */
   padding-bottom: 5%;
   margin-top: -48em;
@@ -188,7 +188,7 @@ body {
     text-align: center;
     padding-left: 1em;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     margin: 0px;
     margin-top: 0px;
     margin-bottom: 5px;
@@ -304,7 +304,7 @@ body {
   .bulletin {
     display: flex;
     flex-direction: column;
-    width: 13em;
+    width: 11.3em;
     height: 16em;
     float: right;
     margin: -26em 2em 0em 0em;
@@ -408,3 +408,150 @@ body {
     opacity: 1; /* Set opacity to 1 when active */
     pointer-events: auto; /* Enable pointer events when active */
   }
+
+  menu {
+    display: none;
+  }
+
+@media screen and (max-width: 800px) {
+  html {
+    box-sizing: border-box;
+    --bgColorMenu : #1d1d27;
+    --duration: .7s;    
+  }
+
+  html *,
+  html *::before,
+  html *::after {
+
+  box-sizing: inherit;
+
+  }
+
+  .menu {
+
+  margin: 0;
+  display: flex;
+  /* Works well with 100% width  */
+  width: 100%;
+  font-size: 1.5em;
+  padding: 0 2.85em;
+  position: fixed;
+  bottom: 0;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bgColorMenu);
+  z-index: 999;
+  }
+
+  .menu__item {
+
+  all: unset;
+  flex-grow: 1;
+  z-index: 100;
+  display: flex;
+  cursor: pointer;
+  position: relative;
+  border-radius: 50%;
+  align-items: center;
+  will-change: transform;
+  justify-content: center;
+  padding: 0.55em 0 0.85em;
+  transition: transform var(--timeOut , var(--duration));
+
+  }
+
+  .menu__item p {
+      color: #ffffff;
+      position: absolute;
+      bottom: 0px;
+      font-size: 2vw;
+  }
+
+  .menu__item::before{
+
+  content: "";
+  z-index: -1;
+  width: 4.2em;
+  height: 4.2em;
+  border-radius: 50%;
+  position: absolute;
+  transform: scale(0);
+  transition: background-color var(--duration), transform var(--duration);
+
+  }
+
+
+  .menu__item.active {
+
+  transform: translate3d(0, -.8em , 0);
+
+  }
+
+  .menu__item.active::before{
+
+  transform: scale(1);
+  background-color: var(--bgColorItem);
+
+  }
+
+  .icon{
+  /* margin-bottom: 1em; */
+  width: 2.6em;
+  height: 2.6em;
+  stroke: white;
+  fill: #ffffff;
+  stroke-width: 1pt;
+  stroke-miterlimit: 10;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 620;
+
+  }
+
+  .menu__item.active .icon {
+
+  animation: strok 1s reverse;
+
+  }
+
+  @keyframes strok {
+
+  100% {
+
+      stroke-dashoffset: 400;
+
+  }
+
+  }
+
+  .menu__border{
+
+  left: 0;
+  bottom: 99%;
+  width: 10.9em;
+  height: 2.4em;
+  position: absolute;
+  clip-path: url(#menu);
+  will-change: transform;
+  background-color: var(--bgColorMenu);
+  transition: transform var(--timeOut , var(--duration));
+
+  }
+
+  .svg-container {
+
+  width: 0;
+  height: 0;
+  }
+
+  .img-container {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 50em) {
+  .menu{
+      font-size: .8em;
+  }
+}

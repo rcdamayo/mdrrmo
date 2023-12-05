@@ -241,13 +241,13 @@ $conn->close();
     </div>
 </div>
 
-    <div class="division" style="padding: 30px;">
+    <div class="division" style="padding: 30px 82px;">
 
     <div class="population">
       <div class="graph-container">
         <select id="yearSelect">
-          <option value="2015">Population as of 2015</option>
           <option value="2020">Population as of 2020</option>
+          <option value="2015">Population as of 2015</option>
         </select>
         <canvas id="populationGraph" style="width: 100%; height: 90%; overflow-x: auto;"></canvas>
       </div>
@@ -365,7 +365,7 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 // Assume '2015' as the initial selected year
-updateChart('2015');
+updateChart('2020');
 
 
 });
