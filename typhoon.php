@@ -231,17 +231,46 @@ use phpseclib\Net\SFTP;
 
 include "db_connection.php";
 
-$sql = "SELECT * FROM alerts WHERE timestamp >= NOW() - INTERVAL 12 HOUR ORDER BY timestamp DESC LIMIT 1";
+$sql = "SELECT * FROM alerts WHERE timestamp >= NOW() - INTERVAL 12 HOUR AND image_path IS NOT NULL ORDER BY timestamp DESC LIMIT 1";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         if (!empty($row["image_path"]) && !empty($row["timestamp"])) {
+            // Create an instance of Net_SFTP
+            $sftp = new SFTP('edr.topfavlists.com');
+
+            // Replace 'your_username' and 'your_password' with your actual SFTP credentials
+            if (!$sftp->login('edr', '3fQoT8cgRu')) {
+                die('Login Failed');
+            }
+
             // Set the remote file path on the SFTP server
             $remoteFilePath = $row["image_path"];
 
-            // Display the image directly from the SFTP server
-            echo '<img src="https://edr.topfavlists.com' . $remoteFilePath . '" onclick="openModal()">';
+            // Set the local directory where you want to save the downloaded image
+            $localDirPath = 'C:/xampp/htdocs/mdrrmo/uploads'; // Provide an appropriate local path
+
+            // Check if the local directory exists, if not, create it
+            if (!file_exists($localDirPath) && !is_dir($localDirPath)) {
+                mkdir($localDirPath, 0777, true);
+            }
+
+            // Set the local file path
+            $localFilePath = $localDirPath . '/' . basename($remoteFilePath);
+
+            // Download the image from the SFTP server
+            if ($sftp->get($remoteFilePath, $localFilePath)) {
+                // Check if the file was successfully downloaded
+                if (file_exists($localFilePath)) {
+                    // Display the alert only if image_path is not null
+                    echo "<script>alert('See Downloads to view image!');</script>";
+                } else {
+                    echo 'Error: Local file not found after download.';
+                }
+            } else {
+                echo 'Error downloading the image from the SFTP server. SFTP Error: ' . $sftp->getLastSFTPError();
+            }
         }
     }
 }
@@ -251,7 +280,9 @@ $conn->close();
 
 
 
-</div>
+
+
+<!-- </div> -->
 
     <menu class="menu" style="--timeOut: none">
       <button class="menu__item active" style="--bgColorItem: #04aa6d">
@@ -381,6 +412,28 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+function showSnackbar(message) {
+    var snackbar = document.getElementById("snackbar");
+    snackbar.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#0864e6" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-8,56a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm8,104a12,12,0,1,1,12-12A12,12,0,0,1,128,184Z"></path></svg><div>' 
+      + message + 
+      '</div><button id="closeSnackbar">OK</button>';
+    snackbar.style.visibility = "visible";
+    snackbar.style.opacity = 1;
+
+    var closeBtn = document.getElementById("closeSnackbar");
+    closeBtn.addEventListener("click", function() {
+        hideSnackbar(snackbar);
+    });
+}
+
+function hideSnackbar(snackbar) {
+    snackbar.style.opacity = 0;
+    setTimeout(function() {
+        snackbar.style.visibility = "hidden";
+        // Reload the page when the snackbar is closed
+        // location.reload();
+    }, 300);
+}
 </script>
 </body>
 </html>

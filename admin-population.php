@@ -212,6 +212,7 @@ if ($result->num_rows > 0) {
 }
 $conn->close();
 ?>
+</form>
 </div>
 
 <div id="snackbar"></div>

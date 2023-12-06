@@ -13,32 +13,53 @@ if (isset($_POST["submit"])) {
             fgetcsv($handle);
 
             // Insert data into the database
-            while (($row = fgetcsv($handle)) !== FALSE) {
-                $id = $row[0];
-                $year = $row[1];
-                $Abango = $row[2];
-                $Amahit = $row[3];
-                $Balire = $row[4];
+            $stmt = $conn->prepare("INSERT INTO population_data (
+                id, year, Abango, Amahit, Balire, Balud, Bukid, Bulod, Busay, Cabarasan,
+                `Cabolo-an`, Calingcaguing, `Can-Isak`, Canomantag, Cuta, Domogdog, Duka,
+                Guindaohan, Hiagsam, Hilaba, Hinugayan, Ibag, Minuhang, Minuswang, Pikas,
+                Pitogo, `Poblacion Dist I`, `Poblacion Dist II`, `Poblacion Dist III`,
+                `Poblacion Dist IV`, `Poblacion Dist V`, `Poblacion Dist VI`, Pongso, Roosevelt,
+                `San Isidro`, `San Roque`, `Santa Rosa`, Santarin, `Tutug-an`
+            ) VALUES (
+                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+            )");
 
-                // Perform the database insertion (adjust the query based on your database structure)
-                $sql = "INSERT INTO population_data (id, year, Abango, Amahit, Balire) VALUES ('$id', '$year', '$Abango', '$Amahit', '$Balire')";
-                
-                if ($conn->query($sql) !== TRUE) {
-                    echo "Error: " . $sql . "<br>" . $conn->error;
+            // Bind parameters
+            $stmt->bind_param("isiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii", $id, $year, $Abango, $Amahit, $Balire, $Balud, $Bukid, $Bulod, $Busay, $Cabarasan,
+                $Cabolo_an, $Calingcaguing, $Can_Isak, $Canomantag, $Cuta, $Domogdog, $Duka,
+                $Guindaohan, $Hiagsam, $Hilaba, $Hinugayan, $Ibag, $Minuhang, $Minuswang, $Pikas,
+                $Pitogo, $Poblacion_Dist_I, $Poblacion_Dist_II, $Poblacion_Dist_III,
+                $Poblacion_Dist_IV, $Poblacion_Dist_V, $Poblacion_Dist_VI, $Pongso, $Roosevelt,
+                $San_Isidro, $San_Roque, $Santa_Rosa, $Santarin, $Tutug_an);
+
+            while (($row = fgetcsv($handle)) !== FALSE) {
+                // Convert numeric values to integers
+                list($id, $year, $Abango, $Amahit, $Balire, $Balud, $Bukid, $Bulod, $Busay, $Cabarasan,
+                    $Cabolo_an, $Calingcaguing, $Can_Isak, $Canomantag, $Cuta, $Domogdog, $Duka,
+                    $Guindaohan, $Hiagsam, $Hilaba, $Hinugayan, $Ibag, $Minuhang, $Minuswang, $Pikas,
+                    $Pitogo, $Poblacion_Dist_I, $Poblacion_Dist_II, $Poblacion_Dist_III,
+                    $Poblacion_Dist_IV, $Poblacion_Dist_V, $Poblacion_Dist_VI, $Pongso, $Roosevelt,
+                    $San_Isidro, $San_Roque, $Santa_Rosa, $Santarin, $Tutug_an) = $row;
+
+                if (!$stmt->execute()) {
+                    echo "Error: " . $stmt->error;
                 }
             }
 
             fclose($handle); // Close the file handle
             echo "File uploaded and data inserted successfully.";
+            header("Location: admin-population.php");
         } else {
             echo "Error opening file.";
+            header("Location: index.php");
         }
     } else {
         echo "Error uploading file.";
+        header("Location: index.php");
     }
 }
 
-// Close the database connection
+// Close the statement and database connection
+$stmt->close();
 $conn->close();
-
 ?>
