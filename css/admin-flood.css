@@ -600,3 +600,35 @@
 .update-marker:hover {
   background-color: #01c87f;
 }
+
+/* Style for hiding the default file input */
+#file-input {
+  display: none;
+}
+
+/* Style for the clickable icon */
+#file-icon {
+  display: inline-block;
+  height: 3em;
+  width: 4em;
+  padding: 0px;
+  /* border: 1px solid white; */
+  margin: 0em 0.5em -3.5em 0em;
+  cursor: pointer;
+}
+
+#file-icon:hover {
+  cursor: pointer;
+}
+
+#file-icon svg {
+  height: 100%;
+  width: 100%;
+  fill: #8e8e8e;
+  margin: 0;
+  padding: 0;
+}
+
+#file-icon:hover svg {
+  fill: #000000;
+}

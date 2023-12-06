@@ -70,7 +70,7 @@
 include 'db_connection.php';
 
 // Retrieve the data from the database (latest row within 1 hour)
-$sql = "SELECT * FROM alerts WHERE timestamp >= NOW() - INTERVAL 12 HOUR ORDER BY timestamp DESC LIMIT 1";
+$sql = "SELECT * FROM typhoon_alerts WHERE timestamp >= NOW() - INTERVAL 12 HOUR ORDER BY timestamp DESC LIMIT 1";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -122,7 +122,7 @@ function getFontColor($alertLevel) {
             <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM120,104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm8,88a12,12,0,1,1,12-12A12,12,0,0,1,128,192Z"></path>
         </svg>
         <?php
-        $sql = "SELECT * FROM alerts WHERE timestamp >= NOW() - INTERVAL 12 HOUR ORDER BY timestamp DESC LIMIT 1";
+        $sql = "SELECT * FROM typhoon_alerts WHERE timestamp >= NOW() - INTERVAL 12 HOUR ORDER BY timestamp DESC LIMIT 1";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -231,7 +231,7 @@ use phpseclib\Net\SFTP;
 
 include "db_connection.php";
 
-$sql = "SELECT * FROM alerts WHERE timestamp >= NOW() - INTERVAL 12 HOUR AND image_path IS NOT NULL ORDER BY timestamp DESC LIMIT 1";
+$sql = "SELECT * FROM typhoon_alerts WHERE timestamp >= NOW() - INTERVAL 12 HOUR AND image_path IS NOT NULL ORDER BY timestamp DESC LIMIT 1";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -249,7 +249,7 @@ if ($result->num_rows > 0) {
             $remoteFilePath = $row["image_path"];
 
             // Set the local directory where you want to save the downloaded image
-            $localDirPath = 'C:/xampp/htdocs/mdrrmo/uploads'; // Provide an appropriate local path
+            $localDirPath = 'c:\Users\Windows\Downloads'; // Provide an appropriate local path
 
             // Check if the local directory exists, if not, create it
             if (!file_exists($localDirPath) && !is_dir($localDirPath)) {
@@ -329,7 +329,7 @@ $conn->close();
 <div class="modal-img" id="modal-img">
   <?php
   include "db_connection.php";
-  $sql = "SELECT * FROM alerts WHERE timestamp >= NOW() - INTERVAL 12 HOUR ORDER BY timestamp DESC LIMIT 1";
+  $sql = "SELECT * FROM typhoon_alerts WHERE timestamp >= NOW() - INTERVAL 12 HOUR ORDER BY timestamp DESC LIMIT 1";
   $result = $conn->query($sql);
 
     // Display the image inside the modal

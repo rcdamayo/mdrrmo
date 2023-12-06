@@ -8,15 +8,12 @@ session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $int_name = $_POST['int_name'];
   $local_name = $_POST['local_name'];
-  $location = $_POST['location'];
   $wind_speed = $_POST['wind_speed'];
   $gust = $_POST['gust'];
-  $movement = $_POST['movement'];
-  $direction = $_POST['direction'];
 
   // SQL query to insert data into the database
-  $sql = "INSERT INTO typhoon_bulletin (int_name, local_name, location, wind_speed, gust, movement, direction) 
-          VALUES ('$int_name', '$local_name', '$location', '$wind_speed', '$gust', '$movement', '$direction')";
+  $sql = "INSERT INTO typhoon_bulletin (int_name, local_name, wind_speed, gust) 
+          VALUES ('$int_name', '$local_name', '$wind_speed', '$gust')";
 
   if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";

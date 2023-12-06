@@ -579,7 +579,7 @@ document.getElementById('user-input').addEventListener('keypress', function (e) 
 // Automatically load messages every 5 seconds (adjust as needed)
 setInterval(function () {
     loadMessages();
-}, 5000); // Adjust the interval as needed
+}, 3000); // Adjust the interval as needed
 
 
 function submitForm(event) {

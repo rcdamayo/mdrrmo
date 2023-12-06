@@ -53,7 +53,7 @@ function saveToDatabase($alertLevel, $alertMessage, $uploadedFilePath) {
     $uploadedFilePath = $mysqli->real_escape_string($uploadedFilePath);
 
     // Insert data into the database (replace with your database insert code)
-    $query = "INSERT INTO alerts (alert_level, alert_message, image_path, timestamp) VALUES ('$alertLevel', '$alertMessage', '$uploadedFilePath', NOW())";
+    $query = "INSERT INTO flood_alerts (alert_level, alert_message, image_path, timestamp) VALUES ('$alertLevel', '$alertMessage', '$uploadedFilePath', NOW())";
     $result = $mysqli->query($query);
 
     // Close the database connection

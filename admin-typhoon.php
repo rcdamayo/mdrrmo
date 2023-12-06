@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <iframe src="https://earth.nullschool.net/#current/wind/surface/level/orthographic=123.55,11.87,1751/loc=124.750,11.305" width="100%" height="590px" frameborder="0"></iframe>
 
-  <form action="store_alert.php" method="post" onsubmit="submitForm(event)">
+  <form action="store_alert-typhoon.php" method="post" onsubmit="submitForm(event)">
   <div class="early-alert" id="alertContainer">
 
     <div class="radio-container">
@@ -296,20 +296,14 @@ if ($result->num_rows > 0) {
   $row = $result->fetch_assoc();
   $int_name = $row["int_name"];
   $local_name = $row["local_name"];
-  $location = $row["location"];
   $wind_speed = $row["wind_speed"];
   $gust = $row["gust"];
-  $movement = $row["movement"];
-  $direction = $row["direction"];
   $updated_on = $row["updated_on"];
 } else {
   $int_name = "N/A";
   $local_name = "N/A";
-  $location = "N/A";
   $wind_speed = "N/A";
   $gust = "N/A";
-  $movement = "N/A";
-  $direction = "N/A";
   $updated_on = "N/A";
 }
 $conn->close();
@@ -332,11 +326,6 @@ $conn->close();
       </tr>
 
       <tr>
-        <td>Location:</td>
-        <td><input type="text" name="location" id="location" placeholder="<?php echo $location; ?>"></td>
-      </tr>
-
-      <tr>
         <td>Wind Speed:</td>
         <td><input type="number" name="wind_speed" id="wind_speed" placeholder="<?php echo $wind_speed; ?> km/h"></td>
       </tr>
@@ -344,16 +333,6 @@ $conn->close();
       <tr>
         <td>Gustiness:</td>
         <td><input type="number" name="gust" id="gust" placeholder="<?php echo $gust; ?> km/h"></td>
-      </tr>
-
-      <tr>
-        <td>Movement:</td>
-        <td><input type="text" name="movement" id="movement" placeholder="<?php echo $movement; ?>"></td>
-      </tr>
-
-      <tr>
-        <td>Direction:</td>
-        <td><input type="text" name="direction" id="direction" placeholder="<?php echo $direction; ?>"></td>
       </tr>
 
       <tr>
